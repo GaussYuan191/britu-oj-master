@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.britu.oj.dao.BlogCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.britu.oj.entity.BlogComment" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="blog_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, blog_id, content, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from blog_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blog_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByBlogId" parameterType="int">
+    delete from blog_comment
+    where blog_id = #{blogId}
+  </delete>
+
+  <insert id="insert"  keyProperty="id" parameterType="com.britu.oj.entity.BlogComment" >
+    insert into blog_comment (id, user_id, blog_id, 
+      content, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{blogId,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP} )
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.britu.oj.entity.BlogComment" >
+    insert into blog_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="blogId != null" >
+        blog_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="blogId != null" >
+        #{blogId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.britu.oj.entity.BlogComment" >
+    update blog_comment
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="blogId != null" >
+        blog_id = #{blogId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.britu.oj.entity.BlogComment" >
+    update blog_comment
+    set user_id = #{userId,jdbcType=INTEGER},
+      blog_id = #{blogId,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <select id="listBlogCommentVO" resultType="com.britu.oj.response.BlogCommentVO" parameterType="map">
+    select bco.id, bco.user_id, u.avatar,u.name, blog_id, content,
+    bco.create_time, bco.update_time, count(up.id) up_count
+    from blog_comment bco
+    join user u on u.id = bco.user_id
+    left join up on up.type_id = bco.id and up.type = 1 and status = true
+    <where>
+      blog_id = #{blogId}
+    </where>
+    group by bco.id
+    <if test="sort == null || sort == -1">
+      order by bco.create_time
+    </if>
+    <if test="sort != null and sort == 1">
+      order by bco.create_time desc
+    </if>
+    <if test="sort != null and sort == 2">
+      order by count(up.id) desc,bco.create_time desc
+    </if>
+
+  </select>
+
+
+
+</mapper>

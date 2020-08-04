@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:text="${tagList}"></div>
+<p>现在标签可以写死，到时候会换标签</p>
+
+<a th:href="@{'/course/course_data?id=1'}">这是教程1</a>
+<a th:href="@{'/course/course_data?id=2'}">这是教程2</a>
+</body>
+</html>

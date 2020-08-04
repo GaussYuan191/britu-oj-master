@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>测评记录</title>
+    <div th:replace="~{fragments/head-base}"></div>
+    <!--Page level styles-->
+    <style type="text/css">
+
+    </style>
+</head>
+
+<!--Page head script-->
+
+<!--end of Page head script-->
+<body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img th:src="@{/img/loader.gif}" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<div id="wrap">
+    <div th:replace="~{fragments/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/left :: left}"></div>
+        <!-- /#left -->
+        <div id="content" class="bg-container">
+            <header class="head">
+                <div class="main-bar">
+                    <div class="row no-gutters">
+                        <div class="col-6">
+                            <h4 class="m-t-5">
+                                <i class="fa fa-pie-chart"></i><span class="ml-1">测评记录</span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="outer">
+                <div class="inner bg-container">
+                    <div id="problemResultApp">
+                        <div class="row">
+                            <!--table-->
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <input type="number" id="problemId" name="problemId"
+                                               class="form-control focused_input" placeholder="题目ID"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <input id="name" type="text" maxlength="16" name="name"
+                                               class="form-control focused_input"
+                                               placeholder="用户名">
+                                    </div>
+                                    <div class="col-2">
+                                        <select name="type" id="type" class="form-control select2">
+                                            <option value="">--语言--</option>
+                                            <option value="C">C</option>
+                                            <option value="C++">C++</option>
+                                            <option value="Java8">Java8</option>
+                                            <option value="Python2">Python2</option>
+                                            <option value="Python3">Python3</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <select name="status" id="status" class="form-control select2">
+                                            <option value="-1">--结果--</option>
+                                            <option value="0">编译中</option>
+                                            <option value="8">队列中</option>
+                                            <option value="9">判题中</option>
+                                            <option value="1">答案正确</option>
+                                            <option value="2">编译错误</option>
+                                            <option value="3">格式错误</option>
+                                            <option value="4">运行错误</option>
+                                            <option value="5">时间超限</option>
+                                            <option value="6">内存超限</option>
+                                            <option value="7">答案错误</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <button onclick="clickPage(1)" class="btn btn-outline-primary"><i
+                                                class="fa fa-search"></i><span class="ml-1">开始查找</span>
+                                        </button>
+                                        <!--<button class="btn ml-3 btn-outline-primary"><i class="fa fa-user"></i>&nbsp;我的提交
+                                        </button>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <div class="card p-3">
+                                    <div class="card-body">
+                                        <table class="table  table-hover">
+                                            <thead class="">
+                                            <tr>
+                                                <th class="text-center">运行编号</th>
+                                                <th class="text-center">用户名</th>
+                                                <th class="text-center">题目ID</th>
+                                                <th class="text-center">语言</th>
+                                                <th class="text-center">时间</th>
+                                                <th class="text-center">内存</th>
+                                                <th class="text-center">结果</th>
+                                                <th class="text-center">得分</th>
+                                                <th class="text-center">提交时间</th>
+                                                <th class="text-center">操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="(problemResult,index) in problemResultList" class="text-center">
+                                                <td>{{problemResult.id}}</td>
+                                                <td>
+                                                    <a class="text-primary"
+                                                       :href="'/user/mainPage?userId='+problemResult.userId"
+                                                       target="_blank">{{problemResult.name}}</a>
+                                                </td>
+                                                <td><a target="_blank" class="primary-hover" :href="'problem/problemDetailPage?problemId='+problemResult.problemId">{{problemResult.problemId}}</a></td>
+                                                <td>{{problemResult.type}}</td>
+                                                <td>{{problemResult.time}}ms</td>
+                                                <td>{{problemResult.memory}}kb</td>
+                                                <td>
+                                                <span class="btn-sm "
+                                                      v-if="problemResult.status == 0">
+
+                                                    <span class="mr-1">编译中</span>
+                                                    <i class="fa fa-spinner fa-pulse "></i>
+                                                </span>
+                                                    <span class=" btn-sm text-white" style="background-color: #4BC0C0"
+                                                          v-if="problemResult.status == 1">
+                                                    答案正确
+                                                </span>
+                                                    <span class=" btn-sm text-white" style="background-color: #FFCD56"
+                                                          v-if="problemResult.status == 2">
+                                                    编译错误
+                                                </span>
+                                                    <span class=" btn-sm text-white" style="background-color: #ed92ff"
+                                                          v-if="problemResult.status == 3">
+                                                    格式错误
+                                                </span>
+                                                    <span class=" btn-sm text-white" style="background-color: #FF9F40"
+                                                          v-if="problemResult.status == 4">
+                                                    运行错误
+                                                </span>
+                                                    <span class=" btn-sm text-white" style="background-color: #62b8ff"
+                                                          v-if="problemResult.status == 5">
+                                                    时间超限
+                                                </span>
+                                                    <span class=" btn-sm text-white" style="background-color: #6574ff"
+                                                          v-if="problemResult.status == 6">
+                                                    内存超限
+                                                </span>
+                                                    <span class=" btn-sm  text-white" style="background-color:#FF6384 "
+                                                          v-if="problemResult.status == 7">
+                                                    答案错误
+                                                </span>
+                                                <span class="btn-sm" v-if="problemResult.status == 8">
+                                                            <span>队列中</span><i class="ml-1 fa fa-spinner fa-pulse"></i>
+                                                </span>
+                                                <span class=" btn-sm"
+                                                      v-if="problemResult.status == 9">
+                                                        <span>判题中</span>
+                                                        <i class="ml-1 fa fa-spinner fa-pulse"></i>
+                                                </span>
+                                                </td>
+                                                <td>{{problemResult.score}}
+                                                <td>{{problemResult.createTime | formatDate}}
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-secondary"
+                                                       :href="'/problemResult/problemResultDetailPage?problemResultId='+problemResult.id">
+                                                        查看详情
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <!--page-->
+                                        <div class="row mt-3">
+                                            <div class="" style="margin: 0 auto">
+                                                <ul class="page" maxshowpageitem="5" pagelistcount="20" id="page"></ul>
+                                            </div>
+                                        </div>
+                                        <!--#page-->
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--#table-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.inner -->
+</div>
+<!-- /.outer -->
+
+<!-- /#content -->
+<!-- Modal -->
+<div th:replace="~{fragments/modal}"></div>
+
+<!--wrapper-->
+<!-- /#content -->
+<!-- # right side -->
+<!-- /#wrap -->
+<!-- global scripts-->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!--end of global scripts-->
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+    // vue
+    var problemResultApp = new Vue({
+        el: '#problemResultApp',
+        data: {
+            total: 0,
+            problemResultList: []
+        },
+        filters: {
+            formatDate: function (val) {
+                var value = new Date(val);
+                var year = value.getFullYear();
+                var month = padDate(value.getMonth() + 1);
+                var day = padDate(value.getDate());
+                var hour = padDate(value.getHours());
+                var minutes = padDate(value.getMinutes());
+                var seconds = padDate(value.getSeconds());
+                return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
+            },
+            formatYear: function (val) {
+                var value = new Date(val);
+                return value.getFullYear();
+            },
+            formatNum: function (val) {
+                //四舍五入
+                return  parseFloat(val).toFixed(2);
+            }
+        },
+        methods: {
+            listProblemResult: function (pageNum) {
+                var problemId = $("#problemId").val();
+                var name = $("#name").val();
+                var type = $('#type').val();
+                var status = $('#status').val();
+                var url = 'problemResult/listProblemResult2Page';
+
+                this.$http.post(url,{"pageNum":pageNum,"problemId":problemId,"name":name,"type":type,"status":status},{emulateJSON:true}).then(function (res) {
+                    this.total = res.data.data.total;
+                    this.problemResultList = res.data.data.list;
+                    $("#page").initPage(this.total, pageNum, clickPage);
+                }), function (res) {
+                    console.log(res.data.msg);
+                }
+            }
+        }
+    });
+    problemResultApp.listProblemResult(1);
+
+    //分页点击方法
+    function clickPage(pageNum) {
+        problemResultApp.listProblemResult(pageNum);
+    }
+
+    // end of vue
+
+
+    $('.select2').select2({
+        theme: 'bootstrap4'
+    });
+
+    /*]]>*/
+
+</script>
+
+</body>
+
+</html>

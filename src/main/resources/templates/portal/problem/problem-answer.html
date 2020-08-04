@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>题目-[[${answer.problem_name}]]</title>
+    <div th:replace="~{fragments/head-base}"></div>
+    <!--Page level styles-->
+    <link type="text/css" rel="stylesheet" th:href="@{/plugins/modal/css/component.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/answer.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/problem_detail.css}"/>
+
+</head>
+
+<body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img src="img/loader.gif" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<div id="wrap">
+    <div th:replace="~{fragments/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/left :: left}"></div>
+        <!-- /#left -->
+        <div id="content" class="bg-container">
+            <header class="head">
+                <div class="main-bar">
+                    <div class="row no-gutters">
+                        <div class="col-6 ">
+                            <h4 class="nav_top_align">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                <span class="ml-1">[[${answer.pid}]]
+                                [[${answer.problem_name}]]
+                                </span>
+                            </h4>
+                        </div>
+                        <div class="col-6 ">
+                            <div th:if="${compId == null}">
+                                <ol class="breadcrumb float-right nav_breadcrumb_top_align">
+                                    <li class="breadcrumb-item">
+                                        <a th:href="@{/}">
+                                            <i class="fa fa-home" aria-hidden="true"></i> 首页
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item">
+                                        <a th:href="@{/problem/problemListPage}">题库</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">[[${answer.pid}]]</li>
+                                </ol>
+                            </div>
+                            <div th:if="${compId != null}">
+                                <ol class="breadcrumb float-right nav_breadcrumb_top_align">
+                                    <li class="breadcrumb-item">
+                                        <a th:href="@{'/competition/competitionProblemListPage?compId='+${compId}}" class="btn-sm btn-primary">
+                                            <i class="fa fa-angle-double-left"></i><span class="ml-1">返回比赛</span>
+                                        </a>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <main id="main-body" style="background-color: rgb(239, 239, 239);">
+                <div id="full-container" style="margin-top: 2em;">
+                    <section id="side">
+                        <div class="col-12">
+                            <div class="card ">
+                                <div class="card-header bg-white"><i class="fa fa-pie-chart mr-1"></i>题目统计</div>
+                                <div class="card-block">
+                                    <canvas id="myChart" class="w-100" style="height: 400px"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="card mt-3" id="changeListApp">
+                                <div class="card-header bg-white">
+                                    <i class="fa fa-flag mr-1"></i>推荐题目
+                                </div>
+                                <div class="card-body">
+                                    <div v-for="problem in suggestProblemList">
+                                        <div class="task-item">
+                                            <a class="primary-hover"
+                                               :href="'problem/problemDetailPage?problemId='+problem.id">{{problem.name}}</a>
+                                            <span class="float-right">
+                                                   {{problem.tags}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="task-item">
+                                        <button @click="changeList()"
+                                                class=" w-100 btn btn-outline-primary glow_button glow_button"><i
+                                                class="fa fa-random mr-1"></i>更换一组
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="main">
+                        <div class="card padding-none">
+                            <div class="card-header">
+                                <b data-v-7d3e416c="" data-v-796309f8="">题解</b>
+                            </div>
+                            <div class="card-body">
+                                <div class="list">
+                                    <div class="block">
+                                        <div class="row-wrap">
+                                            <div class="item-row">
+                                                <div class="solution-article">
+                                                    <div class="header"></div>
+                                                    <div class="main" style="position: relative;">
+                                                        <div class="collapsed-wrapper">
+
+                                                            <div data-v-0776707c="" class="" style="--lcollapsed-height:320px;">
+                                                                <p>c语言</p>
+                                                                <div data-v-5a58a989="" data-v-677ffeda="" class="marked" data-v-0776707c="" th:utext="${answer.answer_c}">
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div dir="ltr" class="resize-sensor" style="pointer-events: none; position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden; max-width: 100%;">
+                                                            <div class="resize-sensor-expand" style="pointer-events: none; position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden; max-width: 100%;">
+                                                                <div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 735px; height: 387px;">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="resize-sensor-shrink" style="pointer-events: none; position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden; max-width: 100%;">
+                                                                <div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 200%; height: 200%;">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="modal hide">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="item-row">
+                                                <div class="solution-article">
+                                                    <div class="header"></div>
+                                                    <div class="main" style="position: relative;">
+                                                        <div class="collapsed-wrapper">
+
+                                                            <div data-v-0776707c="" class="" style="--lcollapsed-height:320px;">
+                                                                <p>c++语言</p>
+                                                                <div data-v-5a58a989="" data-v-677ffeda="" class="marked" data-v-0776707c="" th:utext="${answer.answer_cpro}">
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div dir="ltr" class="resize-sensor" style="pointer-events: none; position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden; max-width: 100%;">
+                                                            <div class="resize-sensor-expand" style="pointer-events: none; position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden; max-width: 100%;">
+                                                                <div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 735px; height: 387px;">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="resize-sensor-shrink" style="pointer-events: none; position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; z-index: -1; visibility: hidden; max-width: 100%;">
+                                                                <div style="position: absolute; left: 0px; top: 0px; transition: all 0s ease 0s; width: 200%; height: 200%;">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="modal hide">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                </div>
+
+
+
+
+
+        </main>
+    </div>
+</div>
+<!-- /.inner -->
+<!-- /.outer -->
+
+<!-- /#content -->
+
+
+
+
+
+
+<!--wrapper-->
+<!-- /#content -->
+<!-- # right side -->
+</div>
+<!-- /#wrap -->
+<!-- global scripts-->
+<script th:replace="~{fragments/footer :: footer}"></script>
+<!--end of global scripts-->
+<!--  plugin scripts -->
+<script type="text/javascript" th:src="@{/plugins/ace/src-noconflict/ace.js}"></script>
+<script th:src="@{/plugins/ace/src-noconflict/ext-language_tools.js}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" th:src="@{/js/pluginjs/Chart.min.js}"></script>
+<!--end of plugin scripts-->
+<!--page scripts-->
+<script th:src="@{/js/pages/problem_detail.js}"></script>
+<!--end of page scripts-->
+</body>
+
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    //初始化黏贴版
+    var clipboard = new ClipboardJS('#clipboard');
+
+    var submitCount = [[${problem.submitCount}]];
+    var acCount = [[${problem.acCount}]];
+    var tleCount = [[${problem.tleCount}]];
+    var peCount = [[${problem.peCount}]];
+    var meCount = [[${problem.meCount}]];
+    var reCount = [[${problem.reCount}]];
+    var ceCount = [[${problem.ceCount}]];
+    var waCount = [[${problem.waCount}]];
+
+    var problemId = [[${problem.id}]];
+    var problemName = [[${problem.name}]];
+    var compId = [[${compId}]];
+
+    // vue
+    var changeListApp = new Vue({
+        el: '#changeListApp',
+        data: {
+            suggestProblemList: []
+        },
+        methods: {
+            changeList: function () {
+                this.$http.get('/problem/suggestProblemList?problemId=' + [[${problem.id}]]).then(function (res) {
+                    this.suggestProblemList = res.data.data;
+                }), function (res) {
+                    console.log(res.data.msg);
+                }
+            }
+        }
+    });
+    changeListApp.changeList();
+    // end of vue
+
+
+    //chars
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [acCount, ceCount, peCount, reCount, tleCount, meCount, waCount],
+                backgroundColor: [
+                    '#4BC0C0',
+                    '#FFCD56',
+                    '#ed92ff',
+                    '#FF9F40',
+                    '#62b8ff',
+                    '#6574ff',
+                    '#FF6384'
+                ],
+                borderColor: []
+            }],
+            labels: [
+                'Accepted',
+                'Compile Error',
+                'Presentation Error',
+                'Runtime Error',
+                'Time Limit Exceeded',
+                'Memory Limit Exceeded',
+                'Wrong Answer'
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: '提交次数-' + submitCount + '次'
+            }
+        }
+    });
+    // en of chars
+
+    //输入测试样例
+    function setTestcase() {
+        $("#testInput").val([[${problem.testcaseInput}]]);
+        $("#eOutput").val([[${problem.testcaseOutput}]]);
+    }
+
+    function clearTestcase() {
+        $("#testInput").val("");
+        $("#eOutput").val("");
+    }
+
+
+    function submitCode() {
+        submit(problemName,compId);
+
+    }
+
+
+    /*]]>*/
+</script>
+</html>

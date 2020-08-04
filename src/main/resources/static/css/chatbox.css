@@ -1,0 +1,291 @@
+/*
+聊天框样式表
+author: Assassin_YU
+*/
+
+.comment {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    top: 40%;
+    right: 0;
+    border-radius: 30px;
+    background-image: url("../img/talk.jpg");
+    z-index: 1;
+    transform: translateY(3px);
+    transition: transform .3s ease-in-out
+}
+.comment:hover {
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 10px -4px rgba(0,0,0,.3);
+}
+#chatbox {
+    bottom: -1000px;
+    left: 600px;
+    height: 600px;
+    width: 500px;
+    position: fixed;
+    transform: translateY(3px);
+    transition: transform .3s ease-in-out, bottom 1s ease-in-out;
+    z-index: 1;
+    border-radius: 50px;
+}
+
+#chatbox:hover {
+    transform: translateY(-10px);
+    box-shadow: 10px 10px 10px -4px rgba(0,0,0,.3);
+}
+
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+:root {
+    --white: #fff;
+    --black: #000;
+    --bg: #f8f8f8;
+    --grey: #999;
+    --dark: #1a1a1a;
+    --light: #e6e6e6;
+    --wrapper: 1000px;
+    --blue: #00b0ff;
+}
+body {
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;/*文字抗锯齿*/
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;/*当绘制文本时，浏览器会侧重文本的可读性（清晰度），而不是渲染速度和几何 精度。该属性值可以用于字距调整和连字。*/
+    font-family: 'Source Sans Pro', sans-serif;/*字体*/
+    font-weight: 400;
+}
+
+.Container {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--white);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border-radius: 50px;
+}
+
+.Container .top {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    background-color: #eceff1;
+    position: relative;
+    border-top-left-radius: 50px;
+}
+
+.Container .top span {
+    font-size: 15px;
+    color: var(--grey);
+}
+
+.Container .top span .name {
+    color: var(--dark);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+}
+.Container .top .x {
+    transform: translateY(3px);
+    transition: transform .3s ease-in-out;
+    z-index: 1;
+    margin-right: 10px;
+    line-height: 42px;
+    float: right;
+}
+
+.Container .top .x:hover {
+    transform: translateY(0px);
+}
+
+.Container .write .recorder {
+    float: left;
+    line-height: 40px;
+}
+
+.Container .write {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    height: 42px;
+    padding-left: 8px;
+    border: 1px solid black;
+    background-color: #eceff1;
+    width: calc(100% - 58px);
+    border-radius: 5px;
+}
+.Container .write input {
+    font-size: 16px;
+    float: left;
+    width: 380px;
+    height: 40px;
+    padding: 0 10px;
+    color: var(--dark);
+    border: 0;
+    outline: none;
+    background-color: #eceff1;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+
+.Container .write .send {
+    float: right;
+    line-height: 40px;
+    display: inline-block;
+    width: 20px;
+    height: 40px;
+    margin-right: 11px;
+}
+
+
+.Container .content {
+    width: auto;
+    height: 420px;
+    margin: 10px auto;
+    overflow-y:auto;
+    border-bottom: 1px solid #cccccc;
+}
+.Container .content::-webkit-scrollbar {display: none;}
+.bubble_you {
+    position: relative;
+    left: 0;
+    top: 0;
+    clear: both;
+}
+.bubble_me {
+    position: relative;
+    right: 0;
+    top: 0;
+    clear: both;
+}
+.img_1 {
+    display: inline-block;
+    background-image: url("image/fairy.png");
+    width: 50px;
+    height: 50px;
+    margin-left: 0;
+    float: left;
+}
+.img_2 {
+    display: inline-block;
+    background-image: url("image/fairy.png");
+    width: 50px;
+    height: 50px;
+    margin-right: 0;
+    float: right;
+}
+.bubble_1 {
+    display: inline-block;
+    position: relative;
+    width: 60%;
+    height: auto;
+    font-size: 16px;
+    color: var(--white);
+    background-color: var(--blue);
+    border-radius: 10px;
+    padding: 8px;
+    line-height: 20px;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.bubble_2 {
+    display: inline-block;
+    position: relative;
+    width: 60%;
+    height: auto;
+    font-size: 16px;
+    color: var(--dark);
+    background-color: #eceff1;
+    border-radius: 10px;
+    padding: 8px;
+    line-height: 20px;
+    float: right;
+    margin-bottom: 10px;
+}
+@-webkit-keyframes list
+{
+    0% {
+        -webkit-transform: scaley(1);
+        transform: scaley(1); }
+
+    50% {
+        -webkit-transform: scaley(0.4);
+        transform: scaley(0.4);
+    }
+    100% {
+        -webkit-transform: scaley(1);
+        transform: scaley(1);
+    }
+}
+@keyframes list
+{
+    0% {
+        -webkit-transform: scaley(1);
+        transform: scaley(1); }
+
+    50% {
+        -webkit-transform: scaley(0.4);
+        transform: scaley(0.4); }
+
+    100% {
+        -webkit-transform: scaley(1);
+        transform: scaley(1); }
+}
+.shadow {
+    height: 20px;
+    width: 50px;
+    margin: 0 225px 0 225px;
+    background-color: #cccccc;
+    float: left;
+}
+.list {
+    height: 20px;
+    width: 50px;
+    margin: 0 auto;
+}
+.list> div {
+    background-color: #000000;
+    width: 3px;
+    height: 18px;
+    border-radius: 2px;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    display: inline-block;
+    -webkit-animation: list 0.9s 0s infinite cubic-bezier(.85, .25, .37, .85);
+    animation: list 0.9s 0s infinite cubic-bezier(.85, .25, .37, .85);
+}
+
+.list> div:nth-child(1) {
+    -webkit-animation-delay: 0.2s !important;
+    animation-delay: 0.1s !important;
+}
+.list> div:nth-child(2) {
+    -webkit-animation-delay: 0.3s !important;
+    animation-delay: 0.2s !important;
+}
+.list> div:nth-child(3) {
+    -webkit-animation-delay: 0.4s !important;
+    animation-delay: 0.3s !important;
+}
+.list> div:nth-child(4) {
+    -webkit-animation-delay: 0.5s !important;
+    animation-delay: 0.4s !important;
+}
+.list> div:nth-child(5) {
+    -webkit-animation-delay: 0.6s !important;
+    animation-delay: 0.5s !important;
+}
+.list> div:nth-child(6) {
+    -webkit-animation-delay: 0.7s !important;
+    animation-delay: 0.6s !important;
+}
+

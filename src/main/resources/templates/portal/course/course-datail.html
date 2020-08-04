@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+
+    <div th:replace="~{fragments/head-base}"></div>
+    <!--Page level styles-->
+    <link type="text/css" rel="stylesheet" th:href="@{/plugins/modal/css/component.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/static/css/pages/problem_answer.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/problem_detail.css}"/>
+
+</head>
+
+<body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
+<!--utext 不转义输出-->
+<div th:utext="${course.contentHTML}"></div>
+
+
+</body>

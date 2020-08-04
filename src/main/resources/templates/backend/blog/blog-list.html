@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>帖子列表</title>
+    <div th:replace="~{fragments/backend/head-base}"></div>
+</head>
+<body class="body fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img th:src="@{/img/loader.gif}" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<!--wrap-->
+<div id="wrap">
+    <div th:replace="~{fragments/backend/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/backend/left :: left}"></div>
+        <!-- /#left -->
+        <div id="content" class="bg-container">
+            <header class="head">
+                <div class="main-bar">
+                    <div class="row no-gutters">
+                        <div class="col-6">
+                            <h4 class="m-t-5">
+                                <i class="fa fa-comments"></i><span class="ml-1">帖子列表</span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="outer">
+                <div class="inner bg-container">
+                    <!--app-->
+                    <div id="">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="float-left w-50" >
+                                    <div class="input-group">
+                                        <input type="search" id="keyword" name="keyword" value=""
+                                               placeholder="输入 用户名/标题/标签 进行搜索" class="form-control"/>
+                                        <span class="input-group-btn">
+                                                    <button class="btn btn-primary" type="button"
+                                                            onclick="clickPage(1)">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true">
+                                                    </span><i class="fa fa-search"></i>
+                                                    </button>
+                                        </span>
+                                        <span  class="ml-3">
+                                            <select  id="sort" name="sort" onchange="clickPage(1)"
+                                                     class="select2-sort"
+                                                     style="width: 100px;">
+                                                <option value="-1">
+                                                    综合排序
+                                                </option>
+                                                <option value="1">
+                                                    最新回复
+                                                </option>
+                                                <option value="2">
+                                                    最热在前
+                                                </option>
+                                            </select>
+                                        </span>
+                                        <span  class="ml-3">
+                                            <select  id="bcId" name="bcId" onchange="clickPage(1)"
+                                                    class="select2-category"
+                                                    style="width: 120px;">
+                                                <option value="-1">
+                                                    全部
+                                                </option>
+                                                <option v-for="(blogCategory,index) in blogCategoryList" :value="blogCategory.id" >
+                                                    {{blogCategory.name}}
+                                                </option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--blogList-->
+                            <div class="col-12 mt-3">
+                                <table class="table  table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">用户</th>
+                                        <th class="text-center">帖子标题</th>
+                                        <th class="text-center">板块</th>
+                                        <th class="text-center">标签</th>
+                                        <th class="text-center">查看数</th>
+                                        <th class="text-center">评论数</th>
+                                        <th class="text-center">点赞数</th>
+                                        <th class="text-center">发布时间</th>
+                                        <th class="text-center">最后回复</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(blog,index) in blogList">
+                                        <td class="text-center">
+                                            {{index + 1 + (pageNum-1) * 10}}
+                                        </td>
+                                        <td class="text-center"><a class="primary-hover" target="_blank"
+                                                                   :href="'/user/mainPage?userId='+blog.userId">{{blog.name}}</a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="primary-hover" target="_blank" :href="'/blog/blogDetailPage?blogId='+blog.id">{{blog.title}}</a>
+                                        </td>
+                                        <td class="text-center">{{blog.bcName}}</td>
+                                        <td class="">
+                                            <span v-if="blog.tags != null && blog.tags.length > 0">
+                                                      <span class="ml-2" v-for="tag in blog.tags.split(',')">
+                                                          <a @click="searchByTag(tag)"
+                                                             class="btn btn-secondary badge-pill btn-sm">{{tag}}</a>
+                                                   </span>
+                                            </span>
+                                        </td>
+                                        <td class="text-center">{{blog.viewCount}}</td>
+                                        <td class="text-center">{{blog.replyCount}}</td>
+                                        <td class="text-center">{{blog.upCount}}</td>
+                                        <td class="text-center">{{blog.createTime | formatDate}}</td>
+                                        <td class="text-center">
+                                            <span v-if="blog.replyTime != null">
+                                                {{blog.replyTime | formatDate}}
+                                            </span>
+                                            <span v-if="blog.replyTime == null">
+                                                －
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="btn btn-sm btn-primary" :href="'/backend/blog/blogEditPage?blogId='+blog.id" >编辑
+                                            </a>
+                                            <a @click="deleteBlog(blog.id)">
+                                                <button class="btn btn-sm btn-danger">删除</button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <!--page-->
+                                <div class="row mt-3">
+                                    <div style="margin: 0 auto">
+                                        <ul class="page" maxshowpageitem="5" pagelistcount="10" id="page"></ul>
+                                    </div>
+                                </div>
+                                <!--#page-->
+                            </div>
+                            <!--#blogList-->
+                        </div>
+                    </div>
+                    <!--#app-->
+                </div>
+            </div>
+        </div>
+        <!-- /.inner -->
+    </div>
+    <!-- /.outer -->
+    <!-- /#content -->
+    <!-- Modal -->
+
+    <!-- # right side -->
+</div>
+<!-- /#wrap -->
+<!-- global scripts-->
+<div th:replace="~{fragments/backend/footer :: footer}"></div>
+<!--end of global scripts-->
+<!--  plugin scripts -->
+<!--end of plugin scripts-->
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+
+    // vue
+    var wrap = new Vue({
+        el: '#wrap',
+        data: {
+            total: 0,
+            pageNum: 1,
+            blog: {},
+            blogList: [],
+            blogCategoryList: []
+        },
+        filters: {
+            formatDate: function (val) {
+                var value = new Date(val);
+                var year = value.getFullYear();
+                var month = padDate(value.getMonth() + 1);
+                var day = padDate(value.getDate());
+                var hour = padDate(value.getHours());
+                var minutes = padDate(value.getMinutes());
+                var seconds = padDate(value.getSeconds());
+                return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
+            },
+            formatYear: function (val) {
+                var value = new Date(val);
+                var year = value.getFullYear();
+                return year;
+            },
+            formatNum: function (val) {
+                //四舍五入
+                return  parseFloat(val).toFixed(2);
+            }
+        },
+        methods: {
+            listBlog: function (pageNum) {
+                var keyword = $("#keyword").val();
+                var sort = $("#sort").val();
+                var bcId = $("#bcId").val();
+                var url = '/backend/blog/list2Page';
+                this.$http.post(url,{"pageNum":pageNum,"bcId":bcId,"sort":sort,"keyword":keyword},{emulateJSON:true}).then(function (res) {
+                    this.total = res.data.data.total;
+                    this.blogList = res.data.data.list;
+                    $("#page").initPage(this.total, pageNum, clickPage);
+                }), function (res) {
+                    console.log(res.data.msg);
+                }
+            },
+            listBlogCategory: function () {
+                var url = '/backend/blogCategory/listAll';
+                this.$http.post(url, {}, {emulateJSON: true}).then(function (res) {
+                    this.blogCategoryList = res.data.data;
+                }), function (res) {
+                    console.log(res.data.msg);
+                }
+            }
+        }
+    });
+    //初始化
+    wrap.listBlog(1);
+    wrap.listBlogCategory();
+    //分页点击方法
+    function clickPage(pageNum) {
+        wrap.listBlog(pageNum);
+    }
+
+    function deleteBlog(blogId) {
+        swal({
+            title: '确认删除该帖子?',
+            // text: '提醒',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#EF6F6C',
+            cancelButtonColor: '#4fb7fe',
+            confirmButtonText: '确定',
+            cancelButtonText:'取消'
+        }).then(function () {
+            $.post("/backend/blog/delete", {"blogId": blogId}, function (resp) {
+                if (resp.status == 200) {
+                    $.message({
+                        message: resp.msg,
+                        type: 'success'
+                    });
+                    clickPage(1);
+                } else {
+                    $.message({
+                        message: resp.msg,
+                        type: 'error'
+                    });
+                }
+            })
+        }).catch(function(reason) {
+
+            return false;
+        });
+    }
+
+
+
+    //添加-更新
+    function saveBlog() {
+        var blog = $("#blogForm").serialize();
+
+        if (!checkField()) {
+            return;
+        }
+        $.ajax({
+            url: '/backend/blog/save',
+            type: 'POST',
+            data: blog,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (resp) {
+                if (resp.status == 200) {
+                    $.message({
+                        message: resp.msg,
+                        type: 'success'
+                    });
+                    $('#stack1').modal('hide');
+                    $("#clearFile").click();
+                    clickPage(1);
+                } else {
+                    $.message({
+                        message: resp.msg,
+                        type: 'error'
+                    });
+                }
+            }
+        });
+    }
+
+    // end of vue
+
+
+    //select2
+    $('.select2-category').select2({
+        placeholder: '选择板块',
+        theme: 'bootstrap4'
+    });
+    $('.select2-sort').select2({
+        placeholder: '排序',
+        theme: 'bootstrap4'
+    });
+    /*]]>*/
+
+
+</script>
+
+</body>
+
+</html>

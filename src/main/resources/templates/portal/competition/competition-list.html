@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>比赛列表</title>
+    <div th:replace="~{fragments/head-base}"></div>
+    <!--Page level styles-->
+    <style type="text/css">
+
+    </style>
+</head>
+
+<!--Page head script-->
+
+<!--end of Page head script-->
+<body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img th:src="@{/img/loader.gif}" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<div id="wrap">
+    <div th:replace="~{fragments/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/left :: left}"></div>
+        <!-- /#left -->
+        <div id="content" class="bg-container">
+            <header class="head">
+                <div class="main-bar">
+                    <div class="row no-gutters">
+                        <div class="col-6">
+                            <h4 class="m-t-5">
+                                <i class="fa fa-trophy mr-1"></i>比赛列表
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="outer">
+                <div class="inner bg-container">
+                    <!--app-->
+                    <div id="competitionApp">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="w-25 float-right">
+                                    <div class="input-group">
+                                        <input type="search" id="keyword" name="keyword" value=""
+                                               placeholder="输入比赛名称进行搜索" class="form-control"/>
+                                        <span class="input-group-btn">
+                                                    <button class="btn btn-primary" type="button"
+                                                            onclick="clickPage(1)">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true">
+                                                    </span><i class="fa fa-search"></i>
+                                                    </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--rankList-->
+                            <div class="col-12 mt-3">
+                                <div class="card p-3">
+
+                                    <div class="card-body ">
+                                        <table class="table   table-hover">
+                                            <thead class="">
+                                            <tr>
+                                                <th class="text-center">赛制</th>
+                                                <th class="">比赛</th>
+                                                <th class="text-center">开始时间</th>
+                                                <th class="text-center">比赛时长</th>
+                                                <th class="text-center">参加人数</th>
+                                                <th class="text-center">状态</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="(competition,index) in competitionList"
+                                                :class="competition.startTime |
+                                                    competitionStatus(competition.endTime) =='已结束' ? 'gray-font':'tr-active'">
+                                                <td class="text-center">OI</td>
+                                                <td class="">
+                                                    <a :href="'/competition/competitionDetailPage/?compId='+competition.id"
+                                                       class="text-primary">{{competition.competitionName}}
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    {{competition.startTime | formatDate}}
+                                                <td class="text-center">
+                                                    <div>
+                                                        {{competition.startTime | differDate(competition.endTime)}}
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">{{competition.registerCount}}</td>
+                                                <td class="text-center">{{competition.startTime |
+                                                    competitionStatus(competition.endTime)}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!--page-->
+                                <div class="row mt-3">
+                                    <div style="margin: 0 auto">
+                                        <ul class="page" maxshowpageitem="5" pagelistcount="20" id="page"></ul>
+                                    </div>
+                                </div>
+                                <!--#page-->
+                            </div>
+                            <!--#rankList-->
+                        </div>
+                    </div>
+                    <!--#app-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.inner -->
+</div>
+<!-- /.outer -->
+
+<!-- /#content -->
+<!-- Modal -->
+<div th:replace="~{fragments/modal}"></div>
+<!--#Modal-->
+
+<!--wrapper-->
+<!-- /#content -->
+<!-- # right side -->
+</div>
+<!-- /#wrap -->
+<!-- global scripts-->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!--end of global scripts-->
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+
+    // vue
+    var competitionApp = new Vue({
+        el: '#competitionApp',
+        data: {
+            total: 0,
+            competitionList: []
+        },
+        filters: {
+            formatDate: function (val) {
+                var value = new Date(val);
+                var year = value.getFullYear();
+                var month = padDate(value.getMonth() + 1);
+                var day = padDate(value.getDate());
+                var hour = padDate(value.getHours());
+                var minutes = padDate(value.getMinutes());
+                // var seconds = padDate(value.getSeconds());
+                return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes;
+            },
+            differDate: function (date1, date2) {
+                return differDate2HourMinute(date1,date2);
+            },
+            competitionStatus: function (startTime, endTime) {
+                var result;
+                var start = new Date(startTime);
+                var end = new Date(endTime);
+                var now = new Date();
+                if (now.getTime() - start.getTime() < 0) {
+                    result = "未开始";
+                } else if (now.getTime() - start.getTime() >= 0 && now.getTime() - end.getTime() <= 0) {
+                    result = "进行中";
+                } else if (now.getTime() - end.getTime() > 0) {
+                    result = "已结束";
+                }
+                return result;
+            },
+            formatNum: function (val) {
+                //四舍五入
+                return parseFloat(val).toFixed(2);
+            }
+        },
+        methods: {
+            listCompetition: function (pageNum) {
+                var keyword = $("#keyword").val();
+                var url = '/competition/listCompetition2Page';
+                this.$http.post(url,{"pageNum":pageNum,"keyword":keyword},{emulateJSON:true}).then(function (res) {
+                    this.total = res.data.data.total;
+                    this.competitionList = res.data.data.list;
+                    $("#page").initPage(this.total, pageNum, clickPage);
+                }), function (res) {
+                    console.log(res.data.msg);
+                }
+            }
+        }
+    });
+    competitionApp.listCompetition(1);
+
+    //分页点击方法
+    function clickPage(pageNum) {
+        competitionApp.listCompetition(pageNum);
+    }
+
+    // end of vue
+
+    /*]]>*/
+</script>
+
+</body>
+
+</html>

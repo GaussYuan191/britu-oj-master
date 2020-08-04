@@ -1,0 +1,106 @@
+#==================== Tomcat Setting =====================#
+server:
+  servlet:
+    context-path: /
+    session:
+      timeout: 30m
+  tomcat:
+    uri-encoding: UTF-8
+  port: 8081
+#==================== spring Setting =====================#
+spring:
+  datasource:
+    druid:
+      username: root
+      password: 123456a
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/ojdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      max-active: 50
+      min-idle: 10
+      initial-size: 10
+      max-wait: 10
+      default-auto-commit: true
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 30MB
+  http:
+    encoding:
+      charset: UTF-8
+#==================== spring data jpa Setting =====================#
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+#==================== spring session Setting =====================#
+  session:
+    store-type: redis
+#    redis:
+#      namespace:
+#==================== thymeleaf Setting =====================#
+  thymeleaf:
+    servlet:
+      content-type: text/html
+    encoding: UTF-8
+    mode: HTML5
+    prefix: classpath:templates/
+    suffix: .html
+    cache: false
+#==================== mail Setting =====================#
+  mail:
+    host: smtp.qq.com
+    username: 2871811238@qq.com
+    password: hhqayzurutdldfgb
+#==================== redis Setting =====================#
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    lettuce:
+      pool:
+        #最大连接数
+        max-active: 16
+        #最大空闲连接数
+        max-idle: 8
+        min-idle: 0
+        max-wait:
+#==================== spring mvc Setting =====================#
+#  cache:
+#    type: redis
+#==================== mybatis Setting =====================#
+mybatis:
+  config-location: classpath:mybatis.config.xml
+  mapper-locations: classpath:mappers/*.xml
+  type-aliases-package: com.oj.gkuoj.entity
+
+#==================== logging Setting =====================#
+logging:
+  config: classpath:logback.xml
+
+
+
+
+
+
+#==================== project Setting =====================#
+project:
+  debug: true
+file:
+  server:
+    http:
+      prefix: http://file.gkuoj.com/
+    dir: /home/ming/gkuoj/file
+    image:
+      dir: ${file.server.dir}/image
+    testcase:
+      dir: ${file.server.dir}/testcase
+    type:
+      image: jpg,png,bmp,gif,jpeg,psd,svg
+      doc: doc,docx,xls,xlsx,txt,in,out
+#====================rocketMQ Setting =====================#
+rocketmq:
+  nameserver: 127.0.0.1:9876
+  topic: ojcode
+  producer:
+    group: judgeProducerGroup
+    retry-times: 3
