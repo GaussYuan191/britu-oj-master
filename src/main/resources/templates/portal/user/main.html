@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>我的主页</title>
+    <div th:replace="~{fragments/head-base}"></div>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/user_main.css}"/>
+</head>
+<body class="body sidebar-left-hidden fixedNav_position fixedMenu_left ">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img th:src="@{/img/loader.gif}" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<!--wrap-->
+<div id="wrap">
+    <div th:replace="~{fragments/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/left :: left}"></div>
+        <!-- /#left -->
+        <div id="content" class="bg-container">
+            <header class="head">
+                <div class="main-bar">
+                    <div class="row no-gutters">
+                        <div class="col-6">
+                            <h4 class="m-t-5">
+                                <i class="fa fa-user"></i><span class="ml-1">我的主页</span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="outer">
+                <div class="inner bg-container">
+
+                    <div class="row mt-5">
+                        <div class="col-10 push-1">
+                            <div class="card " style="font-size: 20px">
+                                <div class="card-block ">
+                                    <img class="user-profile-img"
+                                         th:src="${user.avatar} == null ? '/img/default_avatar.jpg':${user.avatar}"/>
+                                    <div style="margin-top: 50px">
+                                        <div class="row">
+                                            <div class="col-12">　
+                                                <div class="text-center">
+                                                    <span class="mr-1">[[${user.name}]]</span>
+                                                    <i th:classappend="${user.sex=='男'} ? 'fa-mars':'fa-venus'"
+                                                       class="fa"></i>
+                                                </div>
+                                                <div class="text-right ">
+                                                    <i class="fa fa-check text-success"></i>
+                                                    <span class="ml-1">通过率:</span>
+                                                    <span th:if="${user.submitCount != 0}">
+                                                        <span>
+                                                            [[${#numbers.formatDecimal(user.acCount*1.0/user.submitCount*100,1,2)}]]%
+                                                        </span>
+                                                    </span>
+                                                    <span th:if="${user.submitCount == 0}">0.00%</span>
+                                                    <i class="ml-1 fa fa-clock-o text-primary"></i><span class="ml-1">比赛次数: [[${user.competitionCount}]]次</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-3 push-1">
+                            <div class="card">
+                                <div class="card-header bg-white">
+                                    <span>提交次数</span>
+                                    <span class="badge badge-pill badge-danger ">[[${user.submitCount}]]</span>
+                                </div>
+                                <div class="card-block ">
+                                    <canvas id="myChart" class="w-100" style="height: 400px"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7 push-1">
+                            <div class="card">
+                                <div class="card-header bg-white"><i class="fa fa-drivers-license-o"></i>个人信息</div>
+
+                                <div class="card-block ">
+                                    <div>
+                                        <ul class="nav nav-inline view_user_nav_padding">
+                                            <li class="nav-item card_nav_hover">
+                                                <a class="nav-link active" href="#user" id="home-tab" data-toggle="tab"
+                                                   aria-expanded="true">个人资料</a>
+                                            </li>
+                                            <li class="nav-item card_nav_hover">
+                                                <a class="nav-link" href="#tab2" id="hats-tab" data-toggle="tab"
+                                                   aria-expanded="false">最近做题</a>
+                                            </li>
+                                            <li class="nav-item card_nav_hover">
+                                                <a class="nav-link" href="#tab3" id="acProblemList" data-toggle="tab"
+                                                   aria-expanded="false">通过题目</a>
+                                            </li>
+                                            <li class="nav-item card_nav_hover">
+                                                <a class="nav-link" href="#tab4" id="recentBlogs" data-toggle="tab"
+                                                   aria-expanded="false">近期发帖</a>
+                                            </li>
+                                        </ul>
+                                        <div id="clothing-nav-content" class="tab-content m-t-10">
+                                            <div role="tabpanel" class="tab-pane fade active show" id="user"
+                                                 aria-expanded="true">
+                                                <table class="table" id="users">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>账号</td>
+                                                        <td class="inline_edit">
+                                                            <span class="editable"
+                                                                  data-title="username">[[${user.username}]]</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>昵称</td>
+                                                        <td class="inline_edit">
+                                                            <span class="editable"
+                                                                  data-title="Edit User Name">[[${user.name}]]</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>性别</td>
+                                                        <td>
+                                                            <span class="editable"
+                                                                  data-title="sex">[[${user.sex}]]</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>邮箱</td>
+                                                        <td>
+                                                            <span class="editable"
+                                                                  data-title="email">[[${user.email}]]</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>学校</td>
+                                                        <td>
+                                                            <span class="editable"
+                                                                  data-title="school">[[${user.school}]]</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>签名</td>
+                                                        <td>
+                                                            <span class="editable"
+                                                                  data-title="mood">[[${user.mood}]]</span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="tab2" aria-expanded="false">
+                                                <table class="table table-hover">
+                                                    <tr th:each="problemResult,status:${problemResultList}">
+                                                        <td><a th:href="@{'/problem/problemDetailPage?problemId='+${problemResult.problemId}}" target="_blank" class="text-primary">[[${problemResult.problemName}]]</a></td>
+                                                        <td>
+                                                            <span th:if="${problemResult.status == 1}" class=" btn-sm " style="color: white;background-color: #4BC0C0">Accepted</span>
+                                                            <span th:if="${problemResult.status == 2}" class=" btn-sm " style="color: white;background-color: #FFCD56">CompileError</span>
+                                                            <span th:if="${problemResult.status == 3}" class=" btn-sm " style="color: white;background-color: #ed92ff">PresentationError</span>
+                                                            <span th:if="${problemResult.status == 4}" class=" btn-sm " style="color: white;background-color: #FF9F40">RuntimeError</span>
+                                                            <span th:if="${problemResult.status == 5}" class=" btn-sm " style="color: white;background-color: #62b8ff">TimeLimitExceeded</span>
+                                                            <span th:if="${problemResult.status == 6}" class=" btn-sm " style="color: white;background-color: #6574ff">MemoryLimitExceeded</span>
+                                                            <span th:if="${problemResult.status == 7}" class=" btn-sm " style="color: white;background-color: #FF6384">WrongAnswer</span>
+                                                        </td>
+                                                        <td> [[${#dates.format(problemResult.createTime,'yyyy-MM-dd HH:mm:ss')}]]</td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="tab3" aria-expanded="false">
+                                                <!--<div class="card_nav_body_padding follower_images">
+                                                </div>-->
+                                                <table class="table">
+                                                    <tr>
+                                                        <td th:each="problem,status:${solveProblemList}">
+                                                            <a th:href="@{'/problem/problemDetailPage?problemId='+${problem.id}}"
+                                                               target="_blank"
+                                                               class="text-primary">[[${problem.id}]]</a>
+                                                        </td>
+                                                        </span>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+
+                                            <div role="tabpanel" class="tab-pane fade" id="tab4" aria-expanded="false">
+                                                <!--<div class="card_nav_body_padding follower_images">
+                                                </div>-->
+
+                                                <table class="table ">
+                                                    <tr th:each="blog,status:${blogList}">
+                                                        <td><a th:href="@{'/blog/blogDetailPage?blogId='+${blog.id}}" class="text-primary"  target="_blank">[[${blog.title}]]</a></td>
+                                                        <td>
+                                                            [[${#dates.format(blog.createTime,'yyyy-MM-dd HH:mm')}]]
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-10 push-1">
+                            <div class="card">
+                                <div class="card-header bg-white">提交统计
+                                </div>
+                                <div class="card-block ">
+                                    <div class="mt-3 float-right">
+                                        <button class="btn btn-primary btn-sm">近一月</button>
+                                        <button class="btn btn-primary btn-sm">近一年</button>
+                                    </div>
+                                    <canvas id="submitChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.inner -->
+    </div>
+    <!-- /.outer -->
+    <!-- /#content -->
+    <!-- Modal -->
+    <div class="modal fade" id="search_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <form th:action="@{/problem/problemListPage}" method="post">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="float-right" aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="input-group search_bar_small">
+                        <input type="text" class="form-control" placeholder="题目搜索" name="keyword">
+                        <span class="input-group-btn">
+                          <button class="btn btn-secondary" type="submit"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /#content -->
+    <!-- # right side -->
+</div>
+<!-- /#wrap -->
+<!-- global scripts-->
+<div th:replace="~{fragments/footer :: footer}"></div>
+<!--end of global scripts-->
+<!--  plugin scripts -->
+<script type="text/javascript" th:src="@{/js/pluginjs/Chart.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/chart-utils.js}"></script>
+<!--end of plugin scripts-->
+</body>
+<script th:inline="javascript" type="text/javascript">
+    /*<![CDATA[*/
+
+    var submitCount = [[${user.submitCount}]];
+    var acCount = [[${user.acCount}]];
+    var tleCount = [[${user.tleCount}]];
+    var peCount = [[${user.peCount}]];
+    var meCount = [[${user.meCount}]];
+    var reCount = [[${user.reCount}]];
+    var ceCount = [[${user.ceCount}]];
+    var waCount = [[${user.waCount}]];
+
+
+    //chars
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [acCount, ceCount, peCount, reCount, tleCount, meCount, waCount],
+                backgroundColor: [
+                    '#4BC0C0',
+                    '#FFCD56',
+                    '#ed92ff',
+                    '#FF9F40',
+                    '#62b8ff',
+                    '#6574ff',
+                    '#FF6384'
+                ],
+                borderColor: []
+            }],
+            labels: [
+                'Accepted',
+                'Compile Error',
+                'Presentation Error',
+                'Runtime Error',
+                'Time Limit Exceeded',
+                'Memory Limit Exceeded',
+                'Wrong Answer'
+            ]
+        },
+        options: {
+            title: {
+                display: false,
+                text: '提交次数-' + submitCount + '次'
+            }
+        }
+    });
+
+
+    //最近提交统计
+
+    var MONTHS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+    var config = {
+        type: 'line',
+        data: {
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+            datasets: [{
+                label: 'Accepted',
+                backgroundColor: '#4BC0C0',
+                borderColor: '#4BC0C0',
+                data: [
+                    10,
+                    20,
+                    30,
+                    30,
+                    30,
+                    20,
+                    10,
+                    20,
+                    50,
+                    10,
+                    60,
+                    10
+                ],
+                fill: false,
+            }, {
+                label: 'Compile Error',
+                fill: false,
+                backgroundColor: '#FFCD56',
+                borderColor: '#FFCD56',
+                data: [
+                    10,
+                    20,
+                    30,
+                    30,
+                    30,
+                    20,
+                    10,
+                    20,
+                    50,
+                    10,
+                    60,
+                    10
+                ],
+
+            }, {
+                label: 'Presentation Error',
+                fill: false,
+                backgroundColor: '#ed92ff',
+                borderColor: '#ed92ff',
+                data: [
+                    10,
+                    20,
+                    30,
+                    30,
+                    30,
+                    20,
+                    10,
+                    20,
+                    50,
+                    10,
+                    60,
+                    10
+                ],
+
+            }, {
+                label: 'Runtime Error',
+                fill: false,
+                backgroundColor: '#FF9F40',
+                borderColor: '#FF9F40',
+                data: [
+                    10,
+                    20,
+                    30,
+                    30,
+                    30,
+                    20,
+                    10,
+                    20,
+                    50,
+                    10,
+                    60,
+                    10
+                ],
+
+            }, {
+                label: 'Time Limit Exceeded',
+                fill: false,
+                backgroundColor: '#62b8ff',
+                borderColor: '#62b8ff',
+                data: [
+                    10,
+                    20,
+                    30,
+                    30,
+                    30,
+                    20,
+                    10,
+                    20,
+                    50,
+                    10,
+                    60,
+                    10
+                ],
+
+            }, {
+                label: 'Memory Limit Exceeded',
+                fill: false,
+                backgroundColor: '#6574ff',
+                borderColor: '#6574ff',
+                data: [
+                    10,
+                    20,
+                    30,
+                    30,
+                    30,
+                    20,
+                    10,
+                    20,
+                    50,
+                    10,
+                    60,
+                    10
+                ],
+
+            }, {
+                label: 'Wrong Answer',
+                fill: false,
+                backgroundColor: '#FF6384',
+                borderColor: '#FF6384',
+                data: [
+                    20,
+                    30,
+                    40,
+                    50,
+                    60,
+                    70,
+                    80,
+                    40,
+                    20,
+                    60,
+                    60,
+                    20
+                ],
+
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: '最近一年',
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '月份'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '次数'
+                    }
+                }]
+            }
+        }
+    };
+
+    window.onload = function () {
+        var ctx = document.getElementById('submitChart').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+    };
+
+    //end 提交统计
+
+
+    // en of chars
+
+
+    /*]]>*/
+</script>
+</html>

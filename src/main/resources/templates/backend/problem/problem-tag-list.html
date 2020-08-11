@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>标签列表</title>
+    <div th:replace="~{fragments/backend/head-base}"></div>
+
+</head>
+<body class="body fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img th:src="@{/img/loader.gif}" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<!--wrap-->
+<div id="wrap">
+    <div th:replace="~{fragments/backend/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/backend/left :: left}"></div>
+        <!-- /#left -->
+        <div id="content" class="bg-container">
+            <header class="head">
+                <div class="main-bar">
+                    <div class="row no-gutters">
+                        <div class="col-6">
+                            <h4 class="m-t-5">
+                                <i class="fa fa-tags"></i><span class="ml-1">标签列表</span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="outer">
+                <div class="inner bg-container">
+                    <!--app-->
+                    <div id="">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="float-left w-50" >
+                                    <div class="input-group">
+                                        <input type="search" id="keyword" name="keyword" value=""
+                                               placeholder="输入 标签名/父标签 进行搜索" class="form-control"/>
+                                        <span class="input-group-btn">
+                                                    <button class="btn btn-primary" type="button"
+                                                            onclick="clickPage(1)">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true">
+                                                    </span><i class="fa fa-search"></i>
+                                                    </button>
+                                        </span>
+                                        <span class="ml-3">
+                                            <button class="btn  btn-secondary  "
+                                                    @click="initTag()"
+                                                    data-toggle="modal" data-href="#stack1" href="#stack1">
+                                            <i class="fa fa-plus mr-1"></i><span >添加标签</span>
+                                            </button>
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--tagList-->
+                            <div class="col-12 mt-3">
+                                <table class="table  table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">标签名</th>
+                                        <th class="text-center">父标签</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(tag,index) in tagList">
+                                        <td class="text-center">
+                                            {{index + 1 + (pageNum-1) * 10}}
+                                        </td>
+                                        <td class="text-center">{{tag.name}}</td>
+                                        <td class="text-center">
+                                            <span v-if="tag.parentTag != null">
+                                                {{tag.parentTag.name}}
+                                            </span>
+                                            <span v-if="tag.parentTag == null">
+                                                    －
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <button data-toggle="modal" data-href="#stack1" href="#stack1"
+                                                    class="btn btn-sm btn-primary" @click="tagDetail(tag.id,tag.parentId)">编辑
+                                            </button>
+                                            <a @click="deleteTag(tag.id)">
+                                                <button class="btn btn-sm btn-danger">删除</button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <!--page-->
+                                <div class="row mt-3">
+                                    <div style="margin: 0 auto">
+                                        <ul class="page" maxshowpageitem="5" pagelistcount="10" id="page"></ul>
+                                    </div>
+                                </div>
+                                <!--#page-->
+                            </div>
+                            <!--#tagList-->
+                        </div>
+                    </div>
+                    <!--#app-->
+                </div>
+            </div>
+        </div>
+        <!-- /.inner -->
+    </div>
+    <!-- /.outer -->
+    <!-- /#content -->
+    <!-- Modal -->
+
+    <div class="modal fade bs-example-modal-sm in display_none" id="stack1"  role="dialog"
+         aria-hidden="false">
+        <div class="modal-dialog " style="width: 1000px">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h4 class="modal-title "id="saveTitle" >添加标签</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form id="tagForm">
+                        <input type="hidden" v-model="tag.id" name="id"/>
+                        <table class="table ">
+                            <tr>
+                                <td><span class="text-danger">*</span>标签名</td>
+                                <td><input name="name" v-model="tag.name" type="text" class="form-control"/></td>
+                            </tr>
+                            <tr>
+                                <td><span class="text-danger">*</span>父标签</td>
+                                <td>
+                                    <select class="select2-tag" v-model="tag.parentId" name = "parentId" style="width: 150px">
+                                        <option value="0" >
+                                            无
+                                        </option>
+                                        <option v-for="(tag,index) in tagAllList" :value="tag.id" >
+                                            {{tag.name}}
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-secondary">取消</button>
+                    <button type="button" id="saveTag" class="btn btn-info"
+                            onclick="saveTag()">提交
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- # right side -->
+</div>
+<!-- /#wrap -->
+<!-- global scripts-->
+<div th:replace="~{fragments/backend/footer :: footer}"></div>
+<!--end of global scripts-->
+<!--  plugin scripts -->
+<!--end of plugin scripts-->
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+
+    // vue
+    var wrap = new Vue({
+        el: '#wrap',
+        data: {
+            total: 0,
+            pageNum: 1,
+            tag: {},
+            tagList: [],
+            tagAllList: []
+        },
+        filters: {
+            formatDate: function (val) {
+                var value = new Date(val);
+                var year = value.getFullYear();
+                var month = padDate(value.getMonth() + 1);
+                var day = padDate(value.getDate());
+                var hour = padDate(value.getHours());
+                var minutes = padDate(value.getMinutes());
+                var seconds = padDate(value.getSeconds());
+                return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
+            },
+            formatYear: function (val) {
+                var value = new Date(val);
+                var year = value.getFullYear();
+                return year;
+            },
+            formatNum: function (val) {
+                //四舍五入
+                return  parseFloat(val).toFixed(2);
+            }
+        },
+        methods: {
+            listTag: function (pageNum) {
+                var keyword = $("#keyword").val();
+                var url = '/backend/tag/list2Page';
+
+                this.$http.post(url, {
+                    "pageNum": pageNum,
+                    "keyword": keyword
+                }, {emulateJSON: true}).then(function (res) {
+                    this.total = res.data.data.total;
+                    this.tagList = res.data.data.list;
+                    this.pageNum = pageNum;
+                    $("#page").initPage(this.total, pageNum, clickPage);
+                }), function (res) {
+                    console.log(res.data.msg);
+                }
+            },  listTagAll: function () {
+                var url = '/backend/tag/listAll';
+                this.$http.post(url, {}, {emulateJSON: true}).then(function (res) {
+                    this.tagAllList = res.data.data;
+                }), function (res) {
+                    console.log(res.data.msg);
+                }
+            }
+        }
+    });
+    //初始化
+    wrap.listTag(1);
+    wrap.listTagAll();
+    //分页点击方法
+    function clickPage(pageNum) {
+        wrap.listTag(pageNum);
+    }
+
+    //添加标签点击初始化
+    function initTag() {
+        $("#saveTitle").html("添加标签");
+        wrap.tag = {};
+        $('.select2-tag').val(0).select2({
+            placeholder: '选择父标签',
+            theme: 'bootstrap4'
+        });
+    }
+
+
+    function deleteTag(tagId) {
+        swal({
+            title: '确认删除该标签?',
+            // text: '提醒',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#EF6F6C',
+            cancelButtonColor: '#4fb7fe',
+            confirmButtonText: '确定',
+            cancelButtonText:'取消',
+        }).then(function () {
+            $.post("/backend/tag/delete", {"tagId": tagId}, function (resp) {
+                if (resp.status == 200) {
+                    $.message({
+                        message: resp.msg,
+                        type: 'success'
+                    });
+                    clickPage(1);
+                } else {
+                    $.message({
+                        message: resp.msg,
+                        type: 'error'
+                    });
+                }
+            })
+        }).catch(function(reason) {
+
+            return false;
+        });
+    }
+
+
+    function checkField() {
+        var tag = wrap.tag;
+        if (tag.name == null || tag.name.trim().length == 0) {
+            $.message({
+                message: "标签名不能为空",
+                type: 'warning'
+            });
+            return false;
+        }
+        return true;
+    }
+
+    //添加-更新
+    function saveTag() {
+        var tag = $("#tagForm").serialize();
+        if (!checkField()) {
+            return;
+        }
+        $.ajax({
+            url: '/backend/tag/save',
+            type: 'POST',
+            data: tag,
+            async: true,
+            success: function (resp) {
+                if (resp.status == 200) {
+                    $.message({
+                        message: resp.msg,
+                        type: 'success'
+                    });
+                    $('#stack1').modal('hide');
+                    clickPage(1);
+                } else {
+                    $.message({
+                        message: resp.msg,
+                        type: 'error'
+                    });
+                }
+            }
+        });
+    }
+
+    //详情
+    function tagDetail(tagId,parentId) {
+        $("#saveTitle").html("更新标签");
+        $('.select2-tag').val(parentId).select2({
+            placeholder: '选择父标签',
+            theme: 'bootstrap4'
+        });
+        $.post("/backend/tag/get", {"tagId": tagId}, function (resp) {
+            if (resp.status == 200) {
+                wrap.tag = resp.data;
+            } else {
+                $.message({
+                    message: resp.msg,
+                    type: 'error'
+                });
+            }
+        })
+    }
+
+    // end of vue
+
+    /*]]>*/
+
+
+</script>
+
+</body>
+
+</html>

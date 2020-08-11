@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>讨论区</title>
+    <div th:replace="~{fragments/head-base}"></div>
+    <!--Page level styles-->
+    <!--heard script-->
+</head>
+
+<!--Page head script-->
+
+<!--end of Page head script-->
+<body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img th:src="@{/img/loader.gif}" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<div id="wrap">
+    <div th:replace="~{fragments/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/left :: left}"></div>
+        <!-- /#left -->
+        <div id="content" class="bg-container">
+            <header class="head">
+                <div class="main-bar">
+                    <div class="row no-gutters">
+                        <div class="col-6">
+                            <h4 class="m-t-5">
+                                <i class="fa fa-comments mr-1"></i>讨论区
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="outer">
+                <div class="inner bg-container">
+                    <div id="blogApp">
+                        <div class="row mt-3">
+                            <!--table-->
+                            <div class="col-8">
+                                <!--blogList-->
+                                <div id="">
+                                    <div v-for="(blog,index) in blogList" :class="index == 0 ? 'card':'card mt-3'">
+                                        <div class="card-block twitter_section">
+                                            <ul style="overflow: hidden;">
+                                                <li style="margin-top: 0px;">
+                                                    <div class="row">
+                                                        <div class="col-1">
+                                                            <a :href="'/user/mainPage?userId='+blog.userId">
+                                                                <img :src="blog.avatar == null ? 'img/default_avatar.jpg' : blog.avatar"
+                                                                     class="rounded-circle hidden-sm-down"
+                                                                     alt="image not found">
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-11  ">
+                                                            <!--<div style="width:50px;overflow: hidden; text-overflow:ellipsis" ></div>-->
+                                                            <div class="name">
+                                                                <a :href="'/blog/blogDetailPage?blogId='+blog.id"
+                                                                   class="text-primary">{{blog.title}}
+                                                                </a>
+                                                                <span v-if="blog.tags != null && blog.tags.length > 0">
+                                                                    <span class="ml-2"
+                                                                          v-for="tag in blog.tags.split(',')">
+                                                                      <a @click="searchByTag(tag)"
+                                                                         class="btn btn-secondary badge-pill btn-sm">{{tag}}</a>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                            <div class="msg mt-2">
+                                                                作者：<a :href="'/user/mainPage?userId='+blog.userId"><span
+                                                                    class="text-danger">{{blog.name}}</span></a>
+                                                                <span class="ml-3" style="color: #A6A6A6">{{blog.createTime | formatDate}}</span>
+                                                                <span class="ml-3"><span
+                                                                        style="color: #A6A6A6">发表在</span>
+                                                            <a  href="javascript:void(0);"  @click="intoCategoryByList(blog.bcId)" class="primary-hover">[{{blog.bcName}}]</a></span>
+                                                                <span v-if="blog.replyTime != null" class="ml-3"
+                                                                      style="color: #A6A6A6">最后回复：{{blog.replyTime | formatDate}}</span>
+                                                                <span class="time">回复&nbsp;{{blog.replyCount}}&nbsp;|&nbsp;赞&nbsp;{{blog.upCount}}&nbsp;|&nbsp;浏览&nbsp;{{blog.viewCount}}&nbsp;</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--#bloglist-->
+                                <!--page-->
+                                <div class="row mt-3" id="pageDiv">
+                                    <div class="" style="margin: 0 auto">
+                                        <ul class="page" maxshowpageitem="5" pagelistcount="20" id="page"></ul>
+                                    </div>
+                                </div>
+                                <!--#page-->
+                            </div>
+                            <!--#table-->
+
+                            <!--right-->
+                            <div class="col-4 blog-right">
+                                <div class="card">
+                                    <div class="card-header bg-white"><i class="fa fa-bars mr-1"></i>进入板块</div>
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <input id="bcId" name="bcId" type="hidden" th:value="${bcId}"/>
+                                                <span th:each="blogCategory : ${blogCategoryList}">
+                                                    <a th:onclick="'intoCategory(this,'+${blogCategory.id}+')'"
+                                                       th:attr="id='bcIds'+${blogCategory.id}"
+                                                       th:classappend="${blogCategory.id == bcId}?'active focus':''"
+                                                       href="javascript:void(0)"
+                                                       class="btn btn-outline-primary mt-3 mr-3 categoryItem">
+                                                        [[${blogCategory.name}]]
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-10 w-100">
+                                                <div class="input-group">
+                                                    <input  th:value="${keyword}" type="search" id="keyword"
+                                                           name="keyword"
+                                                           placeholder="用户、标题、标签"
+                                                           class="form-control">
+                                                    <span class="input-group-btn">
+                                                <button class="btn btn-primary" type="button"
+                                                        onclick="clickPage(1)">
+                                                <span class="glyphicon glyphicon-search" aria-hidden="true">
+                                                </span><i class="fa fa-search"></i>
+                                                </button>
+                                                </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-12 ">
+                                                排序方式：
+                                                <select id="sort" name="sort" onchange="clickPage(1)"
+                                                        class="select2-sort" style="width: 100px;">
+                                                    <option value="-1">综合排序</option>
+                                                    <option value="1">最新回复</option>
+                                                    <option value="2">最热在前</option>
+                                                </select>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <a th:href="@{/blog/blogEditPage}"
+                                                   class="btn btn-danger text-white">发布帖子</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                             <!--   <div class="card mt-3">
+                                    <div class="card-header bg-white"><i class="fa fa-comment mr-1"></i>热门话题</div>
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-12">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>-->
+
+                                <div class="card mt-3">
+                                    <div class="card-header bg-white"><i class="fa fa-fire mr-1"></i>近期热帖</div>
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div th:each="hotBlog,status : ${hotBlogList}">
+                                                    <a class="primary-hover" th:href="@{'/blog/blogDetailPage?blogId='+${hotBlog.id}}">
+                                                        <div>[[${hotBlog.title}]]</div>
+                                                    </a>
+                                                    <div class="mt-1">
+                                                        <span class="gray-font ">发表于：[[${#dates.format(hotBlog.createTime,'yyyy-MM-dd HH:mm:ss')}]]</span>
+                                                        <span class="gray-font  float-right">浏览&nbsp;[[${hotBlog.viewCount}]]</span>
+                                                    </div>
+                                                    <hr th:if="${status.count != status.size}" class="mt-3"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--#right-->
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- /.inner -->
+    </div>
+    <!-- /.outer -->
+
+    <!-- /#content -->
+    <!-- Modal -->
+    <div class="modal fade" id="search_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <form th:action="@{/problem/problemListPage}" method="post">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="float-right" aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="input-group search_bar_small">
+                        <input type="text" class="form-control" placeholder="题目搜索" name="keyword">
+                        <span class="input-group-btn">
+                          <button class="btn btn-secondary" type="submit"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--wrapper-->
+    <!-- /#content -->
+    <!-- # right side -->
+</div>
+<!-- /#wrap -->
+<!-- global scripts-->
+<div th:replace="~{fragments/footer :: footer}"></div>
+<!--end of global scripts-->
+
+<script th:inline="javascript" type="text/javascript">
+    /*<![CDATA[*/
+
+    // vue
+
+    var blogApp = new Vue({
+        el: '#blogApp',
+        data: {
+            total: 0,
+            blogList: []
+        },
+        filters: {
+            formatDate: function (val) {
+                var value = new Date(val);
+                var year = value.getFullYear();
+                var month = padDate(value.getMonth() + 1);
+                var day = padDate(value.getDate());
+                var hour = padDate(value.getHours());
+                var minutes = padDate(value.getMinutes());
+                var seconds = padDate(value.getSeconds());
+                return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
+            }
+        },
+        methods: {
+            listBlog: function (pageNum) {
+                var keyword = $("#keyword").val();
+                var sort = $("#sort").val();
+                var bcId = $("#bcId").val();
+                var url = 'blog/listBlog2Page';
+                this.$http.post(url,{"pageNum":pageNum,"bcId":bcId,"sort":sort,"keyword":keyword},{emulateJSON:true}).then(function (res) {
+                    this.total = res.data.data.total;
+                    this.blogList = res.data.data.list;
+                    $("#page").initPage(this.total, pageNum, clickPage);
+                }), function (res) {
+                    console.log(res.data.msg);
+                }
+            }
+        }
+    });
+    blogApp.listBlog(1);
+
+    //分页点击方法
+    function clickPage(pageNum) {
+        blogApp.listBlog(pageNum);
+    }
+
+    //板块点击方法
+    function intoCategory(item, bcId) {
+        $(".categoryItem").removeClass("active focus");
+        $(item).addClass("active focus");
+        $("#bcId").val(bcId);
+        blogApp.listBlog(1);
+    }
+
+    //板块点击方法
+    function intoCategoryByList(bcId) {
+        $(".categoryItem").removeClass("active focus");
+        $("#bcIds"+bcId).addClass("active focus");
+        $("#bcId").val(bcId);
+        blogApp.listBlog(1);
+    }
+
+
+    //tag click
+    function searchByTag(tag){
+        $("#keyword").val(tag);
+        blogApp.listBlog(1);
+    }
+
+
+    // end of vue
+    $('.select2-sort').select2({
+        placeholder: '排序',
+        theme: 'bootstrap4'
+    });
+
+    /*]]>*/
+</script>
+
+</body>
+
+</html>

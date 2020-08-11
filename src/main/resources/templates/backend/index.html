@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <div th:replace="~{fragments/backend/head-base}"></div>
+</head>
+<body class="body fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img th:src="@{/img/loader.gif}" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<!--wrap-->
+<div id="wrap">
+    <div th:replace="~{fragments/backend/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/backend/left :: left}"></div>
+        <!-- /#left -->
+        <div id="content" class="bg-container">
+            <header class="head">
+                <div class="main-bar">
+                    <div class="row no-gutters">
+                        <div class="col-6">
+                            <h4 class="m-t-5">
+                                <i class="fa fa-home"></i><span class="ml-1">首页</span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="outer">
+                <div class="inner bg-container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>
+                               欢迎登录＂计算机程序在线性能测评＂后台管理系统！
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.inner -->
+    </div>
+    <!-- /.outer -->
+    <!-- /#content -->
+    <!-- Modal -->
+
+    <!-- /#content -->
+    <!-- # right side -->
+</div>
+<!-- /#wrap -->
+<!-- global scripts-->
+<div th:replace="~{fragments/backend/footer :: footer}"></div>
+<!--end of global scripts-->
+<!--  plugin scripts -->
+<script type="text/javascript" th:src="@{/js/pages/backend/index.js}"></script>
+<!--end of plugin scripts-->
+<script type="text/javascript" th:inline="javascript">
+
+</script>
+</body>
+
+</html>

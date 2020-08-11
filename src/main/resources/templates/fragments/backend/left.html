@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div id="left" class="fixed"  data-th-fragment="left">
+    <div class="menu_scroll" style="height: 4500px !important">
+        <div class="left_media">
+            <div class="media user-media">
+                <div class="user-media-toggleHover">
+                    <span class="fa fa-user"></span>
+                </div>
+                <div class="user-wrapper">
+                    <span class="user-link" >
+                        <img class="media-object img-thumbnail user-img rounded-circle admin_img3" alt="User Picture" th:src="${#authentication.principal.avatar} == null ? '/img/default_avatar.jpg' :
+                                 ${#authentication.principal.avatar}"/>
+                        <p class="user-info menu_hide">
+                            <span>[[${#authentication.principal.name}]]</span>
+                            <br/>
+                            <span>
+                            <i class="fa fa-circle" style="color: #00A65A"></i>
+                            <span class="ml-1">Online</span>
+                            </span>
+                        </p>
+                    </span>
+                </div>
+            </div>
+            <hr>
+        </div>
+
+        <ul id="menu">
+            <li  th:classappend="${backendIndexActive}? 'active':''">
+                <a th:href="@{/backend/}"  data-toggle="tooltip" data-placement="right"  title="首页">
+                    <i class="fa fa-home "></i>
+                    <span class="link-title menu_hide">&nbsp;首页管理</span>
+                </a>
+            </li>
+
+            <li class="dropdown_menu"  th:classappend="${systemActive} ? 'active':''">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-user"></i>
+                    <span class="link-title menu_hide">&nbsp;系统管理</span>
+                    <span class="fa arrow menu_hide"></span>
+                </a>
+                <ul class="collapse " aria-expanded="false" style="">
+                    <li  th:classappend="${userActive} ? 'active':''">
+                        <a th:href="@{/backend/user/userListPage}" >
+                            <i class="fa fa-angle-right"></i>
+                            &nbsp;用户管理
+                        </a>
+                    </li>
+                    <li th:classappend="${roleActive} ? 'active':''">
+                        <a th:href="@{/backend/role/roleListPage}">
+                            <i class="fa fa-angle-right" ></i>
+                            <span class="link-title">&nbsp;角色管理</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="dropdown_menu " th:classappend="${questionActive} ? 'active':''">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-book"></i>
+                    <span class="link-title menu_hide">&nbsp;题库管理</span>
+                    <span class="fa arrow menu_hide"></span>
+                </a>
+                <ul class="collapse " aria-expanded="false" style="">
+                    <li th:classappend="${problemActive} ? 'active':''">
+                        <a th:href="@{/backend/problem/problemListPage}" >
+                            <i class="fa fa-angle-right"></i>
+                            &nbsp;题目列表
+                        </a>
+                    </li>
+                    <li th:classappend="${tagActive} ? 'active':''" >
+                        <a th:href="@{/backend/tag/tagListPage}" >
+                            <i class="fa fa-angle-right"></i>
+                            &nbsp;题目标签
+                        </a>
+                    </li>
+                    <li th:classappend="${problemEditActive} ? 'active':''">
+                        <a th:href="@{/backend/problem/problemEditPage}">
+                            <i class="fa fa-angle-right" ></i>
+                            <span class="link-title">&nbsp;题目设置</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="dropdown_menu"  th:classappend="${competitionManagerActive} ? 'active':''">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-trophy"></i>
+                    <span class="link-title menu_hide">&nbsp;比赛管理</span>
+                    <span class="fa arrow menu_hide"></span>
+                </a>
+                <ul class="collapse " aria-expanded="false" style="">
+                    <li  th:classappend="${competitionActive} ? 'active':''">
+                        <a th:href="@{/backend/competition/competitionListPage}" >
+                            <i class="fa fa-angle-right"></i>
+                            &nbsp;比赛列表
+                        </a>
+                    </li>
+                    <li  th:classappend="${competitionEditActive} ? 'active':''">
+                        <a th:href="@{/backend/competition/competitionEditPage}" >
+                            <i class="fa fa-angle-right"></i>
+                            &nbsp;比赛设置
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="dropdown_menu"  th:classappend="${blogManageActive} ? 'active':''">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-comments"></i>
+                    <span class="link-title menu_hide">&nbsp;讨论管理</span>
+                    <span class="fa arrow menu_hide"></span>
+                </a>
+                <ul class="collapse " aria-expanded="false" style="">
+                    <li th:classappend="${blogCategoryActive} ? 'active':''">
+                        <a th:href="@{/backend/blogCategory/blogCategoryListPage}">
+                            <i class="fa fa-angle-right" ></i>
+                            <span class="link-title">&nbsp;板块管理</span>
+                        </a>
+                    </li>
+                    <li  th:classappend="${blogActive} ? 'active':''">
+                        <a th:href="@{/backend/blog/blogListPage}" >
+                            <i class="fa fa-angle-right"></i>
+                            &nbsp;帖子管理
+                        </a>
+                    </li>
+                    <li  th:classappend="${blogEditActive} ? 'active':''">
+                        <a th:href="@{/backend/blog/blogEditPage}" >
+                            <i class="fa fa-angle-right"></i>
+                            &nbsp;发布帖子
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+        </ul>
+        <!-- /#menu -->
+    </div>
+</div>
+<!-- /#left -->
+
+</html>

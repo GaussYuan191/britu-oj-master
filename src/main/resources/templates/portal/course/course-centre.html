@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>学习中心</title>
+    <div th:replace="~{fragments/head-base}"></div>
+    <!--Page level styles-->
+    <link type="text/css" rel="stylesheet" th:href="@{/plugins/modal/css/component.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/zzsc-demo.css}"/>
+    <script th:src="@{/js/pages/jquery-2.1.1.min.js}"></script>
+
+
+
+    <script type="text/javascript">
+        $(function(){
+            $('#chengguo_0').mouseover(function() {
+                $('#chengguo_0 .chengguo-bottom').css("background","rgb(62,178,229)");
+                $('#chengguo_0 .chengguo-bottom h5').css("color","white");
+                $('#chengguo_0 .play').css("display","block");
+            })
+            $('#chengguo_0').mouseout(function() {
+                $('#chengguo_0 .chengguo-bottom').css("background","#f6f6f6");
+                $('#chengguo_0 .chengguo-bottom h5').css("color","black");
+                $('#chengguo_0 .play').css("display","none");
+            })
+            $('#chengguo_1').mouseover(function() {
+                $('#chengguo_1 .chengguo-bottom').css("background","rgb(62,178,229)");
+                $('#chengguo_1 .chengguo-bottom h5').css("color","white");
+                $('#chengguo_1 .play').css("display","none");
+            })
+            $('#chengguo_1').mouseout(function() {
+                $('#chengguo_1 .chengguo-bottom').css("background","#f6f6f6");
+                $('#chengguo_1 .chengguo-bottom h5').css("color","black");
+                $('#chengguo_1 .play').css("display","block");
+            })
+            $('#chengguo_2').mouseover(function() {
+                $('#chengguo_2 .chengguo-bottom').css("background","rgb(62,178,229)");
+                $('#chengguo_2 .chengguo-bottom h5').css("color","white");
+                $('#chengguo_2 .play').css("display","block");
+            })
+            $('#chengguo_2').mouseout(function() {
+                $('#chengguo_2 .chengguo-bottom').css("background","#f6f6f6");
+                $('#chengguo_2 .chengguo-bottom h5').css("color","black");
+                $('#chengguo_2 .play').css("display","none");
+            })
+
+        })
+    </script>
+</head>
+
+<body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img src="img/loader.gif" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<div id="wrap">
+    <div th:replace="~{fragments/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/left :: left}"></div>
+        <!-- /#left -->
+        <div id="content" class="bg-container">
+            <header class="head">
+                <div class="main-bar">
+                    <div class="row no-gutters">
+                        <div class="col-6 ">
+                            <h4 class="nav_top_align">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                <span class="ml-1">学习中心
+                                </span>
+                            </h4>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+            <div class="dadiv">
+                <div class="tagBall">
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1015'}" title="字符串">字符串</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1009'}" title="数据结构">数据结构</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1006'}" title="动态规划">动态规划</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1004'}" title="费用流">费用流</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1005'}" title="高精">高精</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1000'}" title="分治">分治</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1002'}" title="枚举">枚举</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1001'}" title="贪心算法">贪心算法</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1005'}" title="图论">图论</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1006'}" title="斐波那契">斐波那契</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1007'}" title="计算几何">计算几何</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1008'}" title="数论">数论</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1009'}" title="生成树">生成树</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1001'}" title="最短路">最短路</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1004'}" title="链表">链表</a>
+                    <a class="tag" th:href="@{'/problem/problemDetailPage?problemId=1010'}" title="堆栈">堆栈</a>
+
+
+
+                </div>
+                <img src="img/back.png" style="float: right;width: 668px;height: 378px;margin-right: 20px;margin-top: 53px;">
+            </div>
+            <script>
+                var tagEle = "querySelectorAll" in document ? document.querySelectorAll(".tag") : getClass("tag"),
+                    paper = "querySelectorAll" in document ? document.querySelector(".tagBall") : getClass("tagBall")[0];
+                RADIUS = 220,
+                    fallLength = 500,
+                    tags = [],
+                    angleX = Math.PI / 500,
+                    angleY = Math.PI / 500,
+                    CX = paper.offsetWidth / 2,
+                    CY = paper.offsetHeight / 2,
+                    EX = paper.offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft,
+                    EY = paper.offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
+
+                function getClass(className) {
+                    var ele = document.getElementsByTagName("*");
+                    var classEle = [];
+                    for (var i = 0; i < ele.length; i++) {
+                        var cn = ele[i].className;
+                        if (cn === className) {
+                            classEle.push(ele[i]);
+                        }
+                    }
+                    return classEle;
+                }
+
+                function innit() {
+                    for (var i = 0; i < tagEle.length; i++) {
+                        var a, b;
+                        var k = -1 + (2 * (i + 1) - 1) / tagEle.length;
+                        var a = Math.acos(k);
+                        var b = a * Math.sqrt(tagEle.length * Math.PI);
+                        var x = RADIUS * Math.sin(a) * Math.cos(b);
+                        var y = RADIUS * Math.sin(a) * Math.sin(b);
+                        var z = RADIUS * Math.cos(a);
+                        var t = new tag(tagEle[i], x, y, z);
+                        tagEle[i].style.color = "rgb(" + parseInt(Math.random() * 255) + "," + parseInt(Math.random() * 255) + "," + parseInt(Math.random() * 255) + ")";
+                        tags.push(t);
+                        t.move();
+                    }
+                }
+                Array.prototype.forEach = function(callback) {
+                    for (var i = 0; i < this.length; i++) {
+                        callback.call(this[i]);
+                    }
+                }
+
+                function animate() {
+                    setInterval(function() {
+                        rotateX();
+                        rotateY();
+                        tags.forEach(function() {
+                            this.move();
+                        })
+                    }, 17)
+                }
+                if ("addEventListener" in window) {
+                    paper.addEventListener("mousemove", function(event) {
+                        var x = event.clientX - EX - CX;
+                        var y = event.clientY - EY - CY;
+                        angleY = x * 0.0001;
+                        angleX = y * 0.0001;
+                    });
+                } else {
+                    paper.attachEvent("onmousemove", function(event) {
+                        var x = event.clientX - EX - CX;
+                        var y = event.clientY - EY - CY;
+                        angleY = x * 0.0001;
+                        angleX = y * 0.0001;
+                    });
+                }
+
+                function rotateX() {
+                    var cos = Math.cos(angleX);
+                    var sin = Math.sin(angleX);
+                    tags.forEach(function() {
+                        var y1 = this.y * cos - this.z * sin;
+                        var z1 = this.z * cos + this.y * sin;
+                        this.y = y1;
+                        this.z = z1;
+                    })
+
+                }
+
+                function rotateY() {
+                    var cos = Math.cos(angleY);
+                    var sin = Math.sin(angleY);
+                    tags.forEach(function() {
+                        var x1 = this.x * cos - this.z * sin;
+                        var z1 = this.z * cos + this.x * sin;
+                        this.x = x1;
+                        this.z = z1;
+                    })
+                }
+                var tag = function(ele, x, y, z) {
+                    this.ele = ele;
+                    this.x = x;
+                    this.y = y;
+                    this.z = z;
+                }
+                tag.prototype = {
+                    move: function() {
+                        var scale = fallLength / (fallLength - this.z);
+                        var alpha = (this.z + RADIUS) / (2 * RADIUS);
+                        this.ele.style.fontSize = 15 * scale + "px";
+                        this.ele.style.opacity = alpha + 0.5;
+                        this.ele.style.filter = "alpha(opacity = " + (alpha + 0.5) * 100 + ")";
+                        this.ele.style.zIndex = parseInt(scale * 100);
+                        this.ele.style.left = this.x + CX - this.ele.offsetWidth / 2 + "px";
+                        this.ele.style.top = this.y + CY - this.ele.offsetHeight / 2 + "px";
+                    }
+                }
+                innit();
+                animate();
+            </script>
+            <div style="clear: both"></div>
+
+            <div style="margin-top: 132px;">
+                <a href="javascript:void (0)">
+                    <div class="xinganniu text-center center-block">
+                        <span style="padding-right: 20px">热门教程</span>
+                    </div>
+                </a>
+            </div>
+
+            <img src="img/xingqiu.gif" style="width: 100%" alt="">
+
+            <div class="w3c-col-xs-24 w3c-col-xl-20" style="    background-color: #ECF6FF;" >
+                <div id="project-content">
+                    <div class="pro-list" style="display: block;padding: 0 55px;">
+
+                        <div class="w3c-row pro-list-content">
+                            <div class="w3c-col-xs-24 w3c-col-md-8 pro-item">
+                                <a th:href="@{'/course/course_data?id=1'}" title="C++ 教程">
+                                    <div class="pro-item-img">
+                                        <img src="img/cover_cpp.png" alt="C++ 教程" class="cover-img">
+                                    </div>
+                                    <div class="pro-item-desc pro-item-desc2">
+                                        <h4>C++ 教程</h4>
+                                        <p>C++是在C语言的基础上开发的一种通用编程语言。</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="w3c-col-xs-24 w3c-col-md-8 pro-item">
+                                <a href="javascript:void (0)" title="Python3 教程">
+                                    <div class="pro-item-img">
+                                        <img src="img/cover_python3.png" alt="Python3 教程" class="cover-img">
+                                    </div>
+                                    <div class="pro-item-desc pro-item-desc2">
+                                        <h4>Python3 教程</h4>
+                                        <p>Python3.x版本，未来主流的版本。</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="w3c-col-xs-24 w3c-col-md-8 pro-item">
+                                <a href="javascript:void (0)" title="Go 教程">
+                                    <div class="pro-item-img">
+                                        <img src="img/cover_Go.png" alt="Go 教程" class="cover-img">
+                                    </div>
+                                    <div class="pro-item-desc pro-item-desc2">
+                                        <h4>Go 教程</h4>
+                                        <p>Go语言是谷歌推出的一种全新的编程语言。</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="w3c-col-xs-24 w3c-col-md-8 pro-item">
+                                <a href="javascript:void (0)" title="C# 教程">
+                                    <div class="pro-item-img">
+                                        <img src="img/cover_csharp.png" alt="C# 教程" class="cover-img">
+                                    </div>
+                                    <div class="pro-item-desc pro-item-desc2">
+                                        <h4>Python3 教程</h4>
+                                        <p>C# 是一个简单的、现代的、通用的、面向对象的编程语言。</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="w3c-col-xs-24 w3c-col-md-8 pro-item">
+                                <a href="javascript:void (0)" title="HTML 教程">
+                                    <div class="pro-item-img">
+                                        <img src="img/cover_html.png" alt="HTML 教程" class="cover-img">
+                                    </div>
+                                    <div class="pro-item-desc pro-item-desc2">
+                                        <h4>Python3 教程</h4>
+                                        <p>HTML 指超文本标签语言。
+                                            HTML 是通向 WEB 技术世界...</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="w3c-col-xs-24 w3c-col-md-8 pro-item">
+                                <a href="javascript:void (0)" title="Java 教程">
+                                    <div class="pro-item-img">
+                                        <img src="img/cover_java.png" alt="Java 教程" class="cover-img">
+                                    </div>
+                                    <div class="pro-item-desc pro-item-desc2">
+                                        <h4>Java 教程</h4>
+                                        <p>一种可以撰写跨平台应用软件的面向对象的程序设计语言。</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="w3c-col-xs-24 w3c-col-md-8 pro-item">
+                                <a href="javascript:void (0)" title="PHP 教程">
+                                    <div class="pro-item-img">
+                                        <img src="img/cover_php.png" alt="PHP 教程" class="cover-img">
+                                    </div>
+                                    <div class="pro-item-desc pro-item-desc2">
+                                        <h4>PHP 教程</h4>
+                                        <p>PHP 是一种创建动态交互性站点的强有力的服务器端脚本语言。
+                                            P...</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="w3c-col-xs-24 w3c-col-md-8 pro-item">
+                                <a href="javascript:void (0)" title="JavaScript 教程">
+                                    <div class="pro-item-img">
+                                        <img src="img/cover_javaScript.png" alt="JavaScript 教程" class="cover-img">
+                                    </div>
+                                    <div class="pro-item-desc pro-item-desc2">
+                                        <h4>JavaScript 教程</h4>
+                                        <p>JavaScript 是世界上最流行的脚本语言。
+                                            JavaScr...</p>
+                                    </div>
+                                </a>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <img src="img/xingqiu_bg1.png" style="width: 100%" alt="">
+
+            <div style="clear: both;"></div>
+
+            <div>
+                <a href="javascript:void (0)">
+                    <div class="xinganniu text-center center-block">
+                        <span style="padding-right: 20px">视频专区</span>
+                    </div>
+                </a>
+            </div>
+
+            <img src="img/youshi_bg.png" style="width: 100%" alt="">
+            <div style="background-color: #D3ECFF">
+
+                <div class="center-block" style="width: 966px;    padding: 30px 0; height: 330px">
+                    <div class="chengguo-details text-center">
+                        <a id="chengguo_0" data-toggle="modal" data-href="#stack1" href="#stack1">
+                            <img class="play" style="display: none" src="img/play.png">
+                            <img class="cover" src="img/xiaoyu.jpg" alt="">
+                            <div class="chengguo-bottom">
+                                <h5>C语言简单历史</h5>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="chengguo-details text-center" style="margin: 0 30px">
+                        <a id="chengguo_1" data-toggle="modal" data-href="#stack2" href="#stack2">
+                            <img class="play" style="display: none" src="img/play.png">
+                            <img class="cover" src="img/hannuota.jpg" alt="">
+                            <div class="chengguo-bottom">
+                                <h5>C语言程序输入</h5>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="chengguo-details text-center">
+                        <a id="chengguo_2" data-toggle="modal" data-href="#stack3" href="#stack3">
+                            <img class="play" style="display: none" src="img/play.png">
+                            <img class="cover" src="img/konglong.jpg" alt="">
+                            <div class="chengguo-bottom">
+                                <h5>C语言常量与变量</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <img src="img/youshi_bg1.png" style="width: 100%" alt="">
+
+            <div class="modal fade bs-example-modal-sm in display_none" id="stack1" tabindex="-1" role="dialog"
+                 aria-hidden="false">
+                <div class="modal-dialog modal-lg" style="width: 600px">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h4 class="modal-title ">C语言简单历史</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <video style="margin-left: -6px; outline: 0;" width="580" height="240" controls="">
+                                <source src="http://yuangauss287.top:8889/video/C语言简单历史.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+                        <div class="modal-footer">
+                            <!--<button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade bs-example-modal-sm in display_none" id="stack2" tabindex="-1" role="dialog"
+                 aria-hidden="false">
+                <div class="modal-dialog modal-lg" style="width: 600px">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h4 class="modal-title ">C语言程序输入</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <video style="margin-left: -6px; outline: 0;" width="580" height="240" controls="">
+                                <source src="http://yuangauss287.top:8889/video/C语言程序输入.mp4" type="video/mp4">                            </video>
+
+                        </div>
+                        <div class="modal-footer">
+                            <!--<button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade bs-example-modal-sm in display_none" id="stack3" tabindex="-1" role="dialog"
+                 aria-hidden="false">
+                <div class="modal-dialog modal-lg" style="width: 600px">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h4 class="modal-title ">C语言常量与变量</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <video style="margin-left: -6px; outline: 0;" width="580" height="240" controls="">
+                                <source src="http://yuangauss287.top:8889/video/C语言常量与变量.mp4" type="video/mp4">                            </video>
+
+                        </div>
+                        <div class="modal-footer">
+                            <!--<button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <!-- /.inner -->
+    <!-- /.outer -->
+
+    <!-- /#content -->
+
+
+    <!--wrapper-->
+    <!-- /#content -->
+    <!-- # right side -->
+</div>
+<!-- /#wrap -->
+<!-- global scripts-->
+<script th:replace="~{fragments/footer :: footer}"></script>
+<!--end of global scripts-->
+<!--  plugin scripts -->
+<!--<script type="text/javascript" th:src="@{/plugins/ace/src-noconflict/ace.js}"></script>-->
+<!--<script th:src="@{/plugins/ace/src-noconflict/ext-language_tools.js}" type="text/javascript" charset="utf-8"></script>-->
+<!--<script type="text/javascript" th:src="@{/js/pluginjs/Chart.min.js}"></script>-->
+<!--end of plugin scripts-->
+<!--page scripts-->
+<!--<script th:src="@{/js/pages/problem_detail.js}"></script>-->
+
+<!--end of page scripts-->
+</body>
+
+
+
+</html>

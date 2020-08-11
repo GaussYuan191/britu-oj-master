@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>学习中心-[[${course.t_name}]]</title>
+    <div th:replace="~{fragments/head-base}"></div>
+    <!--Page level styles-->
+    <link type="text/css" rel="stylesheet" th:href="@{/plugins/modal/css/component.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/learning-center.css}"/>
+
+
+</head>
+
+<body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img src="img/loader.gif" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<div id="wrap">
+    <div th:replace="~{fragments/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+
+        <!-- /#left -->
+
+    </div>
+    <!-- /.inner -->
+    <!-- /.outer -->
+
+    <!-- /#content -->
+    <div id="m-splitter">
+
+        <div class="m-splitter-left left-container" style="width: 270px; height: auto;">
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: inherit; height: auto;">
+                <div class="fixed-sidebar mscroller" style="width: inherit; height: 557px; ">
+                    <div class="splitter-sidebar">
+                        <div class="sidebar-space-info">
+
+
+                            <div class="sidebar-pro-container">
+
+                                <div class="sidebar-pro-name">
+                                    <a th:href="@{/course/centre}" style="display: inline-block; cursor: pointer;">学习中心</a><span> / C++教程</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="sidebar-nav">
+                            <ul class="treeth" id="treeth" style="margin-bottom: 0px;">
+                                <li class="active sidebar-nav-tree" target="sidebar-tree-content">
+                                    <a href="javascript:;" class="text" title="目录">
+                                        <i class="icon icon-th-list">
+
+                                        </i>
+                                        <span class="title">目录
+   										</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-nav-search" target="search-box">
+                                    <a href="javascript:;" class="text" title="搜索">
+                                        <i class="icon icon-search">
+
+                                        </i>
+                                        <span class="title">搜索
+   										</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-nav-star" target="stars-box">
+                                    <a href="javascript:;" class="text" title="书签">
+                                        <i class="icon icon-bookmark">
+
+                                        </i>
+                                        <span class="title">书签
+   										</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="clear:both"></div>
+                        <div class="sidebar-content">
+                            <div class="sidebar-tree">
+                                <div id="cont" class="sidebar-tree-content">
+                                    <div class="dd" id="nestable_handbook">
+                                        <div class="dd-list">
+                                            <div class="dd-item">
+                                                <div id="item1" class="dd-content folder-open " onclick="clickbtn1();">
+                                                    <i class="folder icon-folder-open">
+
+                                                    </i>
+
+                                                    <a  href="javascript:void (0);" title="C++ 教程">C++ 教程
+                                                    </a>
+                                                </div>
+                                                <ol class="dd-list" id="list1">
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content active ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=1'}" title="C++ 简介">C++ 简介
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=2'}" title="C++ 环境配置">C++ 环境设置
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=3'}" title="C++ 基本语法">C++ 基本语法
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=4'}" title="C++ 注释">C++ 注释
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=5'}" title="C++ 数据类型">C++ 数据类型
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=6'}" title="C++ 变量类型">C++ 变量类型
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=7'}" title="C++ 变量作用域">C++ 变量作用域
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=8'}" title="C++ 常量">C++ 常量
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=9'}" title="C++ 修饰符类型">C++ 修饰符类型
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=10'}" title="C++ 存储类">C++ 存储类
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=11'}" title="C++ 判断">C++ 判断
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=12'}" title="C++ 循环">C++ 循环
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=13'}" title="C++ 函数">C++ 函数
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=14'}" title="C++ 数字">C++ 数字
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=15'}" title="C++ 数组">C++ 数组
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=16'}" title="C++ 字符串">C++ 字符串
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=17'}" title="C++ 指针">C++ 指针
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=18'}" title="C++ 引用">C++ 引用
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=19'}" title="C++ 日期&时间">C++ 日期&时间
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=20'}" title="C++ 基本的输入输出">C++ 基本的输入输出
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a th:href="@{'/course/course_data?id=21'}" title="C++ 数据结构">C++ 数据结构
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                </ol>
+                                            </div>
+                                            <div class="dd-item">
+                                                <div id="item2" class="dd-content folder-open " onclick="clickbtn2();">
+                                                    <i class="folder icon-folder-open">
+
+                                                    </i>
+
+                                                    <a title="C++ 教程">C++ 高级教程
+                                                    </a>
+                                                </div>
+                                                <ol class="dd-list" id="list2">
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a href="javascript:void(0) ;" title="C++ 文件和流">C++ 文件和流
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a href="javascript:void(0) ;" title="C++ 异常处理">C++ 异常处理
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a href="javascript:void(0) ;" title="C++ 动态内存">C++ 动态内存
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a href="javascript:void(0) ;" title="C++ 命名空间">C++ 命名空间
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a href="javascript:void(0) ;" title="C++ 模板">C++ 模板
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a href="javascript:void(0) ;" title="C++ 预处理器">C++ 预处理器
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a href="javascript:void(0) ;" title="C++ 信号处理">C++ 信号处理
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a href="javascript:void(0) ;" title="C++ 多线程">C++ 多线程
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="dd-item" data-id="cpp-intro">
+                                                        <div class="dd-content  ">
+                                                            <i class="ic-folder-open2">
+
+                                                            </i>
+
+                                                            <a href="javascript:void(0) ;" title="C++ web编程">C++ web编程
+                                                            </a>
+                                                        </div>
+
+                                                    </li>
+
+                                                </ol>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="serch" class="search-box hide1" style="display: none;">
+                                    <div id="knsearch" class="tab-pane">
+                                        <div class="knsearch-input">
+                                            <input type="text" placeholder="搜索手册内容" name="w" class="input-s">
+                                            <button class="knsearchbtn">搜索
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="searchres"></div>
+                                </div>
+                                <div id="star" class="stars-box hide1" style="display: none;">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="slimScrollBar" style="background: rgb(161, 178, 189); width: 7px; position: absolute; top: 27px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 30px;"></div>
+                <div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+            </div>
+        </div>
+        <div class="splitter-handle left-drager">
+            <div class="left-dragger-c splitter-handle-highlight"></div>
+        </div>
+        <div id="pro-mian" class="main-container font0">
+            <div class="project-body">
+                <div id="pro-mian-header">
+                    <div class="content-top">
+                        <h1>[[${course.title}]]</h1>
+                    </div>
+                </div>
+
+                <div th:utext="${course.contentHTML}"></div>
+
+
+
+                <div class="content-links">
+                    <div class="previous-link">← <a th:href="@{'/course/course_data?id='+${course.preId}}" title="上一篇">上一篇</a></div>
+                    <div class="next-link"><a th:href="@{'/course/course_data?id='+${course.nextId}}" title="下一篇">下一篇</a> →</div>
+                </div>
+                <div class="project-operation">
+                    <div class="pull-right">
+                        <a href="javascript:;" class="op-btn note-btn"><i class="icon-pencil"></i>写代码</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--wrapper-->
+    <!-- /#content -->
+    <!-- # right side -->
+</div>
+<!-- /#wrap -->
+<!-- global scripts-->
+<script th:replace="~{fragments/footer :: footer}"></script>
+<!--end of global scripts-->
+<!--  plugin scripts -->
+<script type="text/javascript" th:src="@{/plugins/ace/src-noconflict/ace.js}"></script>
+<script th:src="@{/plugins/ace/src-noconflict/ext-language_tools.js}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" th:src="@{/js/pluginjs/Chart.min.js}"></script>
+<!--end of plugin scripts-->
+<!--page scripts-->
+<!--end of page scripts-->
+</body>
+
+<script type="text/javascript">
+    function clickbtn1() {
+        document.getElementById('list1').style.display=(document.getElementById('list1').style.display =='none')?'':'none';
+        if(document.getElementById('item1').classList.contains('folder-open')==true) {
+            document.getElementById('item1').classList.add("folder-close");
+            document.getElementById('item1').classList.remove("folder-open");
+        } else {
+            document.getElementById('item1').classList.add("folder-open");
+            document.getElementById('item1').classList.remove("folder-close");
+        }
+    };
+    function clickbtn2() {
+        document.getElementById('list2').style.display=(document.getElementById('list2').style.display =='none')?'':'none';
+        if(document.getElementById('item2').classList.contains('folder-open')==true) {
+            document.getElementById('item2').classList.add("folder-close");
+            document.getElementById('item2').classList.remove("folder-open");
+        } else {
+            document.getElementById('item2').classList.add("folder-open");
+            document.getElementById('item2').classList.remove("folder-close");
+        }
+
+    };
+    $(function() {
+        $(".treeth li").click(function(){
+            $(".treeth li").removeClass("active");
+            $(this).addClass("active");
+        });
+
+        $(".dd-item .dd-list li div a").each(function(){
+            if($($(this))[0].href==String(window.location)) {
+                $(".dd-item .dd-list li div").removeClass("active");
+                $(this).parent().addClass("active");
+                console.log($($(this))[0].href)
+            }
+
+        });
+
+
+        $(".sidebar-nav-tree").click(function() {
+            document.getElementById('serch').style.display='none';
+            document.getElementById('cont').style.display='block';
+            document.getElementById('star').style.display='none';
+        })
+
+        $(".sidebar-nav-search").click(function() {
+            document.getElementById('serch').style.display='block';
+            document.getElementById('cont').style.display='none';
+            document.getElementById('star').style.display='none';
+        })
+
+        $(".sidebar-nav-star").click(function() {
+            document.getElementById('serch').style.display='none';
+            document.getElementById('cont').style.display='none';
+            document.getElementById('star').style.display='block';
+        })
+
+    });
+
+
+
+
+
+</script>
+
+
+</html>

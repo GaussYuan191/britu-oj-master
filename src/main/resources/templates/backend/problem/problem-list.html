@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>题目列表</title>
+    <div th:replace="~{fragments/backend/head-base}"></div>
+    <link type="text/css" rel="stylesheet" th:href="@{/plugins/jasny-bootstrap/css/jasny-bootstrap.min.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/gallery.css}"/>
+</head>
+<body class="body fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img th:src="@{/img/loader.gif}" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<!--wrap-->
+<div id="wrap">
+    <div th:replace="~{fragments/backend/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/backend/left :: left}"></div>
+        <!-- /#left -->
+        <div id="content" class="bg-container">
+            <header class="head">
+                <div class="main-bar">
+                    <div class="row no-gutters">
+                        <div class="col-6">
+                            <h4 class="m-t-5">
+                                <i class="fa fa-book"></i><span class="ml-1">题目列表</span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="outer">
+                <div class="inner bg-container">
+                    <!--app-->
+                    <div id="">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="float-left w-50" >
+                                    <div class="input-group">
+                                        <input type="search" id="keyword" name="keyword" value=""
+                                               placeholder="输入 题号/标题 进行搜索" class="form-control"/>
+                                        <span class="input-group-btn">
+                                                    <button class="btn btn-primary" type="button"
+                                                            onclick="clickPage(1)">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true">
+                                                    </span><i class="fa fa-search"></i>
+                                                    </button>
+                                        </span>
+                                        <span class="ml-3">
+                                            <a class="btn  btn-secondary text-white" th:href="@{/backend/problem/problemEditPage}">
+                                            <i class="fa fa-plus mr-1"></i><span >添加题目</span>
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--problemList-->
+                            <div class="col-12 mt-3">
+                                <table class="table  table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">题号</th>
+                                        <th class="text-center">标题</th>
+                                        <th class="text-center">标签</th>
+                                        <th class="text-center">难度</th>
+                                        <th class="text-center">提交数</th>
+                                        <th class="text-center">通过数</th>
+                                        <th class="text-center">类型</th>
+                                        <th class="text-center">创建时间</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(problem,index) in problemList">
+                                        <td class="text-center">
+                                            {{index + 1 + (pageNum-1) * 10}}
+                                        </td>
+                                        <td class="text-center">
+                                            {{problem.id}}
+                                        </td>
+                                        <td class="text-center">
+                                            <a target="_blank" :href="'/problem/problemDetailPage?problemId='+problem.id" class="text-primary">
+                                                {{problem.name}}
+                                            </a>
+                                        </td>
+                                        <td class="text-center">{{problem.tags}}</td>
+                                        <td class="text-center">
+                                            <span v-if="problem.level == 1">简单</span>
+                                            <span v-if="problem.level == 2">中等</span>
+                                            <span v-if="problem.level == 3">困难</span>
+                                            <span v-if="problem.level == 4">专家</span>
+                                        </td>
+                                        <td class="text-center">{{problem.submitCount}}</td>
+                                        <td class="text-center">{{problem.acCount}}</td>
+                                        <td class="text-center">
+                                            <span v-if="problem.flag == 0">公开</span>
+                                            <span v-if="problem.flag == 1">私密</span>
+                                        </td>
+                                        <td class="text-center">{{problem.createTime | formatDate}}</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-sm btn-primary text-white" :href="'/backend/problem/problemEditPage?problemId='+problem.id" >编辑</a>
+                                            <a @click="deleteProblem(problem.id)">
+                                                <button class="btn btn-sm btn-danger">删除</button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <!--page-->
+                                <div class="row mt-3">
+                                    <div style="margin: 0 auto">
+                                        <ul class="page" maxshowpageitem="5" pagelistcount="15" id="page"></ul>
+                                    </div>
+                                </div>
+                                <!--#page-->
+                            </div>
+                            <!--#problemList-->
+                        </div>
+                    </div>
+                    <!--#app-->
+                </div>
+            </div>
+        </div>
+        <!-- /.inner -->
+    </div>
+    <!-- /.outer -->
+    <!-- /#content -->
+    <!-- Modal -->
+    <!-- # right side -->
+</div>
+<!-- /#wrap -->
+<!-- global scripts-->
+<div th:replace="~{fragments/backend/footer :: footer}"></div>
+<!--end of global scripts-->
+<!--  plugin scripts -->
+<script type="text/javascript" th:src="@{/plugins/jasny-bootstrap/js/jasny-bootstrap.min.js}"></script>
+<!--end of plugin scripts-->
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+
+    // vue
+    var wrap = new Vue({
+        el: '#wrap',
+        data: {
+            total: 0,
+            pageNum: 1,
+            problem: {"sex": "男", "avatar": "http://file.gkuoj.com/image/default_avatar.jpg", "roleIds": "2"},
+            problemList: [],
+            roleList: []
+        },
+        filters: {
+            formatDate: function (val) {
+                var value = new Date(val);
+                var year = value.getFullYear();
+                var month = padDate(value.getMonth() + 1);
+                var day = padDate(value.getDate());
+                var hour = padDate(value.getHours());
+                var minutes = padDate(value.getMinutes());
+                var seconds = padDate(value.getSeconds());
+                return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
+            },
+            formatYear: function (val) {
+                var value = new Date(val);
+                var year = value.getFullYear();
+                return year;
+            },
+            formatNum: function (val) {
+                //四舍五入
+                return  parseFloat(val).toFixed(2);
+            }
+        },
+        methods: {
+            listProblem: function (pageNum) {
+                var keyword = $("#keyword").val();
+                var url = '/backend/problem/listProblem2Page';
+
+                this.$http.post(url, {
+                    "pageNum": pageNum,
+                    "keyword": keyword
+                }, {emulateJSON: true}).then(function (res) {
+                    this.total = res.data.data.total;
+                    this.problemList = res.data.data.list;
+                    this.pageNum = pageNum;
+                    $("#page").initPage(this.total, pageNum, clickPage);
+                }), function (res) {
+                    console.log(res.data.msg);
+                }
+            }
+        }
+    });
+    //初始化
+    wrap.listProblem(1);
+
+    //分页点击方法
+    function clickPage(pageNum) {
+        wrap.listProblem(pageNum);
+    }
+
+
+
+    function deleteProblem(problemId) {
+        swal({
+            title: '确认删除该题目?',
+            // text: '提醒',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#EF6F6C',
+            cancelButtonColor: '#4fb7fe',
+            confirmButtonText: '确定',
+            cancelButtonText:'取消'
+        }).then(function () {
+            $.post("/backend/problem/delete", {"problemId": problemId}, function (resp) {
+                if (resp.status == 200) {
+                    $.message({
+                        message: resp.msg,
+                        type: 'success'
+                    });
+                    clickPage(1);
+                } else {
+                    $.message({
+                        message: resp.msg,
+                        type: 'error'
+                    });
+                }
+            })
+        }).catch(function(reason) {
+
+            return false;
+        });
+    }
+
+
+    // end of vue
+
+    /*]]>*/
+
+
+</script>
+
+</body>
+
+</html>

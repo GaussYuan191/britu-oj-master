@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.britu.oj.dao.ProblemResultMapper" >
+  <resultMap id="BaseResultMap" type="com.britu.oj.entity.ProblemResult" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="problem_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="comp_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="comp_score" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="run_num" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="memory" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="error_msg" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="source_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+
+  <resultMap type="com.britu.oj.response.ProblemResultDetailVO" id="problemResultDetailVOMap">
+    <id column="id" property="id"/>
+    <result column="user_id" property="userId"/>
+    <result column="problem_id" property="problemId"/>
+    <result column="comp_id" property="compId"/>
+    <result column="comp_score" property="compScore"/>
+    <result column="run_num" property="runNum"/>
+    <result column="status" property="status"/>
+    <result column="type" property="type"/>
+    <result column="time" property="time"/>
+    <result column="memory" property="memory"/>
+    <result column="error_msg" property="errorMsg"/>
+    <result column="source_code" property="sourceCode"/>
+    <result column="create_time" property="createTime"/>
+    <result column="update_time" property="updateTime"/>
+    <result column="avatar" property="avatar"/>
+    <result column="name" property="name"/>
+    <result column="problem_name" property="problemName"/>
+
+    <collection property="testcaseResultList" ofType="com.britu.oj.entity.TestcaseResult">
+      <id column="t_id" property="id"/>
+      <result column="pro_re_id" property="proReId"/>
+      <result column="t_num" property="num"/>
+      <result column="user_output" property="userOutput"/>
+      <result column="t_time" property="time"/>
+      <result column="t_memory" property="memory"/>
+      <result column="t_status" property="status"/>
+    </collection>
+  </resultMap>
+
+
+
+
+  <sql id="Base_Column_List" >
+    id, user_id, problem_id, comp_id, comp_score, run_num, status, type, time, memory, error_msg,
+    source_code, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from problem_result
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from problem_result
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByProblemId" parameterType="int">
+   delete from problem_result
+   where problem_id = #{problemId}
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.britu.oj.entity.ProblemResult" >
+    insert into problem_result (id, user_id, problem_id,
+      comp_id,comp_score, run_num, status,
+      type, time, memory, error_msg,
+      source_code, create_time)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{problemId,jdbcType=INTEGER},
+      #{compId,jdbcType=INTEGER},#{compScore,jdbcType=INTEGER}, #{runNum,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{type,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT}, #{memory,jdbcType=BIGINT}, #{errorMsg,jdbcType=VARCHAR},
+      #{sourceCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.britu.oj.entity.ProblemResult" >
+    insert into problem_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="problemId != null" >
+        problem_id,
+      </if>
+      <if test="compId != null" >
+        comp_id,
+      </if>
+      <if test="compScore != null" >
+        comp_score,
+      </if>
+      <if test="runNum != null" >
+        run_num,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="memory != null" >
+        memory,
+      </if>
+      <if test="errorMsg != null" >
+        error_msg,
+      </if>
+      <if test="sourceCode != null" >
+        source_code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="problemId != null" >
+        #{problemId,jdbcType=INTEGER},
+      </if>
+      <if test="compId != null" >
+        #{compId,jdbcType=INTEGER},
+      </if>
+      <if test="compScore != null" >
+        #{compScore,jdbcType=INTEGER},
+      </if>
+      <if test="runNum != null" >
+        #{runNum,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=BIGINT},
+      </if>
+      <if test="memory != null" >
+        #{memory,jdbcType=BIGINT},
+      </if>
+      <if test="errorMsg != null" >
+        #{errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceCode != null" >
+        #{sourceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.britu.oj.entity.ProblemResult" >
+    update problem_result
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="problemId != null" >
+        problem_id = #{problemId,jdbcType=INTEGER},
+      </if>
+      <if test="compId != null" >
+        comp_id = #{compId,jdbcType=INTEGER},
+      </if>
+      <if test="compScore != null" >
+        comp_score = #{compScore,jdbcType=INTEGER},
+      </if>
+      <if test="runNum != null" >
+        run_num = #{runNum,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=BIGINT},
+      </if>
+      <if test="memory != null" >
+        memory = #{memory,jdbcType=BIGINT},
+      </if>
+      <if test="errorMsg != null" >
+        error_msg = #{errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceCode != null" >
+        source_code = #{sourceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.britu.oj.entity.ProblemResult" >
+    update problem_result
+    set user_id = #{userId,jdbcType=INTEGER},
+      problem_id = #{problemId,jdbcType=INTEGER},
+      comp_id = #{compId,jdbcType=INTEGER},
+      comp_score = #{compScore,jdbcType=INTEGER},
+      run_num = #{runNum,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      time = #{time,jdbcType=BIGINT},
+      memory = #{memory,jdbcType=BIGINT},
+      error_msg = #{errorMsg,jdbcType=VARCHAR},
+      source_code = #{sourceCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+
+
+
+  <select id="countUserIdProblemIdByStatus" resultType="java.lang.Integer" parameterType="map">
+      select count(id) from problem_result
+      where user_id = #{userId}
+      and problem_id = #{problemId}
+      and status = #{status}
+    </select>
+
+
+  <select id="countUserIdProblemId" resultType="java.lang.Integer" parameterType="map">
+      select count(id) from problem_result
+      where user_id = #{userId}
+      and problem_id = #{problemId}
+    </select>
+
+  <select id="getByRunNum2SubmitVO" resultType="com.britu.oj.response.ProblemResultSubmitVO" parameterType="string">
+        select id,run_num,problem_id,comp_id,status,time,memory
+        from problem_result
+        where run_num = #{runNum}
+
+    </select>
+
+
+  <select id="listProblemResult" parameterType="map" resultType="com.britu.oj.response.ProblemResultVO">
+    select
+    p.id, user_id, u.name, problem_id, comp_id, status, type, time, memory,
+    p.create_time
+    from problem_result p
+    join user u on u.id = p.user_id
+    <where>
+      <if test="problemId != null and problemId != -1">
+        problem_id = #{problemId}
+      </if>
+      <if test="name != null and name !=''">
+        and u.name like concat('%',#{name},'%')
+      </if>
+      <if test="type != null and type !=''">
+        and type = #{type}
+      </if>
+      <if test="status != null and status != -1">
+        and status = #{status}
+      </if>
+    </where>
+    order by p.create_time desc
+  </select>
+
+    <select id="getById2DetailVO" resultMap="problemResultDetailVOMap" parameterType="int">
+      select   pr.id, user_id, problem_id, comp_id, run_num, pr.status, type, pr.time, pr.memory, error_msg,
+      source_code, pr.create_time, pr.update_time, u.avatar,u.name,p.name problem_name,
+      tr.id t_id,tr.pro_re_id,tr.num t_num, tr.user_output,tr.time t_time,tr.memory t_memory,tr.status t_status
+
+      from problem_result pr
+      join user u on u.id = pr.user_id
+      join problem p on p.id = pr.problem_id
+      left join testcase_result tr on tr.pro_re_id = pr.id
+
+      where pr.id = #{id}
+
+    </select>
+  <select id="listProblemResultCompetitionVO2Page"
+          resultType="com.britu.oj.response.ProblemResultCompetitionVO" parameterType="map">
+    select pr.id, pr.user_id, pr.problem_id, pr.comp_id, pr.run_num, pr.status, pr.type, pr.time, pr.memory, pr.create_time, pr.update_time,
+    p.name problem_name
+    from problem_result pr
+    join problem p on p.id = pr.problem_id
+    where pr.user_id = #{userId}
+    and pr.comp_id = #{compId}
+
+  </select>
+
+  <select id="getTotalScoreById" resultType="java.lang.Integer" parameterType="map">
+  select sum(score) from
+    (select max(comp_score) score from problem_result pr
+                where user_id = #{userId} and comp_id = #{compId} group by problem_id) as t;
+
+  </select>
+
+  <select id="listRecentByUserId" resultType="com.britu.oj.response.ProblemResultRecentVO" parameterType="map">
+      select pr.id,pr.create_time,pr.update_time,pr.status,p.id problem_id,p.name problem_name
+      from problem_result pr
+      join problem p on p.id = pr.problem_id
+      where
+      pr.user_id = #{userId}
+      order by pr.create_time desc
+      limit #{recentSize}
+  </select>
+
+  <select id="listProblemRecord" resultType="com.britu.oj.response.UserProblemRecordVO" parameterType="map">
+    select
+    sum(case pr.status when 1 then 1 else 0 end) ac_count,
+     sum(case pr.status when 2 then 1 else 0 end) ce_count,
+      sum(case pr.status when 3 then 1 else 0 end) pe_count,
+       sum(case pr.status when 4 then 1 else 0 end) re_count,
+        sum(case pr.status when 5 then 1 else 0 end) tle_count,
+         sum(case pr.status when 6 then 1 else 0 end) mle_count,
+          sum(case pr.status when 7 then 1 else 0 end) wa_count
+    problem_result pr
+    where pr.user_id = #{userId}
+
+  </select>
+
+</mapper>
