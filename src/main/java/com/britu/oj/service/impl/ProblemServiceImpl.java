@@ -1,5 +1,6 @@
 package com.britu.oj.service.impl;
 
+import com.britu.oj.utils.RecommendUitl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.britu.oj.common.CommonConst;
@@ -173,7 +174,8 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public RestResponseVO<List<ProblemDetailVO>> listSuggestProblem(Integer problemId, Integer row) {
+    public RestResponseVO<List<ProblemDetailVO>> listSuggestProblem(double ability, Integer row) {
+        Integer problemId = RecommendUitl.Recommend(ability);
         if (problemId == null) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
         }

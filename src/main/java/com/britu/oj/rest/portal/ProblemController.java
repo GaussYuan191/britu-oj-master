@@ -9,6 +9,7 @@ import com.britu.oj.response.ProblemDetailVO;
 import com.britu.oj.response.RestResponseVO;
 import com.britu.oj.response.TagVO;
 import com.britu.oj.service.ProblemService;
+import com.britu.oj.service.RecommendService;
 import com.britu.oj.service.TagService;
 import com.github.pagehelper.PageInfo;
 import com.britu.oj.entity.User;
@@ -37,6 +38,9 @@ public class ProblemController {
 
     @Autowired
     AnswerCql answerCql;
+
+    @Autowired
+    private RecommendService recommendService;
 
     private final Integer SUGGEST_PROBLEM_ROW = 5;
 
@@ -130,15 +134,16 @@ public class ProblemController {
     }
 
     /**
-     * 随机返回5道推荐题目
+     * 根据用户的能力推荐5道题目
      *
-     * @param problemId
+     * @param u_id
      * @return
      */
     @RequestMapping("/suggestProblemList")
     @ResponseBody
-    public RestResponseVO<List<ProblemDetailVO>> suggestProblemList(Integer problemId) {
-        return problemService.listSuggestProblem(problemId, SUGGEST_PROBLEM_ROW);
+    public RestResponseVO<List<ProblemDetailVO>> suggestProblemList(Integer u_id) {
+        double ability = recommendService.GetAbility(u_id);
+        return problemService.listSuggestProblem(ability, SUGGEST_PROBLEM_ROW);
     }
 
     /**
