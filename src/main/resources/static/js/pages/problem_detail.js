@@ -31,10 +31,8 @@ function setCodeType(type) {
         editor.setValue("#include <stdio.h>\n" +
             "\n" +
             "int main() {\n" +
-            "    int a,b;\n" +
-            "    scanf(\"%d%d\",&a,&b);\n" +
-            "    printf(\"%d\", a+b);\n" +
-            "    return 0;\n" +
+            "    \n" +
+
             "}");
     } else if ("C++" == type) {
         editor.session.setMode("ace/mode/c_cpp");
@@ -44,10 +42,8 @@ function setCodeType(type) {
             "using namespace std;\n" +
             "\n" +
             "int main() {\n" +
-            "    int a,b;\n" +
-            "    cin >> a >> b;\n" +
-            "    cout << a+b;\n" +
-            "    return 0;\n" +
+            "    \n" +
+
             "}");
     } else if ("Java8" == type) {
         editor.session.setMode("ace/mode/java");
@@ -55,20 +51,19 @@ function setCodeType(type) {
             "import java.util.*;\n" +
             "public class Main {\n" +
             "    public static void main(String args[]) throws Exception {\n" +
-            "        Scanner cin=new Scanner(System.in);\n" +
-            "        int a = cin.nextInt(), b = cin.nextInt();\n" +
-            "        System.out.println(a+b);\n" +
+            "       \n" +
+
             "    }\n" +
             "}");
     } else if ("Python2" == type) {
         editor.session.setMode("ace/mode/python");
-        editor.setValue("s = raw_input().split()\n" +
-            "print int(s[0]) + int(s[1])");
+        editor.setValue(
+            "print ('这是Python2!')");
         $("#dropdownMenuButton").html("python2");
     } else if ("Python3" == type) {
         editor.session.setMode("ace/mode/python");
-        editor.setValue("s = input().split()\n" +
-            "print(int(s[0]) + int(s[1]))");
+        editor.setValue(
+            "print ('这是Python3!')");
     }
     editor.moveCursorTo(0, 0);
 };
