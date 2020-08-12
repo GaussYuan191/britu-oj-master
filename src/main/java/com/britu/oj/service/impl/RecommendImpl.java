@@ -57,15 +57,16 @@ public class RecommendImpl implements RecommendService {
                     result.append(line).append(System.getProperty("line.separator"));//
                 }
                 JSONObject object = new JSONObject(result.toString());
+
                 return (double)object.get("data");
             }
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
+            System.out.println("能力数据请求失败,是否开启了能力评估系统");
         } finally {
             try {
                 reader.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("数据读取失败");
             }
             connection.disconnect();
         }

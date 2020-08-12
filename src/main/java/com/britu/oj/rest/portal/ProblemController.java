@@ -1,6 +1,7 @@
 package com.britu.oj.rest.portal;
 
 import com.britu.oj.common.ExceptionStatusConst;
+import com.britu.oj.common.RestResponseEnum;
 import com.britu.oj.entity.Answer;
 import com.britu.oj.exception.AnswerNotFoundException;
 import com.britu.oj.exception.ProblemNotFoundException;
@@ -141,7 +142,16 @@ public class ProblemController {
      */
     @RequestMapping("/suggestProblemList")
     @ResponseBody
-    public RestResponseVO<List<ProblemDetailVO>> suggestProblemList(Integer u_id) {
+    public RestResponseVO<List<ProblemDetailVO>> suggestProblemList(@AuthenticationPrincipal UserDetails userDetails) {
+        Integer u_id;
+        if (userDetails == null) {
+            u_id = 1;
+
+        }
+        else{
+            User user = (User) userDetails;
+            u_id = user.getId();
+        }
         double ability = recommendService.GetAbility(u_id);
         return problemService.listSuggestProblem(ability, SUGGEST_PROBLEM_ROW);
     }
