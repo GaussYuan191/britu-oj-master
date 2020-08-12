@@ -80,9 +80,9 @@ z-index: 999999">
                                                         class="select2-level"
                                                         style="width: 100px;">
                                                     <option value="-1">不限</option>
-                                                    <option value="1">简单</option>
-                                                    <option value="2">中等</option>
-                                                    <option value="3">困难</option>
+                                                    <option value="1">入门</option>
+                                                    <option value="2">普及</option>
+                                                    <option value="3">提高</option>
                                                     <option value="4">专家</option>
                                                 </select>
                                             </div>
@@ -170,13 +170,13 @@ z-index: 999999">
                                                 <td class="text-center">{{problem.createTime | formatYear}}</td>
                                                 <td class="text-center">
                                                 <span v-if="problem.level == 1">
-                                                    <span class=" btn-success btn-sm purple">简单</span>
+                                                    <span class=" btn-success btn-sm purple">入门</span>
                                                 </span>
                                                     <span v-if="problem.level == 2">
-                                                    <span class=" btn-primary btn-sm purple">中等</span>
+                                                    <span class=" btn-primary btn-sm purple">普及</span>
                                                 </span>
                                                     <span v-if="problem.level == 3">
-                                                    <span class=" btn-warning btn-sm purple">困难</span>
+                                                    <span class=" btn-warning btn-sm purple">提高</span>
                                                 </span>
                                                     <span v-if="problem.level == 4">
                                                     <span class=" btn-danger btn-sm purple">专家</span>
