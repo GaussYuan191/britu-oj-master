@@ -32,7 +32,7 @@ function setCodeType(type) {
             "\n" +
             "int main() {\n" +
             "    \n" +
-
+            "    return 0;\n" +
             "}");
     } else if ("C++" == type) {
         editor.session.setMode("ace/mode/c_cpp");
@@ -43,7 +43,7 @@ function setCodeType(type) {
             "\n" +
             "int main() {\n" +
             "    \n" +
-
+            "    return 0;\n" +
             "}");
     } else if ("Java8" == type) {
         editor.session.setMode("ace/mode/java");
