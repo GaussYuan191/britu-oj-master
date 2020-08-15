@@ -6,6 +6,6 @@ package com.britu.oj.service;
  * @author: Gauss
  * @date: 2020-08-12 10:10
  **/
-public interface RecommendService {
+public interface AbilityService {
     double GetAbility(Integer u_id);
 }

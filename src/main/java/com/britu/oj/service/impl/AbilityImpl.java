@@ -1,7 +1,7 @@
 package com.britu.oj.service.impl;
 
 
-import com.britu.oj.service.RecommendService;
+import com.britu.oj.service.AbilityService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.net.URL;
  * @date: 2020-08-12 10:17
  **/
 @Service
-public class RecommendImpl implements RecommendService {
+public class AbilityImpl implements AbilityService {
     @Override
     public double GetAbility(Integer u_id){
         String methodUrl = "http://127.0.0.1:5000/getAbility" + "?u_id=" + u_id;

@@ -1,7 +1,6 @@
 package com.britu.oj.rest.portal;
 
 import com.britu.oj.common.ExceptionStatusConst;
-import com.britu.oj.common.RestResponseEnum;
 import com.britu.oj.entity.Answer;
 import com.britu.oj.exception.AnswerNotFoundException;
 import com.britu.oj.exception.ProblemNotFoundException;
@@ -10,8 +9,9 @@ import com.britu.oj.response.ProblemDetailVO;
 import com.britu.oj.response.RestResponseVO;
 import com.britu.oj.response.TagVO;
 import com.britu.oj.service.ProblemService;
-import com.britu.oj.service.RecommendService;
+import com.britu.oj.service.AbilityService;
 import com.britu.oj.service.TagService;
+import com.britu.oj.utils.SpendTimeUtil;
 import com.github.pagehelper.PageInfo;
 import com.britu.oj.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class ProblemController {
     AnswerCql answerCql;
 
     @Autowired
-    private RecommendService recommendService;
+    private AbilityService abilityService;
 
     private final Integer SUGGEST_PROBLEM_ROW = 5;
 
@@ -104,7 +104,21 @@ public class ProblemController {
      * @return
      */
     @RequestMapping("/problemDetailPage")
-    public String problemDetailPage(HttpServletRequest request, Integer problemId,Integer compId) {
+    public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, Integer problemId,Integer compId) {
+        Integer u_id;
+        if (userDetails == null) {
+            System.out.println("请先登入");
+
+        }
+        else{
+            User user = (User) userDetails;
+            u_id = user.getId();
+            double ability = abilityService.GetAbility(u_id);
+            Integer SpendTime = SpendTimeUtil.GetSpendTime(ability);
+            System.out.println(SpendTime);
+        }
+
+
         ProblemDetailVO detailVO = problemService.getDetailVOById(problemId).getData();
         if (detailVO == null) {
             throw new ProblemNotFoundException(ExceptionStatusConst.PROBLEM_NOT_FOUND_EXP, "未找到该题号的题目");
@@ -152,7 +166,7 @@ public class ProblemController {
             User user = (User) userDetails;
             u_id = user.getId();
         }
-        double ability = recommendService.GetAbility(u_id);
+        double ability = abilityService.GetAbility(u_id);
         return problemService.listSuggestProblem(ability, SUGGEST_PROBLEM_ROW);
     }
 
