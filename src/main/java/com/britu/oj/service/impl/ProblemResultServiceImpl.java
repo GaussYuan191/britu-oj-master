@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.List;
 
 /**
@@ -153,6 +154,81 @@ public class ProblemResultServiceImpl implements ProblemResultService {
      */
     private int getProblemResultBaseScore(List<TestcaseResult> testcaseResultList) {
         return testcaseResultList.size() == 5 ? 20 : testcaseResultList.size() == 10 ? 10 : 0;
+    }
+
+    /**
+     *
+     * @param testInput
+     * @param testOutput
+     * @param problemId
+     * @return
+     */
+    @Override
+    public RestResponseVO submit_input(String testInput,String testOutput,String problemId) {
+
+        String problem_in = testInput;
+        System.out.println(testInput);
+        System.out.println(testOutput);
+        System.out.println(problemId);
+//        if (testInput.contains(" ")){
+//            input1 = testInput.split(" ");
+//            for (int i = 0;i<input1.length;i++) {
+//                System.out.println(Integer.parseInt(input1[i]));
+//            }
+//        }else if (testInput.contains("\n")){
+//            input1 = testInput.split("\n");
+//            for (int i= 0;i<input1.length;i++){
+//                System.out.println(Integer.parseInt(input1[i]));
+//            }
+//        }
+
+        BufferedWriter bw = null,bw1 =null;
+        File dir = new File("D:\\OJ\\britu-oj-Judge-master\\data\\testcase\\"+problemId);
+        File problem_dir = new File(dir+"\\input");
+        File problem_dir1 = new File(dir+"\\output");
+        File problem_dir2 = new File(dir+"\\input_test");
+        File problem_dir3 = new File(dir+"\\output_test");
+        System.out.println(dir);
+        System.out.println(problem_dir);
+        System.out.println(problem_dir1);
+        try
+        {
+            if ((!dir.exists())&&(!problem_dir.exists())&&(!problem_dir1.exists())&&(!problem_dir2.exists())&&(!problem_dir3.exists())) {
+                dir.mkdir();
+                problem_dir.mkdir();
+                problem_dir1.mkdir();
+                problem_dir2.mkdir();
+                problem_dir3.mkdir();
+            }
+            String str = problemId+".txt";
+            File file = new File(problem_dir2, str);
+            File file1 = new File(problem_dir3,str);
+            if (!file.exists()) {
+                file.createNewFile();
+                file1.createNewFile();
+            } else {
+                System.out.print("文件已存在！");
+            }
+
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+            bw1 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1)));
+            if (bw != null & bw1 != null) {
+                bw.write(testInput+"");
+                bw1.write(testOutput+"");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            try {
+                bw.close();
+                bw1.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return RestResponseVO.createBySuccess();
     }
 
 }

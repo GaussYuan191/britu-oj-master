@@ -179,19 +179,117 @@ function problemResultNow(runNum, problemResultNowInterval) {
 /**
  * 测试样例运行
  */
-function testRun() {
+function submit_Input(problemName, compId) {
 
-    var inputHtml = $("#testInput").val();
-    var eOutputHtml = $("#eOutput").val();
-    if (!inputHtml || !eOutputHtml) {
+    var testInputHtml = $("#testInput").val();//[[${problem.testcaseInput}]]
+    var testOutputHtml = $("#testOutput").val();//[[${problem.testcaseOutput}]]
+    if (!testInputHtml || !testOutputHtml) {
         $.message({
-            message: '输入不能为空',
+            message: '输入不能为空!',
             type: 'warning'
         });
-    }
+    } else{
+        swal({
+            title: '确认生成输入文件?'+problemId+""+""+testInputHtml,
+            // text: '提醒',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#EF6F6C',
+            cancelButtonColor: '#4fb7fe',
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+        }).then(function () {
+            $.post("problemResult/submit_input", {
+                "problemId": problemId,
+                "testInput": testInputHtml,
+                "testOutput": testOutputHtml,
+                "compId": compId
+            }, function (resp) {
+                if (resp.status == 200) {
+                    $.message({
+                        message: '存入成功',
+                        type: 'warning'
+                    });
+                } else {
+                    $.message({
+                        message: resp.msg,
+                        type: 'error'
+                    });
+                }
+            });
 
-    submit();
+        }).catch(function (reason) {
+
+        });
+        submit_code();
+    }
 }
+
+/**
+ *
+ */
+
+function submit_code(problemName, compId) {
+    var type = $("#type").val();
+    var sourceCode = editor.getValue();
+    if (!type || type == -1) {
+        $.message({
+            message: "请选择编程语言",
+            type: 'warning'
+        });
+        return;
+    }
+    if (!sourceCode) {
+        $.message({
+            message: "请编写代码",
+            type: 'warning'
+        });
+        return;
+    }
+    swal({
+        title: '确认提交代码?',
+        // text: '提醒',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#EF6F6C',
+        cancelButtonColor: '#4fb7fe',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+    }).then(function () {
+        $.post("problemResult/submit_code", {
+            "problemId": problemId,
+            "compId": compId,
+            "type": type,
+            "sourceCode": sourceCode
+        }, function (resp) {
+            if (resp.status == 200) {
+                var runNum = resp.data;
+                var html = "<div class='text-center' id = '" + runNum + "'>" +
+                    "<i class='fa fa-circle-o-notch fa-lg fa-spin text-primary'></i>" +
+                    "<span class='ml-3' id = '" + runNum + "-Str'>队列中</span></div>";
+
+                naranja()["log"]({
+                    icon: false,
+                    title: problemName,
+                    text: html,
+                    timeout: 'keep'
+                });
+                var problemResultNowInterval = window.setInterval(function () {
+                    problemResultNow(runNum, problemResultNowInterval)
+                }, 500);
+            } else {
+                $.message({
+                    message: resp.msg,
+                    type: 'error'
+                });
+            }
+        });
+    }).catch(function (reason) {
+
+    });
+
+}
+
 
 
 /**

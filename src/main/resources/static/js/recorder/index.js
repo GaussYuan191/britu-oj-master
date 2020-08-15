@@ -20,3 +20,11 @@ if(/mobile/i.test(navigator.userAgent)){
         eruda.init();
     };
 };
+
+//兼容环境
+var PageLM="2020-1-12 11:44:28";
+
+function RandomKey(){
+    return "randomkey"+(RandomKey.idx++);
+};
+RandomKey.idx=0;
