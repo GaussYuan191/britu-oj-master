@@ -20,6 +20,32 @@ editor.setOptions({
 });
 
 /**
+ * 后台返回历史最近代码 历史
+ */
+
+function getHistoryCode(type,source_code){
+    $("#dropdownMenuButton").html(type);
+    $("#type").val(type);
+    if ("C" == type) {
+        editor.session.setMode("ace/mode/c_cpp");
+        editor.setValue(source_code);
+    } else if ("C++" == type) {
+        editor.session.setMode("ace/mode/c_cpp");
+        editor.setValue(source_code);
+    } else if ("Java8" == type) {
+        editor.setValue(source_code);
+    } else if ("Python2" == type) {
+        editor.session.setMode("ace/mode/python");
+        editor.setValue(source_code);
+        $("#dropdownMenuButton").html("python2");
+    } else if ("Python3" == type) {
+        editor.session.setMode("ace/mode/python");
+        editor.setValue(source_code);
+    }
+    editor.moveCursorTo(0, 0);
+
+}
+/**
  * 选择语言
  * @param type
  */
@@ -218,10 +244,10 @@ function submit_Input(problemName, compId) {
                 }
             });
 
+            submit_code(problemName, compId);
         }).catch(function (reason) {
 
         });
-        submit_code();
     }
 }
 

@@ -235,7 +235,7 @@ z-index: 999999">
                     </div>
                     <div>
                         期望结果:
-                        <textarea id="eOutput" style="height: 100px" type="text" name="eOutput"
+                        <textarea id="testOutput" style="height: 100px" type="text" name="testOutput"
                                   class="form-control"></textarea>
                     </div>
                     <div class="mt-2">
@@ -268,8 +268,20 @@ z-index: 999999">
 <!--page scripts-->
 <script th:src="@{/js/pages/problem_detail.js}"></script>
 <!--end of page scripts-->
+
 </body>
 
+<script th:inline="javascript">
+    var code = [[${sourceCode.code}]]
+    var type = [[${sourceCode.type}]]
+    alert(code)
+    alert(type)
+    if(code != null){
+        window.onload = function(){
+            getHistoryCode(type,code)
+        }
+    }
+</script>
 
 <script th:inline="javascript">
     /*<![CDATA[*/
@@ -349,12 +361,12 @@ z-index: 999999">
     //输入测试样例
     function setTestcase() {
         $("#testInput").val([[${problem.testcaseInput}]]);
-        $("#eOutput").val([[${problem.testcaseOutput}]]);
+        $("#testOutput").val([[${problem.testcaseOutput}]]);
     }
 
     function clearTestcase() {
         $("#testInput").val("");
-        $("#eOutput").val("");
+        $("#testOutput").val("");
     }
 
     function testRun() {

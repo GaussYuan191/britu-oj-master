@@ -2,6 +2,8 @@ package com.britu.oj.rest.portal;
 
 import com.britu.oj.common.ExceptionStatusConst;
 import com.britu.oj.entity.Answer;
+import com.britu.oj.entity.ProblemResult;
+import com.britu.oj.entity.SourceCode;
 import com.britu.oj.exception.AnswerNotFoundException;
 import com.britu.oj.exception.ProblemNotFoundException;
 import com.britu.oj.repository.AnswerCql;
@@ -106,6 +108,7 @@ public class ProblemController {
     @RequestMapping("/problemDetailPage")
     public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, Integer problemId,Integer compId) {
         Integer u_id;
+        RestResponseVO<ProblemResult> problemResultRestResponseVO = null;
         if (userDetails == null) {
             System.out.println("请先登入");
 
@@ -116,7 +119,13 @@ public class ProblemController {
             double ability = abilityService.GetAbility(u_id);
             Integer SpendTime = SpendTimeUtil.GetSpendTime(ability);
             System.out.println(SpendTime);
+
+            problemResultRestResponseVO = problemService.querySource_code(compId,problemId,user.getId());
+            System.out.println(problemResultRestResponseVO.getData());
         }
+        SourceCode sourceCode = new SourceCode();
+        sourceCode.setCode(problemResultRestResponseVO.getData().getSourceCode());
+        sourceCode.setType(problemResultRestResponseVO.getData().getType());
 
 
         ProblemDetailVO detailVO = problemService.getDetailVOById(problemId).getData();
@@ -126,6 +135,7 @@ public class ProblemController {
         //set data
         request.setAttribute("problem", detailVO);
         request.setAttribute("compId", compId);
+        request.setAttribute("sourceCode",sourceCode);
         request.setAttribute("active2", true);
         return "portal/problem/problem-detail";
     }

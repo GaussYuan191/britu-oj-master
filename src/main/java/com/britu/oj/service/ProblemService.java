@@ -1,5 +1,6 @@
 package com.britu.oj.service;
 
+import com.britu.oj.entity.ProblemResult;
 import com.britu.oj.response.RestResponseVO;
 import com.github.pagehelper.PageInfo;
 import com.britu.oj.entity.Problem;
@@ -30,4 +31,5 @@ public interface ProblemService {
 
     RestResponseVO<ProblemDetailVO> getDetailVOById(Integer problemId);
 
+    RestResponseVO<ProblemResult> querySource_code(Integer compId, Integer problemId, Integer userId);
 }

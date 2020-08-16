@@ -39,4 +39,6 @@ public interface ProblemResultMapper {
     List<UserProblemRecordVO> listProblemRecord(@Param("userId") Integer userId, @Param("flag") Integer flag);
 
     int deleteByProblemId(Integer problemId);
+
+    ProblemResult querySource_code(@Param("userId") Integer userId,@Param("compId") Integer compId,@Param("problemId") Integer problemId);
 }

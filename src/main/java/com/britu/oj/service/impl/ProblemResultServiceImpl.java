@@ -14,6 +14,7 @@ import com.britu.oj.service.CompetitionProblemService;
 import com.britu.oj.service.ProblemResultService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -33,6 +34,9 @@ public class ProblemResultServiceImpl implements ProblemResultService {
 
     @Autowired
     private CompetitionProblemService competitionProblemService;
+
+    @Value("${file.server.testcase.dir}")
+    private String fileServerTestcaseDir;
 
 
     @Override
@@ -166,10 +170,10 @@ public class ProblemResultServiceImpl implements ProblemResultService {
     @Override
     public RestResponseVO submit_input(String testInput,String testOutput,String problemId) {
 
-        String problem_in = testInput;
-        System.out.println(testInput);
-        System.out.println(testOutput);
-        System.out.println(problemId);
+//        String problem_in = testInput;
+//        System.out.println(testInput);
+//        System.out.println(testOutput);
+//        System.out.println(problemId);
 //        if (testInput.contains(" ")){
 //            input1 = testInput.split(" ");
 //            for (int i = 0;i<input1.length;i++) {
@@ -183,17 +187,17 @@ public class ProblemResultServiceImpl implements ProblemResultService {
 //        }
 
         BufferedWriter bw = null,bw1 =null;
-        File dir = new File("D:\\OJ\\britu-oj-Judge-master\\data\\testcase\\"+problemId);
-        File problem_dir = new File(dir+"\\input");
-        File problem_dir1 = new File(dir+"\\output");
-        File problem_dir2 = new File(dir+"\\input_test");
-        File problem_dir3 = new File(dir+"\\output_test");
+        File dir = new File(fileServerTestcaseDir+"/"+problemId);
+        File problem_dir = new File(dir+"/input");
+        File problem_dir1 = new File(dir+"/output");
+        File problem_dir2 = new File(dir+"/input_test");
+        File problem_dir3 = new File(dir+"/output_test");
         System.out.println(dir);
         System.out.println(problem_dir);
         System.out.println(problem_dir1);
         try
         {
-            if ((!dir.exists())&&(!problem_dir.exists())&&(!problem_dir1.exists())&&(!problem_dir2.exists())&&(!problem_dir3.exists())) {
+            if ((!problem_dir3.exists())&&(!problem_dir2.exists())&&(!problem_dir1.exists())&&(!problem_dir.exists())&&(!dir.exists())) {
                 dir.mkdir();
                 problem_dir.mkdir();
                 problem_dir1.mkdir();

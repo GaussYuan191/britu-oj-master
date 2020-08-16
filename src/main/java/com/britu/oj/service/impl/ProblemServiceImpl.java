@@ -1,5 +1,6 @@
 package com.britu.oj.service.impl;
 
+import com.britu.oj.entity.ProblemResult;
 import com.britu.oj.utils.RecommendUitl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -235,6 +236,13 @@ public class ProblemServiceImpl implements ProblemService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public RestResponseVO<ProblemResult> querySource_code(Integer compId, Integer problemId, Integer userId) {
+        ProblemResult problemResult = problemResultMapper.querySource_code(userId,compId,problemId);
+//        System.out.println(problemResult);
+        return RestResponseVO.createBySuccess(problemResult);
     }
 
 }
