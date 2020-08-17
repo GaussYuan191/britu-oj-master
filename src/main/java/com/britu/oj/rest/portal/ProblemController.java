@@ -47,6 +47,8 @@ public class ProblemController {
 
     private final Integer SUGGEST_PROBLEM_ROW = 5;
 
+    private String p_id;
+
     /**
      * 跳转到题目List页面
      *
@@ -108,6 +110,7 @@ public class ProblemController {
     @RequestMapping("/problemDetailPage")
     public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, Integer problemId,Integer compId) {
         Integer u_id;
+//        p_id = problemId
         RestResponseVO<ProblemResult> problemResultRestResponseVO = null;
         if (userDetails == null) {
             System.out.println("请先登入");
@@ -116,9 +119,9 @@ public class ProblemController {
         else{
             User user = (User) userDetails;
             u_id = user.getId();
-            double ability = abilityService.GetAbility(u_id);
-            Integer SpendTime = SpendTimeUtil.GetSpendTime(ability);
-            System.out.println(SpendTime);
+//            double ability = abilityService.GetAbility(u_id);
+//            Integer SpendTime = SpendTimeUtil.GetSpendTime(ability);
+//            System.out.println(SpendTime);
 
             problemResultRestResponseVO = problemService.querySource_code(compId,problemId,user.getId());
             System.out.println(problemResultRestResponseVO.getData());
@@ -139,6 +142,37 @@ public class ProblemController {
         request.setAttribute("active2", true);
         return "portal/problem/problem-detail";
     }
+
+    /**
+     *
+     * @param
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getSpendTime")
+    @ResponseBody
+        public Integer getSpendTime(@AuthenticationPrincipal UserDetails userDetails){
+                Integer u_id;
+                if (userDetails == null) {
+                    System.out.println("请先登入");
+                    return null;
+
+                }
+                else{
+                    User user = (User) userDetails;
+                    u_id = user.getId();
+                    double ability = abilityService.GetAbility(u_id);
+                    Integer SpendTime = SpendTimeUtil.GetSpendTime(ability);
+                    System.out.println(SpendTime);
+                    return SpendTime;
+
+                }
+
+
+        }
+
+
     @RequestMapping("/answer")
 
     public String problemAnswer(HttpServletRequest request,Integer problemId,Integer compId){
