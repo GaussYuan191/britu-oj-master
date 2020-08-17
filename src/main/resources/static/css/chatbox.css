@@ -9,30 +9,31 @@ author: Assassin_YU
     height: 60px;
     top: 40%;
     right: 0;
+    background-image: url("../img/chat.jpg");
     border-radius: 30px;
-    background-image: url("../img/talk.jpg");
     z-index: 1;
     transform: translateY(3px);
-    transition: transform .3s ease-in-out
+    transition: transform .3s ease-in-out;
 }
 .comment:hover {
     transform: translateY(-5px);
-    box-shadow: 10px 10px 10px -4px rgba(0,0,0,.3);
+    box-shadow: 6px 9px 4px -6px rgba(0,0,0,.3);
+
 }
 #chatbox {
     bottom: -1000px;
     left: 600px;
-    height: 600px;
+    height: 550px;
     width: 500px;
     position: fixed;
     transform: translateY(3px);
     transition: transform .3s ease-in-out, bottom 1s ease-in-out;
-    z-index: 1;
+    z-index: 20;
     border-radius: 50px;
 }
 
 #chatbox:hover {
-    transform: translateY(-10px);
+    /*transform: translateY(-10px);*/
     box-shadow: 10px 10px 10px -4px rgba(0,0,0,.3);
 }
 
@@ -65,7 +66,7 @@ body {
     left: 50%;
     width: 100%;
     height: 100%;
-    background-color: var(--white);
+    background-color: #f8f8f8;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     border-radius: 50px;
@@ -79,6 +80,7 @@ body {
     background-color: #eceff1;
     position: relative;
     border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
 }
 
 .Container .top span {
@@ -109,6 +111,17 @@ body {
     line-height: 40px;
 }
 
+.Container .write .stop {
+    float: left;
+    line-height: 40px;
+    height: 20px;
+    width: 20px;
+    background-image: url("../img/stop.png");
+    margin-left: 9px;
+    margin-top: 10px;
+}
+
+
 .Container .write {
     position: absolute;
     bottom: 30px;
@@ -123,9 +136,9 @@ body {
 .Container .write input {
     font-size: 16px;
     float: left;
-    width: 380px;
+    width: 350px;
     height: 40px;
-    padding: 0 10px;
+    padding: 0 5px;
     color: var(--dark);
     border: 0;
     outline: none;
@@ -133,6 +146,7 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
     margin-left: 5px;
+    border-left: 1px solid #cccccc;
 }
 
 
@@ -148,7 +162,7 @@ body {
 
 .Container .content {
     width: auto;
-    height: 420px;
+    height: 380px;
     margin: 10px auto;
     overflow-y:auto;
     border-bottom: 1px solid #cccccc;
@@ -160,15 +174,29 @@ body {
     top: 0;
     clear: both;
 }
+
 .bubble_me {
     position: relative;
     right: 0;
     top: 0;
     clear: both;
 }
+#bubble_meme {
+    position: relative;
+    right: 0;
+    top: 0;
+    clear: both;
+}
+.wait {
+    display: inline-block;
+    background-image: url("../img/wait.gif");
+    width: 32px;
+    height: 32px;
+    float: right;
+}
 .img_1 {
     display: inline-block;
-    background-image: url("image/fairy.png");
+    background-image: url("../img/britu.png");
     width: 50px;
     height: 50px;
     margin-left: 0;
@@ -176,7 +204,7 @@ body {
 }
 .img_2 {
     display: inline-block;
-    background-image: url("image/fairy.png");
+    background-image: url("../img/britu.png");
     width: 50px;
     height: 50px;
     margin-right: 0;
@@ -196,6 +224,18 @@ body {
     float: left;
     margin-bottom: 10px;
 }
+.bubble_1 .tri_1 {
+    position: absolute;
+    left: -15px;
+    top: 10px;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+    border: 10px solid transparent;
+    border-right-color: var(--blue);
+}
+
 
 .bubble_2 {
     display: inline-block;
@@ -204,12 +244,39 @@ body {
     height: auto;
     font-size: 16px;
     color: var(--dark);
-    background-color: #eceff1;
+    background-color: #9ee658;
     border-radius: 10px;
     padding: 8px;
     line-height: 20px;
     float: right;
     margin-bottom: 10px;
+    margin-right: 5px;
+}
+.bubble_2 .tri_2 {
+    position: absolute;
+    right: -15px;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-left-color: #9ee658;
+    line-height: 0;
+    font-size: 0;
+}
+.bubble_3 {
+    display: inline-block;
+    position: relative;
+    width: 60%;
+    height: 50px;
+    font-size: 16px;
+    color: var(--dark);
+    background-color: #9ee658;
+    border-radius: 10px;
+    padding: 8px;
+    line-height: 20px;
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 5px;
 }
 @-webkit-keyframes list
 {
@@ -288,4 +355,9 @@ body {
     -webkit-animation-delay: 0.7s !important;
     animation-delay: 0.6s !important;
 }
-
+#box {
+    height: 30px;
+    width: 400px;
+    margin: 0 auto;
+    z-index: 1;
+}

@@ -161,110 +161,93 @@
             xhr.onreadystatechange = function() {//Call a function when the state changes.
                 if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {//xhr.readyState == 4等价于XMLHttpRequest.DONE
                     // 请求结束后,在此处写处理代码
-                   alert(1);
+
+                    // alert(1);
                     var jsoncontent = JSON.parse(xhr.responseText);/*将获取的信息解析为json对象*/
 
                     if(jsoncontent['code'] == 200){
-                        alert(jsoncontent['code']);
-
-
+                        // alert(jsoncontent['code']);
                         var message = jsoncontent['message'];
                         var data = jsoncontent['data'];
                         var text = jsoncontent['text'];
-                        alert(text);
-                        if(message == 'Success'){
-
-
-                            // 问方
+                        function ask() {
                             var div = document.createElement('div');
                             var span_1 = document.createElement('span');
                             var span_2 = document.createElement('span');
-
+                            var span_3 = document.createElement('span');
                             var txt = document.createTextNode(text);
                             var content = document.getElementsByClassName('content')[0];
-
-
-                            span_1.appendChild(txt);
-                            div.appendChild(span_2);
-                            div.appendChild(span_1);
-                            // div.appendChild(imgs);
-                            // nDiv.style.display='block';
-                            content.insertBefore(div,content.lastChild);
                             span_1.className='bubble_2';
                             span_2.className='img_2';
+                            span_3.className='tri_2';
                             div.className='bubble_me';
+                            span_1.appendChild(txt);
+                            span_1.appendChild(span_3);
+                            div.appendChild(span_2);
+                            div.appendChild(span_1);
+                            content.insertBefore(div,content.lastChild);
+                            content.scrollTop = content.scrollHeight;//自动跟进最新消息
+                        }
+
+                        // alert(text);
+                        if(message == 'Success'){
+                            var el = document.getElementById('bubble_meme');
+                            el.parentNode.removeChild(el);
+                            // document.getElementsByClassName("bubble_meme").style.display = "none";
+                            // 问方
+                            ask();
 
                             //答方
-                            var txt2 = document.createTextNode(data);
+                            setTimeout(function(){
+                                var txt2 = document.createTextNode(data);
+                                var div = document.createElement('div');
+                                var span_1 = document.createElement('span');
+                                var span_2 = document.createElement('span');
+                                var span_3 = document.createElement('span');
+                                var content = document.getElementsByClassName('content')[0];
+                                span_1.className='bubble_1';
+                                span_2.className='img_1';
+                                span_3.className='tri_1';
+                                div.className='bubble_you';
+                                span_1.appendChild(txt2);
+                                span_1.appendChild(span_3);
+                                div.appendChild(span_2);
+                                div.appendChild(span_1);
+                                content.insertBefore(div,content.lastChild);
+                                content.scrollTop = content.scrollHeight;//自动跟进最新消息
+                            }, 1000);
 
-                            var div = document.createElement('div');
-                            var span_1 = document.createElement('span');
-                            var span_2 = document.createElement('span');
-                            // var img = document.createElement('img');
-                            // var txt = document.createTextNode(text.value);
-                            var content = document.getElementsByClassName('content')[0];
 
-                            span_1.appendChild(txt2);
-                            div.appendChild(span_2);
-                            div.appendChild(span_1);
-                            // div.appendChild(imgs);
-                            // nDiv.style.display='block';
-                            content.insertBefore(div,content.lastChild);
-                            span_1.className='bubble_1';
-                            span_2.className='img_1';
-                            div.className='bubble_you';
-
-                        }
-                        else{
+                        }else{
                             // 问方
-                            var div = document.createElement('div');
-                            var span_1 = document.createElement('span');
-                            var span_2 = document.createElement('span');
-
-                            var txt = document.createTextNode(text);
-                            var content = document.getElementsByClassName('content')[0];
-
-
-                            span_1.appendChild(txt);
-                            div.appendChild(span_2);
-                            div.appendChild(span_1);
-                            // div.appendChild(imgs);
-                            // nDiv.style.display='block';
-                            content.insertBefore(div,content.lastChild);
-                            span_1.className='bubble_2';
-                            span_2.className='img_2';
-                            div.className='bubble_me';
-
+                            var el = document.getElementById('bubble_meme');
+                            el.parentNode.removeChild(el);
+                            ask();
                             // 答方
-                            var txt2 = document.createTextNode(message);
-                            alert(message);
-
-                            var div = document.createElement('div');
-                            var span_1 = document.createElement('span');
-                            var span_2 = document.createElement('span');
-                            // var img = document.createElement('img');
-                            // var txt = document.createTextNode(text.value);
-                            var content = document.getElementsByClassName('content')[0];
-
-                            span_1.appendChild(txt2);
-                            div.appendChild(span_2);
-                            div.appendChild(span_1);
-                            // div.appendChild(imgs);
-                            // nDiv.style.display='block';
-                            content.insertBefore(div,content.lastChild);
-                            span_1.className='bubble_1';
-                            span_2.className='img_1';
-                            div.className='bubble_you';
+                            setTimeout(function () {
+                                var txt2 = document.createTextNode(message);
+                                // alert(message);
+                                var div = document.createElement('div');
+                                var span_1 = document.createElement('span');
+                                var span_2 = document.createElement('span');
+                                var span_3 = document.createElement('span');
+                                var content = document.getElementsByClassName('content')[0];
+                                span_1.className='bubble_1';
+                                span_2.className='img_1';
+                                span_3.className='tri_1';
+                                div.className='bubble_you';
+                                span_1.appendChild(txt2);
+                                span_1.appendChild(span_3);
+                                div.appendChild(span_2);
+                                div.appendChild(span_1);
+                                content.insertBefore(div,content.lastChild);
+                                content.scrollTop = content.scrollHeight;//自动跟进最新消息
+                            },1000);
                         }
 
                     }
-
-
-
-
                 }
             }
-
             console.log(fd)
         }
 
@@ -317,8 +300,6 @@
             }
         }
     }
-
     window.swrecorder = SWRecorder;
-
 
 })(window);
