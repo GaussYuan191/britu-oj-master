@@ -161,12 +161,8 @@
                         <div class="col-6">
                             <div class="text-center ">
                                 <span sec:authorize="isAuthenticated()">
-<!--                                    <h3>欢迎回来，<a class="text-primary">[[${#authentication.principal.name}]]</a></h3>-->
                                 </span>
-<!--                                <h3 class="text-danger">[[${#dates.format(nowDate,'yyyy')}]]&nbsp;Years</h3>-->
-<!--                                <h3 class="text-success">[[${#dates.format(nowDate,'MM')}]]&nbsp;Month</h3>-->
-<!--                                <h3 class="text-primary">[[${#dates.format(nowDate,'dd')}]]&nbsp;Day</h3>-->
-<!--                                <h4 class="text-warning">距 2020-ACM-WorldFinal 还剩 229 天</h4>-->
+
                             </div>
                         </div>
                     </div>
@@ -194,8 +190,8 @@
                             <div class="card">
                                 <div class="card-block  ">
                                     <div class="row">
-                                        <img th:src="@{/img/img1.jpg}" class="col-4">
                                         <img th:src="@{/img/img2.jpg}" class="col-4">
+                                        <img th:src="@{/img/img1.jpg}" class="col-4">
                                         <img th:src="@{/img/img3.jpg}" class="col-4">
                                     </div>
                                 </div>

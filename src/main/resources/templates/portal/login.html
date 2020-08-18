@@ -4,6 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>登录</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/problem_detail.css}"/>
     <div th:replace="~{fragments/head-base}"></div>
 </head>
 <body class="body sidebar-left-hidden fixedNav_position fixedMenu_left ">
@@ -26,19 +27,19 @@ z-index: 999999">
     </div>
 </div>
 <!--wrap-->
-<div id="wrap">
+<div id="wrap" class="login_reg" >
     <div th:replace="~{fragments/top :: top}"></div>
     <!-- /#top -->
-    <div class="wrapper fixedNav_top">
+    <div class="wrapper fixedNav_top" >
         <div th:replace="~{fragments/left :: left}"></div>
         <!-- /#left -->
-        <div id="content" class="bg-container">
-            <div class="outer">
-                <div class="inner bg-container">
+        <div id="content " class="bg-container">
+            <div class="outer" >
+                <div class="inner bg-container" >
                     <!--start-->
                     <!--end-->
-
-                    <div class="row" >
+<!--                    <img src="img/backImg.jpg" style="width: 300px;height: 300px;">-->
+                    <div class="row">
                         <div style="margin: 0 auto;">
                             <div class=" m-t-35  signin_wid" style="width: 400px">
                                 <!-- <div class="card-header bg-white">

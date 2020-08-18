@@ -1,4 +1,22 @@
 #editor{
 	height: 733px;
-
 }
+.glyphicon-refresh:before {
+	content: "\e031";
+}
+.code-editor-option-title {
+	font-size: 17px;
+	margin-bottom: 10px;
+}
+.visible-xs-block{
+	display: none!important;
+}
+.code-editor-option-description {
+	font-size: 13px;
+	color: grey;
+}
+.login_reg{
+	background-image: url(../../img/backImg.jpg);
+	height: 610px;
+}
+

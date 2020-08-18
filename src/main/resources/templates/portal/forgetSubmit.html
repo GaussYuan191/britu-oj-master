@@ -4,6 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>找回密码</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/problem_detail.css}"/>
     <div th:replace="~{fragments/head-base}"></div>
 </head>
 <body class="body sidebar-left-hidden fixedNav_position fixedMenu_left ">
@@ -26,7 +27,7 @@ z-index: 999999">
     </div>
 </div>
 <!--wrap-->
-<div id="wrap">
+<div id="wrap" class="login_reg">
     <div th:replace="~{fragments/top :: top}"></div>
     <!-- /#top -->
     <div class="wrapper fixedNav_top">
@@ -44,7 +45,7 @@ z-index: 999999">
                                 <div>
                                     <!-- logo -->
                                     <div class="m-t-30 text-center">
-                                        <img src="img/loginLogo.png" style="width: 300px"/>
+<!--                                        <img src="img/login.png" />-->
                                         <h3 class="mt-4">重设密码和两步验证-最后一步!</h3>
                                     </div>
                                     <form class="mt-3">

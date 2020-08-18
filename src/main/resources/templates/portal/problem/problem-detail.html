@@ -142,7 +142,7 @@ z-index: 999999">
                             <div class="row">
                                 <div class="col-12">
                                     <div class=" float-left">
-                                        <button style="width: 150px"
+                                        <button style="width: 150px" title="选择编程语言"
                                                 class="btn btn-secondary dropdown-toggle"
                                                 type="button"
                                                 id="dropdownMenuButton"
@@ -163,6 +163,24 @@ z-index: 999999">
                                                href="javascript:void(0)">Python3</a>
                                         </div>
                                     </div>
+                                    <div class="float-right">
+                                        <button style="width: 50px; margin-left: 10px;" title="代码重置"
+                                                class="btn btn-secondary"
+                                                type="button"
+                                                onclick="refresh()"
+                                                aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-refresh mr-1" style="margin-left: 2px;"></i>
+                                        </button>
+                                        <button style="width: 50px; margin-left: 10px;" title="编辑器设置"
+                                                class="btn btn-secondary"
+                                                type="button"
+                                                data-toggle="modal" data-href="#stack4" href="#stack4"
+                                                aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-cog mr-1" style="margin-left: 2px;"></i>
+                                        </button>
+                                    </div>
+
+
                                 </div>
                                 <div class="col-12 mt-2 ">
                                     <div id="editor" class="custom_card w-100 col-12"></div>
@@ -217,6 +235,128 @@ z-index: 999999">
             </div>
         </form>
     </div>
+
+    <!--- stack4 model 代码编辑器-->
+    <div class="modal fade bs-example-modal-sm in display_none" id="stack4" tabindex="-1" role="dialog"
+         aria-hidden="false">
+        <div class="modal-dialog modal-lg" style="width: 600px">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h4 class="modal-title ">代码器编辑设置</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <hr style="margin: 0 0 10px 0;">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-8 col-xs-12">
+                            <div class="code-editor-option-title">
+                                界面风格
+                            </div>
+                            <div class="code_editor_option_theme visible-xs-block">
+                                <select name="theme_option" style="max-width: 220px; border-radius: 4px; margin-bottom: 10px;" class="form-control code-editor-option" id="theme_option">
+                                    <option value="1" selected="">Textmate</option>
+
+                                    <option value="2">Monoka</option>
+
+                                    <option value="3">Eclipse</option>
+
+                                </select>
+                            </div>
+                            <div class="code-editor-option-description">
+                                对白色界面感到厌倦了吗？可以尝试其他的背景和代码高亮风格。
+                            </div>
+                        </div>
+                        <div class="code_editor_option_theme col-sm-4 hidden-xs">
+                            <select name="theme_option" style="max-width: 220px; border-radius: 4px; margin-bottom: 10px;" class="form-control code-editor-option" id="id_theme_option">
+                                <option value="textmate" selected="">Textmate</option>
+
+                                <option value="monokai">Monokai</option>
+
+                                <option value="dracula">Dracula</option>
+
+                                <option value="gob">Gob</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-8 col-xs-12">
+                            <div class="code-editor-option-title">
+                                字体大小
+                            </div>
+                            <div class="code_editor_option_theme visible-xs-block">
+                                <select name="theme_option" style="max-width: 220px; border-radius: 4px; margin-bottom: 10px;" class="form-control code-editor-option" id="key_binding_option">
+                                    <option value="12">12px</option>
+
+                                    <option value="14">14px</option>
+
+                                    <option value="18" selected="">18px</option>
+
+                                    <option value="22">22px</option>
+
+                                </select>
+                            </div>
+                            <div class="code-editor-option-description">
+                                更喜欢自己设置字体大小吗？我们也为你提供了这些选项。
+
+                            </div>
+                        </div>
+                        <div class="code_editor_option_theme col-sm-4 hidden-xs">
+                            <select name="theme_option" style="max-width: 220px; border-radius: 4px; margin-bottom: 10px;" class="form-control code-editor-option" id="id_key_binding_option">
+                                <option value="12">12px</option>
+
+                                <option value="14">14px</option>
+
+                                <option value="18" selected="">18px</option>
+
+                                <option value="22">22px</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-8 col-xs-12">
+                            <div class="code-editor-option-title">
+                                缩进长度
+                            </div>
+                            <div class="code_editor_option_theme visible-xs-block">
+                                <select name="theme_option" style="max-width: 220px; border-radius: 4px; margin-bottom: 10px;" class="form-control code-editor-option" id="tab_size_option">
+                                    <option value="1">2个空格</option>
+
+                                    <option value="2" selected="">4个空格</option>
+
+                                    <option value="3">8个空格</option>
+
+                                </select>
+                            </div>
+                            <div class="code-editor-option-description">
+                                选择代码缩进的长度。默认是4个空格。
+                            </div>
+                        </div>
+                        <div class="code_editor_option_theme col-sm-4 hidden-xs">
+                            <select name="theme_option" style="max-width: 220px; border-radius: 4px; margin-bottom: 10px;" class="form-control code-editor-option" id="id_tab_size_option">
+                                <option value="2">2个空格</option>
+
+                                <option value="4" selected="">4个空格</option>
+
+                                <option value="8">8个空格</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <hr style="margin: 10px 0 0 0;">
+                <div class="modal-footer">
+                    <!--<button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>-->
+                    <button type="button" data-dismiss="modal" id="changeEditor" class="btn btn-info" onclick="changeEditor()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!--- stack1 model 运行测试-->
     <div class="modal fade bs-example-modal-sm in display_none" id="stack1" tabindex="-1" role="dialog"
@@ -288,6 +428,8 @@ z-index: 999999">
     var problemId = [[${problem.id}]];
     var problemName = [[${problem.name}]];
     var compId = [[${compId}]];
+
+
 
     // vue
     var changeListApp = new Vue({

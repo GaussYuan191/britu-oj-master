@@ -12,21 +12,54 @@ editor.getSession().setUseWrapMode(true);
 //设置打印边距可见度
 editor.setShowPrintMargin(false);
 editor.session.setMode("ace/mode/java");
-editor.setTheme("ace/theme/monokai");
+editor.setTheme("ace/theme/textmate");
 editor.setOptions({
     enableBasicAutocompletion: false,
-    enableSnippets: true,
+    enableSnippets: false,
     enableLiveAutocompletion: true
+
 });
+
+/**
+ * 代码编辑器
+ * @param
+ */
+
+function changeEditor() {
+    var theme = $('#id_theme_option option:selected').val()
+    var tabsize = $('#id_tab_size_option option:selected').val()
+    var fontsize = $('#id_key_binding_option option:selected').val()
+
+    editor.setTheme("ace/theme/"+theme);
+    editor.getSession().setTabSize(tabsize);
+    editor.setFontSize(parseInt(fontsize));
+}
+
+/**
+ * 代码重置
+ * @param
+ */
+
+function refresh() {
+    editor.setValue('')
+}
+
 
 /**
  * 选择语言
  * @param type
  */
 function setCodeType(type) {
+
+    $.message({
+        message: '正在切换编程语言...',
+        type: 'warning'
+    });
     $("#dropdownMenuButton").html(type);
     $("#type").val(type);
+
     if ("C" == type) {
+
         editor.session.setMode("ace/mode/c_cpp");
         editor.setValue("#include <stdio.h>\n" +
             "\n" +
@@ -73,8 +106,11 @@ function setCodeType(type) {
  * 提交代码
  */
 function submit(problemName, compId) {
+
     var type = $("#type").val();
     var sourceCode = editor.getValue();
+
+
     if (!type || type == -1) {
         $.message({
             message: "请选择编程语言",
@@ -83,12 +119,30 @@ function submit(problemName, compId) {
         return;
     }
     if (!sourceCode) {
+
         $.message({
             message: "请编写代码",
             type: 'warning'
         });
         return;
     }
+
+    // if (typeof(Storage) !== "undefined") {
+    //     if (localStorage) {
+    //         localStorage.setItem('btn',type)
+    //         localStorage.setItem('code',sourceCode)
+    //     } else {
+    //         localStorage.setItem('1',"#include <stdio.h>\n" +
+    //             "\n" +
+    //             "int main() {\n" +
+    //             "    \n" +
+    //             "    return 0;\n" +
+    //             "}")
+    //     }
+    //     editor.setValue(localStorage.getItem('1'))
+    //
+    // }
+
     swal({
         title: '确认提交代码?',
         // text: '提醒',
