@@ -2224,11 +2224,11 @@ tbody.collapse.show {
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: 0;
+  left: 14px;
   z-index: 1000;
   display: none;
   float: left;
-  min-width: 10rem;
+  min-width: 9.5rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
   font-size: 14px;

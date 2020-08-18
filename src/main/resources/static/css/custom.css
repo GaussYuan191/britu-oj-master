@@ -436,7 +436,7 @@ button, .btn {
 }
 
 .bg-container {
-    background: #fff;
+    /*background: #fff;*/
     color: #525252;
 }
 
@@ -1503,7 +1503,7 @@ a.list-group-item {
 .Wrap, #wrap {
     margin: 0 auto -20px auto;
     position: relative;
-    background: #fff;
+    /*background: #fff;*/
 }
 
 .xs_skin_hide {

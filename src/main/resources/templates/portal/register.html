@@ -4,6 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>注册</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/problem_detail.css}"/>
     <div th:replace="~{fragments/head-base}"></div>
 </head>
 <body class="body sidebar-left-hidden fixedNav_position fixedMenu_left ">
@@ -26,7 +27,7 @@ z-index: 999999">
     </div>
 </div>
 <!--wrap-->
-<div id="wrap">
+<div id="wrap" class="login_reg">
     <div th:replace="~{fragments/top :: top}"></div>
     <!-- /#top -->
     <div class="wrapper fixedNav_top">
