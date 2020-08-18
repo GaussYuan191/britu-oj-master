@@ -109,16 +109,32 @@ public class ProblemResultController {
 
 
     /**
-     * 提交题目代码
+     * 提交题目输入文档
+     *
+     * @param testInput
+     * @param testOutput
+     * @param problemId
+     * @return
+     */
+    @RequestMapping("/submit_input")
+    @ResponseBody
+    public RestResponseVO submit_input(String testInput,String testOutput,String problemId) {
+
+        return problemResultService.submit_input(testInput,testOutput,problemId);
+    }
+
+    /**
+     * 测试入口上传代码
      *
      * @param userDetails
      * @param problemResult
      * @param bindingResult
-     * @return runNum
+     * @return
      */
-    @RequestMapping("/submit")
+    @RequestMapping("submit_code")
     @ResponseBody
-    public RestResponseVO<String> submit(@AuthenticationPrincipal UserDetails userDetails, @Validated ProblemResult problemResult, BindingResult bindingResult) {
+    public RestResponseVO<String> submit_code(@AuthenticationPrincipal UserDetails userDetails, @Validated ProblemResult problemResult, BindingResult bindingResult) {
+        problemResult.setTestcode("1");
         if (userDetails == null) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.UNAUTHORIZED);
         }
@@ -148,6 +164,63 @@ public class ProblemResultController {
             }
         }
 
+        //init
+        problemResult.setUserId(user.getId());
+        problemResult.setStatus(JudgeStatusEnum.QUEUING.getStatus());
+        problemResult.setRunNum(UUIDUtil.createByAPI36());
+        return producer.send(problemResult);
+    }
+
+    /**
+     * 提交题目代码
+     *
+     * @param userDetails
+     * @param problemResult
+     * @param bindingResult
+     * @return runNum
+     */
+    @RequestMapping("/submit")
+    @ResponseBody
+    public RestResponseVO<String> submit(@AuthenticationPrincipal UserDetails userDetails, @Validated ProblemResult problemResult, BindingResult bindingResult) {
+//        System.out.println(userDetails);
+        System.out.println(problemResult);
+        problemResult.setTestcode("0");
+        if (userDetails == null) {
+            return RestResponseVO.createByErrorEnum(RestResponseEnum.UNAUTHORIZED);
+        }
+        User user = (User) userDetails;
+//        System.out.println(user);
+//        System.out.println(bindingResult.hasErrors());
+        if (bindingResult.hasErrors()) {
+            return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
+        }
+
+        System.out.println(problemResult.getCompId());
+        if (problemResult.getCompId() != null) {
+            Competition competition = competitionService.getById(problemResult.getCompId()).getData();
+            if (competition == null) {
+                return RestResponseVO.createByErrorEnum(RestResponseEnum.COMPETITION_NOT_FOUND_ERROR);
+            }
+            Instant nowDate = Instant.now();
+            boolean isStarted = nowDate.isAfter(competition.getStartTime().toInstant());
+            boolean isClosed = nowDate.isAfter(competition.getEndTime().toInstant());
+            if (!isStarted) {
+                return RestResponseVO.createByErrorEnum(RestResponseEnum.COMPETITION_NOT_START_ERROR);
+            }
+            if (isClosed) {
+                return RestResponseVO.createByErrorEnum(RestResponseEnum.COMPETITION_CLOSED_ERROR);
+            }
+
+            RestResponseVO isRegistered = registerService.isRegisterCompetition(user.getId(), problemResult.getCompId());
+            if (!isRegistered.isSuccess()) {
+                return RestResponseVO.createByErrorEnum(RestResponseEnum.COMPETITION_NOT_REGISTER);
+            }
+        }
+
+//        System.out.println(user.getId());
+//        System.out.println(JudgeStatusEnum.QUEUING.getStatus());
+//        System.out.println(UUIDUtil.createByAPI36());
+        System.out.println(problemResult);
         //init
         problemResult.setUserId(user.getId());
         problemResult.setStatus(JudgeStatusEnum.QUEUING.getStatus());

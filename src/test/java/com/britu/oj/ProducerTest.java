@@ -16,11 +16,12 @@ public class ProducerTest {
 
     public static void main(String[] args) throws MQClientException, InterruptedException, RemotingException, MQBrokerException {
         ProblemResult problemResult = new ProblemResult();
-        String body = JsonUtil.obj2String(problemResult);
+//        String body = JsonUtil.obj2String(problemResult);
+        String body = "hi";
         //创建一个生产者
-        DefaultMQProducer producer=new DefaultMQProducer("judgeProducerGroup");
+        DefaultMQProducer producer=new DefaultMQProducer("judgeProducerGroup1");
         //设置NameServer地址
-        producer.setNamesrvAddr("127.0.0.1:9876");
+        producer.setNamesrvAddr("39.106.134.120:9876");
         producer.setRetryTimesWhenSendFailed(Integer.parseInt("3"));
         //设置生产者实例名称
         producer.setInstanceName("provider");
@@ -32,7 +33,7 @@ public class ProducerTest {
             //创建消息  topic代表主题名称
             Message message= null;
             try {
-                message = new Message("ojcode", body.getBytes(RemotingHelper.DEFAULT_CHARSET));
+                message = new Message("ojcode1", body.getBytes(RemotingHelper.DEFAULT_CHARSET));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

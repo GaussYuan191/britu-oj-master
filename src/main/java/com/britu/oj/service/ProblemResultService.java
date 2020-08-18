@@ -26,4 +26,6 @@ public interface ProblemResultService {
     RestResponseVO<ProblemResultDetailVO> getById2DetailVO(Integer problemResultId);
 
     RestResponseVO<PageInfo> listProblemResultCompetitionVO2Page(Integer pageNum, Integer pageSize, Integer userId, Integer compId);
+
+    RestResponseVO submit_input(String testInput, String testOutput, String problemId);
 }

@@ -18,6 +18,9 @@
 <body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
 <a href="javascript:;" class="comment" id="chat"></a>
 
+
+
+
 <div id="chatbox">
     <div class="Container">
 
@@ -32,27 +35,42 @@
         <div class="content">
             <div class="bubble_you">
                 <span class="img_1"></span>
-                <span class="bubble_1">Hello,我是Britu小精灵。你有什么不懂的问题吗？我可是全知全能哟！</span>
+                <span class="bubble_1">
+                    <span class="tri_1"></span>
+                    Hello,我是Britu小精灵。你有什么不懂的问题吗？我可是全知全能哟！
+                </span>
             </div>
             <div class="bubble_me">
                 <span class="img_2"></span>
-                <span class="bubble_2">好的呢，我可是有一大堆问题想问的呢。</span>
+                <span class="bubble_2">
+                    <span class="tri_2"></span>
+                    好的呢，我可是有一大堆问题想问的呢。
+                </span>
             </div>
         </div>
-        <div class="list">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
+        <div class="recwave" id="box"></div>
+        <!--        <div id="box">-->
+        <!--            <div class="list">-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
         <div class="write">
-            <!--                    <a href="javascript:;" class="write-link attach"></a>-->
-            <a href="javascript:;" class="recorder fa fa-lg fa-microphone" id = "Recording"></a>
+            <a href="javascript: recopen(); recording(); " class="recorder fa fa-lg fa-microphone" id="Recording"></a>
+            <a href="javascript: notrecording(); " class="stop"></a>
             <input id="text" type="text" placeholder='尽情畅聊吧' />
-            <!--                    <a href="javascript:;" class="write-link smiley"></a>-->
             <a href="javascript:;" class="send fa fa-lg fa-paper-plane" id="send"></a>
+        </div>
+        <div id="bdtts_div_id">
+            <audio id="tts_autio_id" autoplay="autoplay">
+                <source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&per=1&text=" type="audio/mpeg">
+                <embed id="tts_embed_id" height="0" width="0" src="">
+            </audio>
 
         </div>
 
@@ -383,8 +401,53 @@
 <script type="text/javascript" th:inline="javascript"></script>
 <script src="/js/index.js"></script>
 
+<script src = "/js/recorder/recorder-core.js"></script>
+
+<script src = "/js/recorder/extensions/waveview.js"></script>
+<script src = "/js/recorder/extensions/wavesurfer.view.js"></script>
+<script src = "/js/recorder/extensions/lib.fft.js"></script>
+<script src = "/js/recorder/extensions/frequency.histogram.view.js"></script>
+<script src = "/js/recorder/extensions/dtmf.encode.js"></script>
+<script src = "/js/recorder/extensions/dtmf.decode.js"></script>
+
+<script src = "/js/recorder/fragment.playbuffer.js"></script>
+
+<!--<script src = "/js/recorder/core.js"></script>-->
+<script src = "/js/recorder/index.js"></script>
+<script src = "/js/recorder/ztest-jquery.min-1.9.1.js"></script>
+
+
 <!--对话交流js-->
 <script>
+    var rec;
+    window.onload = function (){
+        window.waveStore={};
+        rec=Recorder({
+            onProcess:function(buffers,a,b){
+                waveStore["WaveView"].input(buffers[buffers.length-1],a,b);
+            }
+        });
+        rec.start();
+        rec.open(function(){
+            //此处创建这些音频可视化图形绘制浏览器支持妥妥的
+            waveStore.WaveView=Recorder.WaveView({elem:".recwave"});
+        })
+    };
+    function recopen() {
+        window.waveStore={};
+        rec=Recorder({
+            onProcess:function(buffers,a,b){
+                waveStore["WaveView"].input(buffers[buffers.length-1],a,b);
+            }
+        });
+        rec.start();
+        rec.open(function(){
+            //此处创建这些音频可视化图形绘制浏览器支持妥妥的
+            waveStore.WaveView=Recorder.WaveView({elem:".recwave"});
+        })
+    }
+
+
     var send =document.getElementById('send');
     // var pic =document.getElementById('pic');
     var text =document.getElementById('text');
@@ -400,14 +463,22 @@
     var recorder;
     recording.onclick = function(){
         if((num % 2) === 0){
-            startRecording();
+            alert(1)
+            // startRecording();
+            recopen();
+            alert(2)
+            recstart();
             alert("开始语音识别，再点击录音按钮结束");
             num++;
         }
         else{
             alert("识别结束，等待结果");
-            stopRecording();
-            uploadAudio();
+            // stopRecording();
+            // uploadAudio();
+            recstop();
+            var id=RandomKey(16);
+            recplay(id);
+
             num++;
         }
     }
@@ -445,6 +516,7 @@
             var div = document.createElement('div');
             var span_1 = document.createElement('span');
             var span_2 = document.createElement('span');
+            var span_3 = document.createElement('span');
 
             var txt = document.createTextNode(text.value);
             var content = document.getElementsByClassName('content')[0];
@@ -452,15 +524,16 @@
             var xhr = new XMLHttpRequest();
             var fd = new FormData();
 
-            span_1.appendChild(txt);
-            div.appendChild(span_2);
-            div.appendChild(span_1);
-            // div.appendChild(imgs);
-            // nDiv.style.display='block';
-            content.insertBefore(div,content.lastChild);
             span_1.className='bubble_2';
             span_2.className='img_2';
+            span_3.className='tri_2';
             div.className='bubble_me';
+            span_1.appendChild(txt);
+            span_1.appendChild(span_3);
+            div.appendChild(span_2);
+            div.appendChild(span_1);
+            content.insertBefore(div,content.lastChild);
+            content.scrollTop = content.scrollHeight;//自动跟进最新消息
             // imgs.src='img/2.jpg';
             //请求后台
             var url = 'http://yuangauss287.top:9944/api/qa?msg='+ text.value;
@@ -482,46 +555,71 @@
                         if(message == 'Success'){
                             // 创建节点
                             var txt2 = document.createTextNode(data);
-
                             var div = document.createElement('div');
                             var span_1 = document.createElement('span');
                             var span_2 = document.createElement('span');
-                            // var img = document.createElement('img');
-                            // var txt = document.createTextNode(text.value);
+                            var span_3 = document.createElement('span');
                             var content = document.getElementsByClassName('content')[0];
-
-                            span_1.appendChild(txt2);
-                            div.appendChild(span_2);
-                            div.appendChild(span_1);
-                            // div.appendChild(imgs);
-                            // nDiv.style.display='block';
-                            content.insertBefore(div,content.lastChild);
                             span_1.className='bubble_1';
                             span_2.className='img_1';
+                            span_3.className='tri_1';
                             div.className='bubble_you';
+                            span_1.appendChild(txt2);
+                            span_1.appendChild(span_3);
+                            div.appendChild(span_2);
+                            div.appendChild(span_1);
+                            content.insertBefore(div,content.lastChild);
+
+                            var ttsDiv = document.getElementById('bdtts_div_id');
+                            var ttsAudio = document.getElementById('tts_autio_id');
+                            var ttsText = data;
+
+                            // 文字转语音
+                            ttsDiv.removeChild(ttsAudio);
+                            var au1 = '<audio id="tts_autio_id" autoplay="autoplay">';
+                            var sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&per=3&spd=5&text=' + ttsText + '" type="audio/mpeg">';
+                            var eee = '<embed id="tts_embed_id" height="0" width="0" src="">';
+                            var au2 = '</audio>';
+                            ttsDiv.innerHTML = au1 + sss + eee + au2;
+
+                            ttsAudio = document.getElementById('tts_autio_id');
+                            ttsAudio.play();
 
                         }
                         else{
                             // 创建节点
                             var txt2 = document.createTextNode(message);
-
                             var div = document.createElement('div');
                             var span_1 = document.createElement('span');
                             var span_2 = document.createElement('span');
-                            // var img = document.createElement('img');
-                            // var txt = document.createTextNode(text.value);
+                            var span_3 = document.createElement('span');
                             var content = document.getElementsByClassName('content')[0];
-
                             span_1.appendChild(txt2);
+                            span_1.appendChild(span_3);
                             div.appendChild(span_2);
                             div.appendChild(span_1);
-                            // div.appendChild(imgs);
-                            // nDiv.style.display='block';
                             content.insertBefore(div,content.lastChild);
                             span_1.className='bubble_1';
                             span_2.className='img_1';
+                            span_3.className='tri_1';
                             div.className='bubble_you';
+
+                            var ttsDiv = document.getElementById('bdtts_div_id');
+                            var ttsAudio = document.getElementById('tts_autio_id');
+                            var ttsText = message;
+
+                            // 文字转语音
+                            ttsDiv.removeChild(ttsAudio);
+                            var au1 = '<audio id="tts_autio_id" autoplay="autoplay">';
+                            var sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&per=3&spd=5&text=' + ttsText + '" type="audio/mpeg">';
+                            var eee = '<embed id="tts_embed_id" height="0" width="0" src="">';
+                            var au2 = '</audio>';
+                            ttsDiv.innerHTML = au1 + sss + eee + au2;
+
+                            ttsAudio = document.getElementById('tts_autio_id');
+                            ttsAudio.play();
                         }
+                        content.scrollTop = content.scrollHeight;//自动跟进最新消息
 
                     }
 

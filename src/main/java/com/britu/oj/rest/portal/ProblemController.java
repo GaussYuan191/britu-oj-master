@@ -2,6 +2,8 @@ package com.britu.oj.rest.portal;
 
 import com.britu.oj.common.ExceptionStatusConst;
 import com.britu.oj.entity.Answer;
+import com.britu.oj.entity.ProblemResult;
+import com.britu.oj.entity.SourceCode;
 import com.britu.oj.exception.AnswerNotFoundException;
 import com.britu.oj.exception.ProblemNotFoundException;
 import com.britu.oj.repository.AnswerCql;
@@ -9,7 +11,9 @@ import com.britu.oj.response.ProblemDetailVO;
 import com.britu.oj.response.RestResponseVO;
 import com.britu.oj.response.TagVO;
 import com.britu.oj.service.ProblemService;
+import com.britu.oj.service.AbilityService;
 import com.britu.oj.service.TagService;
+import com.britu.oj.utils.SpendTimeUtil;
 import com.github.pagehelper.PageInfo;
 import com.britu.oj.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +42,12 @@ public class ProblemController {
     @Autowired
     AnswerCql answerCql;
 
+    @Autowired
+    private AbilityService abilityService;
+
     private final Integer SUGGEST_PROBLEM_ROW = 5;
+
+    private String p_id;
 
     /**
      * 跳转到题目List页面
@@ -99,7 +108,29 @@ public class ProblemController {
      * @return
      */
     @RequestMapping("/problemDetailPage")
-    public String problemDetailPage(HttpServletRequest request, Integer problemId,Integer compId) {
+    public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, Integer problemId,Integer compId) {
+        Integer u_id;
+//        p_id = problemId
+        RestResponseVO<ProblemResult> problemResultRestResponseVO = null;
+        if (userDetails == null) {
+            System.out.println("请先登入");
+
+        }
+        else{
+            User user = (User) userDetails;
+            u_id = user.getId();
+//            double ability = abilityService.GetAbility(u_id);
+//            Integer SpendTime = SpendTimeUtil.GetSpendTime(ability);
+//            System.out.println(SpendTime);
+
+            problemResultRestResponseVO = problemService.querySource_code(compId,problemId,user.getId());
+            System.out.println(problemResultRestResponseVO.getData());
+        }
+        SourceCode sourceCode = new SourceCode();
+        sourceCode.setCode(problemResultRestResponseVO.getData().getSourceCode());
+        sourceCode.setType(problemResultRestResponseVO.getData().getType());
+
+
         ProblemDetailVO detailVO = problemService.getDetailVOById(problemId).getData();
         if (detailVO == null) {
             throw new ProblemNotFoundException(ExceptionStatusConst.PROBLEM_NOT_FOUND_EXP, "未找到该题号的题目");
@@ -107,9 +138,41 @@ public class ProblemController {
         //set data
         request.setAttribute("problem", detailVO);
         request.setAttribute("compId", compId);
+        request.setAttribute("sourceCode",sourceCode);
         request.setAttribute("active2", true);
         return "portal/problem/problem-detail";
     }
+
+    /**
+     *
+     * @param
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("/getSpendTime")
+    @ResponseBody
+        public Integer getSpendTime(@AuthenticationPrincipal UserDetails userDetails){
+                Integer u_id;
+                if (userDetails == null) {
+                    System.out.println("请先登入");
+                    return null;
+
+                }
+                else{
+                    User user = (User) userDetails;
+                    u_id = user.getId();
+                    double ability = abilityService.GetAbility(u_id);
+                    Integer SpendTime = SpendTimeUtil.GetSpendTime(ability);
+                    System.out.println(SpendTime);
+                    return SpendTime;
+
+                }
+
+
+        }
+
+
     @RequestMapping("/answer")
 
     public String problemAnswer(HttpServletRequest request,Integer problemId,Integer compId){
@@ -130,15 +193,25 @@ public class ProblemController {
     }
 
     /**
-     * 随机返回5道推荐题目
+     * 根据用户的能力推荐5道题目
      *
-     * @param problemId
+     * @param u_id
      * @return
      */
     @RequestMapping("/suggestProblemList")
     @ResponseBody
-    public RestResponseVO<List<ProblemDetailVO>> suggestProblemList(Integer problemId) {
-        return problemService.listSuggestProblem(problemId, SUGGEST_PROBLEM_ROW);
+    public RestResponseVO<List<ProblemDetailVO>> suggestProblemList(@AuthenticationPrincipal UserDetails userDetails) {
+        Integer u_id;
+        if (userDetails == null) {
+            u_id = 1;
+
+        }
+        else{
+            User user = (User) userDetails;
+            u_id = user.getId();
+        }
+        double ability = abilityService.GetAbility(u_id);
+        return problemService.listSuggestProblem(ability, SUGGEST_PROBLEM_ROW);
     }
 
     /**
