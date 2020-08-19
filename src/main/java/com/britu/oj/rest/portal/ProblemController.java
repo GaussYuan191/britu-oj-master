@@ -149,7 +149,7 @@ public class ProblemController {
      */
     @RequestMapping("/getSpendTime")
     @ResponseBody
-        public Integer getSpendTime(@AuthenticationPrincipal UserDetails userDetails){
+        public Integer getSpendTime(@AuthenticationPrincipal UserDetails userDetails,Integer level){
                 Integer u_id;
                 if (userDetails == null) {
                     System.out.println("请先登入");
@@ -160,7 +160,7 @@ public class ProblemController {
                     User user = (User) userDetails;
                     u_id = user.getId();
                     double ability = abilityService.GetAbility(u_id);
-                    Integer SpendTime = SpendTimeUtil.GetSpendTime(ability);
+                    Integer SpendTime = SpendTimeUtil.GetSpendTime(ability,level);
                     System.out.println(SpendTime);
                     return SpendTime;
 
