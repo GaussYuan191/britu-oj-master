@@ -22,9 +22,9 @@ author: Assassin_YU
 }
 #chatbox {
     bottom: -1000px;
-    left: 600px;
-    height: 550px;
-    width: 500px;
+    left: 1000px;
+    height: 600px;
+    width: 450px;
     position: fixed;
     transform: translateY(3px);
     transition: transform .3s ease-in-out, bottom 1s ease-in-out;
@@ -136,7 +136,7 @@ body {
 .Container .write input {
     font-size: 16px;
     float: left;
-    width: 350px;
+    width: 300px;
     height: 40px;
     padding: 0 5px;
     color: var(--dark);

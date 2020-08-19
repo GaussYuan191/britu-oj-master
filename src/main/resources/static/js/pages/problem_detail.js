@@ -44,7 +44,7 @@ function refresh() {
     editor.setValue('')
 }
 
-
+ /*
  * 后台返回历史最近代码 历史
  */
 
@@ -125,6 +125,8 @@ function setCodeType(type) {
             "print ('这是Python3!')");
     }
     editor.moveCursorTo(0, 0);
+
+
 };
 
 
@@ -153,21 +155,7 @@ function submit(problemName, compId) {
         return;
     }
 
-    // if (typeof(Storage) !== "undefined") {
-    //     if (localStorage) {
-    //         localStorage.setItem('btn',type)
-    //         localStorage.setItem('code',sourceCode)
-    //     } else {
-    //         localStorage.setItem('1',"#include <stdio.h>\n" +
-    //             "\n" +
-    //             "int main() {\n" +
-    //             "    \n" +
-    //             "    return 0;\n" +
-    //             "}")
-    //     }
-    //     editor.setValue(localStorage.getItem('1'))
-    //
-    // }
+
 
     swal({
         title: '确认提交代码?',
@@ -270,7 +258,7 @@ function submit_Input(problemName, compId) {
         });
     } else{
         swal({
-            title: '确认生成输入文件?'+problemId+""+""+testInputHtml,
+            title: '确认生成输入文件?',
             // text: '提醒',
             type: 'warning',
             showCancelButton: true,
@@ -381,6 +369,29 @@ function copyToClipboard() {
         type: 'success'
     });
 }
+
+/**
+ * 自动保存历史代码
+ */
+//
+// function savecode() {
+//     var source_code = editor.getValue();
+//     if(typeof(localStorage) !== "undefined") {
+//         let $problem_id = [[${problem.id}]];
+//         let $user_id = "anonymous";
+//         let type = $("#type").val();
+//         let filename = $problem_id + '-' + $user_id + type;
+//         localStorage.setItem(filename,editor.getValue())
+//
+//     } else {
+//         $.message({
+//             message: "Sorry, your browser does not support web storage...",
+//             type: 'warning'
+//         });
+//     }
+//
+//
+// }
 
 
 

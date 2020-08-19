@@ -89,10 +89,13 @@ z-index: 999999">
                                     </span>
                                     <span class=" btn-danger loading btn-sm ml-1">
                                         难度:
-                                        <span th:if="${problem.level == 1}">简单</span>
-                                        <span th:if="${problem.level == 2}">中等</span>
-                                        <span th:if="${problem.level == 3}">困难</span>
-                                        <span th:if="${problem.level == 4}">专家</span>
+                                        <span th:if="${problem.level == 1}">入门</span>
+                                        <span th:if="${problem.level == 2}">普及</span>
+                                        <span th:if="${problem.level == 3}">提高</span>
+                                        <span th:if="${problem.level == 4}">普及+</span>
+                                        <span th:if="${problem.level == 5}">提高+</span>
+                                        <span th:if="${problem.level == 6}">省选</span>
+                                        <span th:if="${problem.level == 7}">NOI</span>
                                     </span>
                                 </div>
                                 <div class="mt-5">
@@ -369,7 +372,7 @@ z-index: 999999">
                 </div>
                 <div class="modal-body">
                     <div>
-                        输入字符串:
+                        请输入数据:
                         <textarea id="testInput" style="height: 100px" type="text" name="testInput"
                                   class="form-control"></textarea>
                     </div>
@@ -412,13 +415,14 @@ z-index: 999999">
 </body>
 
 <script th:inline="javascript">
-    var code = [[${sourceCode.code}]]
-    var type = [[${sourceCode.type}]]
-    alert(code)
-    alert(type)
-    if(code != null){
+    var sourcecode = [[${sourceCode.code}]]
+    var typecode = [[${sourceCode.type}]]
+    // alert(sourcecode);
+    // alert(typecode);
+    if(sourcecode != null){
         window.onload = function(){
-            getHistoryCode(type,code)
+            getHistoryCode(typecode,sourcecode);
+
         }
     }
 </script>

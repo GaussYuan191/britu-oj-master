@@ -62,7 +62,7 @@
 
         <div class="write">
             <a href="javascript: recopen(); recording(); " class="recorder fa fa-lg fa-microphone" id="Recording"></a>
-            <a href="javascript: notrecording(); " class="stop"></a>
+            <a href="javascript: notrecording(); " class="stop" id="stop"></a>
             <input id="text" type="text" placeholder='尽情畅聊吧' />
             <a href="javascript:;" class="send fa fa-lg fa-paper-plane" id="send"></a>
         </div>
@@ -459,28 +459,32 @@
     };
    //上传录音
     var recording = document.getElementById('Recording');
-    var num = 0;
     var recorder;
     recording.onclick = function(){
-        if((num % 2) === 0){
-            alert(1)
-            // startRecording();
-            recopen();
-            alert(2)
-            recstart();
-            alert("开始语音识别，再点击录音按钮结束");
-            num++;
-        }
-        else{
-            alert("识别结束，等待结果");
-            // stopRecording();
-            // uploadAudio();
-            recstop();
-            var id=RandomKey(16);
-            recplay(id);
 
-            num++;
-        }
+
+            startRecording();
+            // recopen();
+            // alert(2)
+            // recstart();
+            alert("开始语音识别，再点击录音按钮结束");
+
+
+
+
+            // recstop();
+            // var id=RandomKey(16);
+            // recplay(id);
+
+
+
+    }
+    var stop = document.getElementById('stop');
+    stop.onclick = function(){
+        alert("识别结束，等待结果");
+        stopRecording();
+        uploadAudio();
+
     }
     function startRecording(){
         swrecorder.get(function(rec) {
@@ -536,7 +540,7 @@
             content.scrollTop = content.scrollHeight;//自动跟进最新消息
             // imgs.src='img/2.jpg';
             //请求后台
-            var url = 'http://yuangauss287.top:9944/api/qa?msg='+ text.value;
+            var url = 'http://127.0.0.1:9944/api/qa?msg='+ text.value;
             xhr.open("GET", url);
             xhr.send(fd);
 

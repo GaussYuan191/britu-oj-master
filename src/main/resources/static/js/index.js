@@ -164,7 +164,6 @@
 
                     // alert(1);
                     var jsoncontent = JSON.parse(xhr.responseText);/*将获取的信息解析为json对象*/
-
                     if(jsoncontent['code'] == 200){
                         // alert(jsoncontent['code']);
                         var message = jsoncontent['message'];
@@ -248,6 +247,8 @@
                     }
                 }
             }
+
+
             console.log(fd)
         }
 

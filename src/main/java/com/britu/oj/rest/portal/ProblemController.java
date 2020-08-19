@@ -110,6 +110,7 @@ public class ProblemController {
     @RequestMapping("/problemDetailPage")
     public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, Integer problemId,Integer compId) {
         Integer u_id;
+        SourceCode sourceCode = new SourceCode();
 //        p_id = problemId
         RestResponseVO<ProblemResult> problemResultRestResponseVO = null;
         if (userDetails == null) {
@@ -119,16 +120,12 @@ public class ProblemController {
         else{
             User user = (User) userDetails;
             u_id = user.getId();
-//            double ability = abilityService.GetAbility(u_id);
-//            Integer SpendTime = SpendTimeUtil.GetSpendTime(ability);
-//            System.out.println(SpendTime);
-
             problemResultRestResponseVO = problemService.querySource_code(compId,problemId,user.getId());
-            System.out.println(problemResultRestResponseVO.getData());
+
+            sourceCode.setCode(problemResultRestResponseVO.getData().getSourceCode());
+            sourceCode.setType(problemResultRestResponseVO.getData().getType());
         }
-        SourceCode sourceCode = new SourceCode();
-        sourceCode.setCode(problemResultRestResponseVO.getData().getSourceCode());
-        sourceCode.setType(problemResultRestResponseVO.getData().getType());
+
 
 
         ProblemDetailVO detailVO = problemService.getDetailVOById(problemId).getData();
