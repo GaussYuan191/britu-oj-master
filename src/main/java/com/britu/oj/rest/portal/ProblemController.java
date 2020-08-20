@@ -108,7 +108,7 @@ public class ProblemController {
      * @return
      */
     @RequestMapping("/problemDetailPage")
-    public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, Integer problemId,Integer compId) {
+    public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, String problemId,Integer compId) {
         Integer u_id;
         SourceCode sourceCode = new SourceCode();
 //        p_id = problemId
@@ -172,7 +172,7 @@ public class ProblemController {
 
     @RequestMapping("/answer")
 
-    public String problemAnswer(HttpServletRequest request,Integer problemId,Integer compId){
+    public String problemAnswer(HttpServletRequest request,String problemId,Integer compId){
         Answer answerList =  answerCql.findByPid(problemId);
         if(answerList == null){
             throw new AnswerNotFoundException(ExceptionStatusConst.PROBLEM_ANSWER_NOT_STARTED_EXP,"未找到该题号的答案");

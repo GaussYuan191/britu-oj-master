@@ -70,7 +70,7 @@ public class ProblemResultServiceImpl implements ProblemResultService {
     }
 
     @Override
-    public RestResponseVO<PageInfo> listProblemResult2Page(Integer problemId, String name, String type, Integer status, Integer pageNum, Integer pageSize) {
+    public RestResponseVO<PageInfo> listProblemResult2Page(String problemId, String name, String type, Integer status, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize, true);
         List<ProblemResultVO> problemResultList = problemResultMapper.listProblemResult(problemId, name, type, status);
         for (ProblemResultVO problemResultVO : problemResultList) {
@@ -137,7 +137,7 @@ public class ProblemResultServiceImpl implements ProblemResultService {
                     dataVO.setAcCount(dataVO.getAcCount() + 1);
                 }
             }
-            Integer score = competitionProblemService.getScoreByCompIdProblemId(compId, dataVO.getProblemId()).getData();
+            Integer score = Integer.valueOf(competitionProblemService.getScoreByCompIdProblemId(compId, dataVO.getProblemId()).getData());
             if (score != null) {
                 score = (int) ((dataVO.getAcCount() * 1.0 / testcaseResultList.size()) * score);
                 dataVO.setScore(dataVO.getScore() + score);

@@ -7,7 +7,7 @@ public class Problem implements Serializable {
 
     private static final long serialVersionUID = -7742482817295006294L;
 
-    private Integer id;
+    private String id;
 
     private String name;
 
@@ -51,7 +51,7 @@ public class Problem implements Serializable {
 
     private Date updateTime;
 
-    public Problem(Integer id, String name, String content, String htmlContent,String inputDesc, String outputDesc, String testcaseInput, String testcaseOutput, Integer level, Integer submitCount, Integer acCount, Integer tleCount, Integer peCount, Integer meCount, Integer reCount, Integer ceCount, Integer waCount, Long time, Long memory, Integer flag, Date createTime, Date updateTime) {
+    public Problem(String id, String name, String content, String htmlContent,String inputDesc, String outputDesc, String testcaseInput, String testcaseOutput, Integer level, Integer submitCount, Integer acCount, Integer tleCount, Integer peCount, Integer meCount, Integer reCount, Integer ceCount, Integer waCount, Long time, Long memory, Integer flag, Date createTime, Date updateTime) {
         this.id = id;
         this.name = name;
         this.content = content;
@@ -80,11 +80,11 @@ public class Problem implements Serializable {
         super();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

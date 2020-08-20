@@ -11,7 +11,7 @@ public class CompetitionProblem implements Serializable {
 
     private Integer compId;
 
-    private Integer problemId;
+    private String problemId;
 
     private Integer score;
 
@@ -23,7 +23,7 @@ public class CompetitionProblem implements Serializable {
 
     private Date updateTime;
 
-    public CompetitionProblem(Integer id, Integer compId, Integer problemId, Integer score, Integer acCount, Integer submitCount, Date createTime, Date updateTime) {
+    public CompetitionProblem(Integer id, Integer compId, String problemId, Integer score, Integer acCount, Integer submitCount, Date createTime, Date updateTime) {
         this.id = id;
         this.compId = compId;
         this.problemId = problemId;
@@ -54,11 +54,11 @@ public class CompetitionProblem implements Serializable {
         this.compId = compId;
     }
 
-    public Integer getProblemId() {
+    public String getProblemId() {
         return problemId;
     }
 
-    public void setProblemId(Integer problemId) {
+    public void setProblemId(String problemId) {
         this.problemId = problemId;
     }
 

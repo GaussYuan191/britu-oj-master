@@ -8,13 +8,13 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ProblemMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     int insert(Problem record);
 
     int insertSelective(Problem record);
 
-    Problem selectByPrimaryKey(Integer id);
+    Problem selectByPrimaryKey(String id);
 
     int updateByPrimaryKeySelective(Problem record);
 
@@ -26,7 +26,7 @@ public interface ProblemMapper {
      * @param row
      * @return
      */
-    List<ProblemDetailVO> listSuggestProblem(@Param("problemId") Integer problemId, @Param("row") int row);
+    List<ProblemDetailVO> listSuggestProblem(@Param("problemId") String problemId, @Param("row") int row);
 
     Integer countRandomProblemId();
 
@@ -34,7 +34,7 @@ public interface ProblemMapper {
                                @Param("level") Integer level, @Param("tagIdsList") List<Integer> tagIdsList);
 
 
-    ProblemDetailVO getDetailVOById(Integer problemId);
+    ProblemDetailVO getDetailVOById(String problemId);
 
     List<Problem> listAllSolveProblemByUserId(Integer userId);
 

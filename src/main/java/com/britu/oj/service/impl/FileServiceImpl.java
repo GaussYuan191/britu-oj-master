@@ -135,7 +135,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void getTestcaseInput(HttpServletResponse response, Integer problemId, Integer num) {
+    public void getTestcaseInput(HttpServletResponse response, String problemId, Integer num) {
         String fileName = num + ".in";
         String filePath = fileServerTestcaseDir + "/" +problemId+ "/input/" +num + ".txt";
         downloadFile2Browser(response, filePath, fileName);
@@ -143,14 +143,14 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
-    public void getTestcaseOutput(HttpServletResponse response, Integer problemId, Integer num) {
+    public void getTestcaseOutput(HttpServletResponse response, String problemId, Integer num) {
         String fileName = num + ".out";
         String filePath = fileServerTestcaseDir + "/" +problemId+ "/output/" +num + ".txt";
         downloadFile2Browser(response, filePath, fileName);
     }
 
     @Override
-    public RestResponseVO<String> deleteTestcase(Integer problemId) {
+    public RestResponseVO<String> deleteTestcase(String problemId) {
         if (problemId == null) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
         }
@@ -165,7 +165,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public RestResponseVO<String> saveTestcase(Integer problemId,Integer num,String testcaseInput, String testcaseOutput) {
+    public RestResponseVO<String> saveTestcase(String problemId,Integer num,String testcaseInput, String testcaseOutput) {
         if (problemId == null || !StringUtils.isNoneBlank(testcaseInput, testcaseOutput)) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
         }
@@ -201,7 +201,7 @@ public class FileServiceImpl implements FileService {
         return RestResponseVO.createBySuccess();
     }
     @Override
-    public RestResponseVO<TreeSet<TestcaseVO>> listTestcaseVO(Integer problemId) {
+    public RestResponseVO<TreeSet<TestcaseVO>> listTestcaseVO(String problemId) {
         TreeSet<TestcaseVO> testcaseVOList = new TreeSet<>(Comparator.comparing(TestcaseVO::getNum));
 
         if(problemId == null){
@@ -254,7 +254,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public RestResponseVO deleteTestcase(Integer problemId, Integer num) {
+    public RestResponseVO deleteTestcase(String problemId, Integer num) {
         String problemDir = fileServerTestcaseDir + "/" + problemId;
         String testcaseInputPath = problemDir + "/input/" + num + ".txt";
         String testcaseOutputPath = problemDir + "/output/" + num + ".txt";

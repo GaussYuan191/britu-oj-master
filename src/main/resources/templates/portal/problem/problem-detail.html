@@ -211,6 +211,12 @@ z-index: 999999">
                                                 <i class="fa fa-files-o mr-1"></i>查看题解
                                             </button>
                                         </a>
+                                        <a th:href="@{'/problem/answer?problemId='+${problem.id}}">
+                                            <button
+                                                    class="notify ml-2 float-right btn btn-outline-primary  button-rounded">
+                                                <i class="fa fa-files-o mr-1"></i>暂存代码
+                                            </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -431,8 +437,23 @@ z-index: 999999">
         window.onload = function(){
             getHistoryCode(typecode,sourcecode);
 
+
         }
     }
+</script>
+
+<script>
+
+    window.onload = function(){
+        // var link = window.location.href;
+        // var link2 = document.location;
+        // alert(link);
+        // alert(link2);
+        }
+
+
+
+
 </script>
 
 <script th:inline="javascript">

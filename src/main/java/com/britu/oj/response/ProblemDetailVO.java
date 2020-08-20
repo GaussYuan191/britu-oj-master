@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class ProblemDetailVO {
 
-    private Integer id;
+    private String id;
 
     private String name;
 
@@ -61,7 +61,7 @@ public class ProblemDetailVO {
 
 
 
-    public ProblemDetailVO(Integer id, String name, String content, String htmlContent,String inputDesc, String outputDesc, String testcaseInput, String testcaseOutput, String tags,String tagIds, Integer level, Integer submitCount, Integer acCount, Integer tleCount, Integer peCount, Integer meCount, Integer reCount, Integer ceCount, Integer waCount, Long time, Long memory, Integer flag, Date createTime, Date updateTime) {
+    public ProblemDetailVO(String id, String name, String content, String htmlContent,String inputDesc, String outputDesc, String testcaseInput, String testcaseOutput, String tags,String tagIds, Integer level, Integer submitCount, Integer acCount, Integer tleCount, Integer peCount, Integer meCount, Integer reCount, Integer ceCount, Integer waCount, Long time, Long memory, Integer flag, Date createTime, Date updateTime) {
         this.id = id;
         this.name = name;
         this.content = content;
@@ -92,11 +92,11 @@ public class ProblemDetailVO {
         super();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

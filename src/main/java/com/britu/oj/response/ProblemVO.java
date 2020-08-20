@@ -12,7 +12,7 @@ public class ProblemVO implements Serializable{
 
     private static final long serialVersionUID = -1224668082268614715L;
 
-    private Integer id;
+    private String id;
 
     private String name;
 
@@ -37,7 +37,7 @@ public class ProblemVO implements Serializable{
      */
     private Integer userStatus;
 
-    public ProblemVO(Integer id, String name, String tags, Integer level, Integer submitCount, Integer acCount, Integer waCount, Integer flag, Date createTime, Date updateTime, Integer userStatus) {
+    public ProblemVO(String id, String name, String tags, Integer level, Integer submitCount, Integer acCount, Integer waCount, Integer flag, Date createTime, Date updateTime, Integer userStatus) {
         this.id = id;
         this.name = name;
         this.tags = tags;
@@ -55,11 +55,11 @@ public class ProblemVO implements Serializable{
         super();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

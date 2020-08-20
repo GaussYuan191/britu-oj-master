@@ -19,5 +19,5 @@ public interface TestcaseResultMapper {
 
     List<TestcaseResult> listByProblemResultId(Integer problemResultId);
 
-    int deleteByProblemId(Integer problemId);
+    int deleteByProblemId(String problemId);
 }

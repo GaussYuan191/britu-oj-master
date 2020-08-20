@@ -15,11 +15,11 @@ import java.util.List;
  */
 public interface ProblemService {
 
-    RestResponseVO<Problem> getById(Integer problemId);
+    RestResponseVO<Problem> getById(String problemId);
 
     RestResponseVO insert(ProblemRequest problemRequest);
 
-    RestResponseVO delById(Integer id);
+    RestResponseVO delById(String id);
 
     RestResponseVO<Problem> updateById(ProblemRequest problemRequest);
 
@@ -29,7 +29,7 @@ public interface ProblemService {
 
     RestResponseVO<Integer> randomProblemId();
 
-    RestResponseVO<ProblemDetailVO> getDetailVOById(Integer problemId);
+    RestResponseVO<ProblemDetailVO> getDetailVOById(String problemId);
 
-    RestResponseVO<ProblemResult> querySource_code(Integer compId, Integer problemId, Integer userId);
+    RestResponseVO<ProblemResult> querySource_code(Integer compId, String problemId, Integer userId);
 }

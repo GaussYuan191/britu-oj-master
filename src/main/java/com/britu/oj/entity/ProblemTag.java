@@ -12,7 +12,7 @@ public class ProblemTag implements Serializable {
 
     private Integer id;
 
-    private Integer problemId;
+    private String problemId;
 
     private Integer tagId;
 
@@ -20,7 +20,7 @@ public class ProblemTag implements Serializable {
 
     private Date updateTime;
 
-    public ProblemTag(Integer id, Integer problemId, Integer tagId, Date createTime, Date updateTime) {
+    public ProblemTag(Integer id, String problemId, Integer tagId, Date createTime, Date updateTime) {
         this.id = id;
         this.problemId = problemId;
         this.tagId = tagId;

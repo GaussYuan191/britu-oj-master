@@ -19,15 +19,15 @@ public interface FileService {
 
     RestResponseVO<byte[]> get(String path);
 
-    void getTestcaseInput(HttpServletResponse response,Integer problemId, Integer num);
+    void getTestcaseInput(HttpServletResponse response,String problemId, Integer num);
 
-    void getTestcaseOutput(HttpServletResponse response, Integer problemId, Integer num);
+    void getTestcaseOutput(HttpServletResponse response, String problemId, Integer num);
 
-    RestResponseVO<String> deleteTestcase(Integer problemId);
+    RestResponseVO<String> deleteTestcase(String problemId);
 
-    RestResponseVO<String> saveTestcase(Integer problemId,Integer num,String testcaseInput, String testcaseOutput);
+    RestResponseVO<String> saveTestcase(String problemId,Integer num,String testcaseInput, String testcaseOutput);
 
-    RestResponseVO<TreeSet<TestcaseVO>> listTestcaseVO(Integer problemId);
+    RestResponseVO<TreeSet<TestcaseVO>> listTestcaseVO(String problemId);
 
-    RestResponseVO deleteTestcase(Integer problemId, Integer num);
+    RestResponseVO deleteTestcase(String problemId, Integer num);
 }

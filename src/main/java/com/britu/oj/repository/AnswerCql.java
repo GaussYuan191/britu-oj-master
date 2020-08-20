@@ -9,6 +9,6 @@ import org.springframework.data.repository.CrudRepository;
  * @author: Gauss
  * @date: 2020-07-29 19:01
  **/
-public interface AnswerCql extends CrudRepository<Answer,Integer> {
-    Answer findByPid(Integer pid);
+public interface AnswerCql extends CrudRepository<Answer,String> {
+    Answer findByPid(String pid);
 }

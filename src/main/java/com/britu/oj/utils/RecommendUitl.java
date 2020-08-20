@@ -10,12 +10,12 @@ import java.util.Map;
  * @date: 2020-08-11 20:47
  **/
 public class RecommendUitl {
-    public static Integer Recommend(double ability){
-        Map<Double,Integer> recommendMap = new HashMap<>();
-        recommendMap.put(0.4,1000);
-        recommendMap.put(0.5,1006);
-        recommendMap.put(0.6,1004);
-        recommendMap.put(0.7,1003);
+    public static String Recommend(double ability){
+        Map<Double,String> recommendMap = new HashMap<>();
+        recommendMap.put(0.4,"P1000");
+        recommendMap.put(0.5,"P1006");
+        recommendMap.put(0.6,"P1004");
+        recommendMap.put(0.7,"P1003");
         if(ability <= 0.5){
             return recommendMap.get(0.4);
         }

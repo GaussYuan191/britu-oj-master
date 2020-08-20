@@ -14,7 +14,7 @@ public class ProblemResult implements Serializable {
     private Integer userId;
 
     @NotNull
-    private Integer problemId;
+    private String problemId;
 
     private Integer compId;
 
@@ -42,7 +42,7 @@ public class ProblemResult implements Serializable {
 
     private String testcode;
 
-    public ProblemResult(Integer id, Integer userId, @NotNull Integer problemId, Integer compId, Integer compScore, String runNum, Integer status, @NotBlank String type, Long time, Long memory, String errorMsg, @NotBlank String sourceCode, Date createTime, Date updateTime, String testcode) {
+    public ProblemResult(Integer id, Integer userId, @NotNull String problemId, Integer compId, Integer compScore, String runNum, Integer status, @NotBlank String type, Long time, Long memory, String errorMsg, @NotBlank String sourceCode, Date createTime, Date updateTime, String testcode) {
         this.id = id;
         this.userId = userId;
         this.problemId = problemId;
@@ -84,11 +84,11 @@ public class ProblemResult implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getProblemId() {
+    public String getProblemId() {
         return problemId;
     }
 
-    public void setProblemId(Integer problemId) {
+    public void setProblemId(String problemId) {
         this.problemId = problemId;
     }
 

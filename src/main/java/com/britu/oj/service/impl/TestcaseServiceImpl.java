@@ -21,7 +21,7 @@ public class TestcaseServiceImpl implements TestcaseService {
      * @return
      */
     @Override
-    public RestResponseVO listTestcaseByProblemId(Integer problemId) {
+    public RestResponseVO listTestcaseByProblemId(String problemId) {
         if (problemId == null) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
         }

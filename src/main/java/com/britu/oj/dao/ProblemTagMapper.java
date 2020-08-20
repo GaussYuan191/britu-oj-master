@@ -15,6 +15,6 @@ public interface ProblemTagMapper {
 
     int updateByPrimaryKey(ProblemTag record);
 
-    int deleteByProblemId(Integer problemId);
+    int deleteByProblemId(String problemId);
 
 }

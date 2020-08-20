@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class ProblemRequest {
 
-    private Integer id;
+    private String id;
 
     private String name;
 

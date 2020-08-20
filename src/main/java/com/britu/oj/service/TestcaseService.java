@@ -8,7 +8,7 @@ import com.britu.oj.response.RestResponseVO;
  */
 public interface TestcaseService {
 
-     RestResponseVO listTestcaseByProblemId(Integer problemId);
+     RestResponseVO listTestcaseByProblemId(String problemId);
 
 
 }

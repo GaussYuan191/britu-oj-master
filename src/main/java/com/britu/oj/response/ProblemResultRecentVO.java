@@ -7,7 +7,7 @@ public class ProblemResultRecentVO implements Serializable {
 
     private Integer id;
 
-    private Integer problemId;
+    private String problemId;
 
     private String problemName;
 
@@ -25,11 +25,11 @@ public class ProblemResultRecentVO implements Serializable {
         this.id = id;
     }
 
-    public Integer getProblemId() {
+    public String getProblemId() {
         return problemId;
     }
 
-    public void setProblemId(Integer problemId) {
+    public void setProblemId(String problemId) {
         this.problemId = problemId;
     }
 

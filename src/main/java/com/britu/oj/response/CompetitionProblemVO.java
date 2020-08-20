@@ -17,7 +17,7 @@ public class CompetitionProblemVO implements Serializable {
 
     private Integer score;
 
-    private Integer problemId;
+    private String problemId;
 
     private String problemName;
 
@@ -60,11 +60,11 @@ public class CompetitionProblemVO implements Serializable {
         this.score = score;
     }
 
-    public Integer getProblemId() {
+    public String getProblemId() {
         return problemId;
     }
 
-    public void setProblemId(Integer problemId) {
+    public void setProblemId(String problemId) {
         this.problemId = problemId;
     }
 
