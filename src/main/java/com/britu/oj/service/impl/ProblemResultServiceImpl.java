@@ -71,6 +71,7 @@ public class ProblemResultServiceImpl implements ProblemResultService {
 
     @Override
     public RestResponseVO<PageInfo> listProblemResult2Page(String problemId, String name, String type, Integer status, Integer pageNum, Integer pageSize) {
+        problemId = null;
         PageHelper.startPage(pageNum, pageSize, true);
         List<ProblemResultVO> problemResultList = problemResultMapper.listProblemResult(problemId, name, type, status);
         for (ProblemResultVO problemResultVO : problemResultList) {

@@ -253,6 +253,7 @@ public class ProblemResultController {
 
             }
         }
+        System.out.println(problemResultDetailVO.toString());
         //set data
         request.setAttribute("active4", true);
         request.setAttribute("problemResultDetail", problemResultDetailVO);

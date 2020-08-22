@@ -5,7 +5,7 @@
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="problem_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="problem_id" jdbcType="INTEGER" javaType="java.lang.String" />
       <arg column="comp_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="comp_score" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="run_num" jdbcType="VARCHAR" javaType="java.lang.String" />
