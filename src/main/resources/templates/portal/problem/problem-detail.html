@@ -8,17 +8,73 @@
     <!--Page level styles-->
     <link type="text/css" rel="stylesheet" th:href="@{/plugins/modal/css/component.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/css/pages/problem_detail.css}"/>
+    <script type="text/javascript" th:src="@{/js/pages/autoload.js}"></script><!--2D人物加载-->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/chatbox.css}" rel="stylesheet" type="text/css" />
+    <script src="/js/index.js"></script>
+    <script src = "/js/recorder/recorder-core.js"></script>
+    <script src = "/js/recorder/extensions/waveview.js"></script>
 
 </head>
 
 <body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
-<div id="bdtts_div_id">
-    <audio id="tts_autio_id" autoplay="autoplay">
-        <source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&per=1&text=" type="audio/mpeg">
-        <embed id="tts_embed_id" height="0" width="0" src="">
-    </audio>
+<a href="javascript:;" class="comment" id="chat"></a>
+<div id="chatbox">
+    <div class="Container">
 
+        <div class="top">
+                    <span>To:
+                        <span class="name">Britu小精灵</span>
+                    </span>
+            <div class="x">
+                <a href="javascript:;" class="fa fa-lg fa-times" id="x"></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="bubble_you">
+                <span class="img_1"></span>
+                <span class="bubble_1">
+                    <span class="tri_1"></span>
+                    Hello,我是Britu小精灵。你有什么不懂的问题吗？我可是全知全能哟！
+                </span>
+            </div>
+            <div class="bubble_me">
+                <span class="img_2"></span>
+                <span class="bubble_2">
+                    <span class="tri_2"></span>
+                    好的呢，我可是有一大堆问题想问的呢。
+                </span>
+            </div>
+        </div>
+        <div class="recwave" id="box"></div>
+        <!--        <div id="box">-->
+        <!--            <div class="list">-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="write">
+            <a href="javascript: recopen(); " class="recorder fa fa-lg fa-microphone" id="Recording"></a>
+            <a href="javascript: ;" class="stop" id="stop"></a>
+            <input id="text" type="text" placeholder='尽情畅聊吧' />
+            <a href="javascript:;" class="send fa fa-lg fa-paper-plane" id="send"></a>
+        </div>
+        <div id="bdtts_div_id">
+            <audio id="tts_autio_id" autoplay="autoplay">
+                <source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&per=1&text=" type="audio/mpeg">
+                <embed id="tts_embed_id" height="0" width="0" src="">
+            </audio>
+
+        </div>
+
+    </div>
 </div>
+
+<script src="/js/questions.js"></script>
 
 <div class="preloader" style=" position: fixed;
   width: 100%;
