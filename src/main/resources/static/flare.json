@@ -1,0 +1,90 @@
+{
+  "name": "birtu 教育机器人",
+  "children": [
+    {
+      "name": "基础算法",
+      "children": [
+        {"name": "高精"},
+        {
+          "name": "排序",
+          "children": [
+            {"name": "选择排序", "size": 3938},
+            {"name": "冒泡排序", "size": 3938},
+            {"name": "希尔排序", "size": 3938},
+            {"name": "快速排序", "size": 3938},
+            {"name": "归并排序", "size": 3938},
+            {"name": "堆排序", "size": 3938},
+            {"name": "桶排序", "size": 3938}
+
+          ]
+        },
+        {
+          "name": "分治"
+        },
+        {
+          "name": "动态规划",
+          "children": [
+            {"name": "费用流", "size": 3534},
+            {"name": "网络流", "size": 3534}
+          ]
+        },
+        {
+          "name": "贪心"
+        },
+        {
+          "name": "搜索",
+          "children": [
+            {"name": "深度优先搜索","size": 4456},
+            {"name": "广度优先搜索","size": 4456}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "数论",
+      "children": [
+        {"name": "进位制", "size": 17010},
+        {"name": "斐波那契数列", "size": 5842}
+      ]
+    },
+    {
+      "name": "数据结构",
+      "children": [
+        {
+          "name": "线性表",
+          "children": [
+            {"name": "栈", "size": 721},
+            {"name": "队列", "size": 4294},
+            {"name": "哈希表", "size": 4294},
+            {"name": "链表", "size": 4294}
+          ]
+        },
+        {
+          "name": "二叉树",
+          "children": [
+            {"name": "二叉查找树", "size": 721},
+            {"name": "最小生成树", "size": 721}
+          ]
+        },
+        {"name": "并查集", "size": 1759}
+
+
+      ]
+    },
+    {
+      "name": "图论",
+      "children": [
+        {
+          "name": "最短路",
+          "children": [
+            {"name": "单源最短路", "size": 721},
+            {"name": "多源最短路", "size": 4294}
+          ]
+        },
+        {"name": "二分图", "size": 1759}
+
+
+      ]
+    }
+  ]
+}
