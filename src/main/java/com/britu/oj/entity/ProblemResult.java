@@ -40,11 +40,14 @@ public class ProblemResult implements Serializable {
 
     private Date updateTime;
 
-    public ProblemResult(Integer id, Integer userId, Integer problemId, Integer compId, String runNum, Integer status, String type, Long time, Long memory, String errorMsg, String sourceCode, Date createTime, Date updateTime,Integer compScore) {
+    private String testcode;
+
+    public ProblemResult(Integer id, Integer userId, @NotNull Integer problemId, Integer compId, Integer compScore, String runNum, Integer status, @NotBlank String type, Long time, Long memory, String errorMsg, @NotBlank String sourceCode, Date createTime, Date updateTime, String testcode) {
         this.id = id;
         this.userId = userId;
         this.problemId = problemId;
         this.compId = compId;
+        this.compScore = compScore;
         this.runNum = runNum;
         this.status = status;
         this.type = type;
@@ -52,13 +55,17 @@ public class ProblemResult implements Serializable {
         this.memory = memory;
         this.errorMsg = errorMsg;
         this.sourceCode = sourceCode;
-        this.compScore = compScore;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.testcode = testcode;
     }
 
     public ProblemResult() {
         super();
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Integer getId() {
@@ -93,12 +100,20 @@ public class ProblemResult implements Serializable {
         this.compId = compId;
     }
 
+    public Integer getCompScore() {
+        return compScore;
+    }
+
+    public void setCompScore(Integer compScore) {
+        this.compScore = compScore;
+    }
+
     public String getRunNum() {
         return runNum;
     }
 
     public void setRunNum(String runNum) {
-        this.runNum = runNum == null ? null : runNum.trim();
+        this.runNum = runNum;
     }
 
     public Integer getStatus() {
@@ -114,7 +129,7 @@ public class ProblemResult implements Serializable {
     }
 
     public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+        this.type = type;
     }
 
     public Long getTime() {
@@ -138,7 +153,7 @@ public class ProblemResult implements Serializable {
     }
 
     public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg == null ? null : errorMsg.trim();
+        this.errorMsg = errorMsg;
     }
 
     public String getSourceCode() {
@@ -146,7 +161,7 @@ public class ProblemResult implements Serializable {
     }
 
     public void setSourceCode(String sourceCode) {
-        this.sourceCode = sourceCode == null ? null : sourceCode.trim();
+        this.sourceCode = sourceCode;
     }
 
     public Date getCreateTime() {
@@ -165,16 +180,12 @@ public class ProblemResult implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public String getTestcode() {
+        return testcode;
     }
 
-    public Integer getCompScore() {
-        return compScore;
-    }
-
-    public void setCompScore(Integer compScore) {
-        this.compScore = compScore;
+    public void setTestcode(String testcode) {
+        this.testcode = testcode;
     }
 
     @Override
@@ -194,6 +205,7 @@ public class ProblemResult implements Serializable {
                 ", sourceCode='" + sourceCode + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", testcode='" + testcode + '\'' +
                 '}';
     }
 }

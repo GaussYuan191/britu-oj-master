@@ -332,4 +332,9 @@
 
   </select>
 
+  <select id="querySource_code" resultType="com.britu.oj.entity.ProblemResult" parameterType="map">
+  select pr.source_code,pr.type from problem_result pr
+  where user_id=#{userId} and problem_id=#{problemId} order by id desc limit 1
+  </select>
+
 </mapper>
