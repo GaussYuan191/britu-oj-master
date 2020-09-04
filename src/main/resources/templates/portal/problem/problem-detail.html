@@ -267,12 +267,10 @@ z-index: 999999">
                                                 <i class="fa fa-files-o mr-1"></i>查看题解
                                             </button>
                                         </a>
-                                        <a th:href="@{'/problem/answer?problemId='+${problem.id}}">
-                                            <button
-                                                    class="notify ml-2 float-right btn btn-outline-primary  button-rounded">
-                                                <i class="fa fa-files-o mr-1"></i>暂存代码
-                                            </button>
-                                        </a>
+                                        <button onclick="save_code(userID)"
+                                                class="notify ml-2 float-right btn btn-info  button-rounded">
+                                            <i class="fa fa-cloud mr-1"></i>暂存代码
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -487,15 +485,23 @@ z-index: 999999">
 <script th:inline="javascript">
     var sourcecode = [[${sourceCode.code}]]
     var typecode = [[${sourceCode.type}]]
+    var userID;
+    // console.log('用户信息' + [[${user.id}]] );
     // alert(sourcecode);
     // alert(typecode);
+    // console.log('后台返回的历史代码' + sourcecode);
+    // console.log('后台返回代码的类型' + typecode);
+    if([[${user.id}]]){
+        userID = [[${user.id}]];
+    }
+    else{
+        userID = null;
+    }
     if(sourcecode != null){
-        window.onload = function(){
             getHistoryCode(typecode,sourcecode);
 
-
-        }
     }
+    outCode(userID);
 </script>
 
 <script>
@@ -552,42 +558,7 @@ z-index: 999999">
     // end of vue
 
 
-    //chars
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myDoughnutChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [acCount, ceCount, peCount, reCount, tleCount, meCount, waCount],
-                backgroundColor: [
-                    '#4BC0C0',
-                    '#FFCD56',
-                    '#ed92ff',
-                    '#FF9F40',
-                    '#62b8ff',
-                    '#6574ff',
-                    '#FF6384'
-                ],
-                borderColor: []
-            }],
-            labels: [
-                'Accepted',
-                'Compile Error',
-                'Presentation Error',
-                'Runtime Error',
-                'Time Limit Exceeded',
-                'Memory Limit Exceeded',
-                'Wrong Answer'
-            ]
-        },
-        options: {
-            title: {
-                display: true,
-                text: '提交次数-' + submitCount + '次'
-            }
-        }
-    });
-    // en of chars
+
 
     //输入测试样例
     function setTestcase() {

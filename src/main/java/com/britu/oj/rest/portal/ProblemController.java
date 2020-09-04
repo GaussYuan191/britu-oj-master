@@ -110,6 +110,7 @@ public class ProblemController {
     @RequestMapping("/problemDetailPage")
     public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, String problemId,Integer compId) {
         Integer u_id;
+        User user = new User();
         SourceCode sourceCode = new SourceCode();
 //        p_id = problemId
         RestResponseVO<ProblemResult> problemResultRestResponseVO = null;
@@ -118,7 +119,7 @@ public class ProblemController {
 
         }
         else{
-            User user = (User) userDetails;
+            user = (User) userDetails;
             u_id = user.getId();
             problemResultRestResponseVO = problemService.querySource_code(compId,problemId,user.getId());
 
@@ -135,6 +136,7 @@ public class ProblemController {
         //set data
         request.setAttribute("problem", detailVO);
         request.setAttribute("compId", compId);
+        request.setAttribute("user",user);
         request.setAttribute("sourceCode",sourceCode);
         request.setAttribute("active2", true);
         return "portal/problem/problem-detail";

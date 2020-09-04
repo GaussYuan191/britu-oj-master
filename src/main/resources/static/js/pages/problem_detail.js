@@ -47,27 +47,11 @@ function refresh() {
  /*
  * 后台返回历史最近代码 历史
  */
-
+var this_type;
+var this_source_code;
 function getHistoryCode(type,source_code){
-    $("#dropdownMenuButton").html(type);
-    $("#type").val(type);
-    if ("C" == type) {
-        editor.session.setMode("ace/mode/c_cpp");
-        editor.setValue(source_code);
-    } else if ("C++" == type) {
-        editor.session.setMode("ace/mode/c_cpp");
-        editor.setValue(source_code);
-    } else if ("Java8" == type) {
-        editor.setValue(source_code);
-    } else if ("Python2" == type) {
-        editor.session.setMode("ace/mode/python");
-        editor.setValue(source_code);
-        $("#dropdownMenuButton").html("python2");
-    } else if ("Python3" == type) {
-        editor.session.setMode("ace/mode/python");
-        editor.setValue(source_code);
-    }
-    editor.moveCursorTo(0, 0);
+    this_type = type;
+    this_source_code = source_code;
 
 }
 
@@ -373,25 +357,59 @@ function copyToClipboard() {
 /**
  * 自动保存历史代码
  */
-//
-// function savecode() {
-//     var source_code = editor.getValue();
-//     if(typeof(localStorage) !== "undefined") {
-//         let $problem_id = [[${problem.id}]];
-//         let $user_id = "anonymous";
-//         let type = $("#type").val();
-//         let filename = $problem_id + '-' + $user_id + type;
-//         localStorage.setItem(filename,editor.getValue())
-//
-//     } else {
-//         $.message({
-//             message: "Sorry, your browser does not support web storage...",
-//             type: 'warning'
-//         });
-//     }
-//
-//
-// }
+
+function save_code(userId){
+    var user_id;
+    var type = $("#type").val();
+    var sourceCode = editor.getValue();
+    console.log('用户id' + userId )
+//判断用户是否登录，登录则返回用户id，否则返回默认用户
+    if (userId !== null){
+        user_id = userId;
+    } else{
+        user_id = "anonymous";
+    }
+    var filename = problemId + '-' + user_id;//定义key值形式
+    var filecode = ({
+        "type": type,
+        "code": sourceCode
+    });//定义相对应的value
+    filecode = JSON.stringify(filecode);//localstorage不能直接写入JSON，所以在这里将JSON转为String字符串形式
+    localStorage.setItem(filename,filecode);//写入数据库
+}
+
+
+function outCode(users_id) {//需要传参user_id
+    var codeKey = new Array();
+    var key_u;
+    //alert(user_id);
+//循环取localStorage中的所对应的用户的键dao(Key)
+    getKey:
+        for(var i=0;i<localStorage.length;i++){
+            codeKey = localStorage.key(i).split("-")
+            getUser:
+                for (var j=0;j<codeKey.length;j++) {//感觉这个循环有点多余，因为数组codeKey就两个值
+                    var user_n = codeKey[1];
+                    //alert(user_n);s
+                    if (user_n == users_id) {
+                        key_u = localStorage.key(i);
+                        //alert(key_u);
+                        //console.log(key_u);
+                        break getKey;
+                    }
+                }
+        }
+    var filecode = localStorage.getItem(key_u);
+    //console.log(filecode);
+    filecode = eval(JSON.parse(filecode));
+    var type = filecode.type;//取出的代码类型
+    //console.log(type);
+    var sourceCode = filecode.code;//取出的代码
+    //console.log(sourceCode);
+    console.log('取出来的ype' + type);
+    console.log('取出来的代码' + sourceCode);
+}
+
 
 
 
