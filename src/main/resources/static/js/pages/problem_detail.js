@@ -20,6 +20,129 @@ editor.setOptions({
 
 });
 
+function change() {
+    var typel = $('#key_option option:selected').val()
+    if (typel=='c') {
+        $('#show2').html(`<div class="chengguo-details text-center">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack1" href="#stack1">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/pic1.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>C语言简单历史</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="chengguo-details text-center" style="margin: 0 30px">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack2" href="#stack2">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/pic2.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>C语言循环</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="chengguo-details text-center" style="margin-right: 30px;">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack3" href="#stack3">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/konglong.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>C语言常量与变量</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="chengguo-details text-center">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack4" href="#stack4">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/pic4.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>C语言求最大公约数</h5>
+                                </div>
+                            </a>
+                        </div>
+
+									`)
+    }
+    else if (typel=='c++') {
+        $('#show2').html(`<div class="chengguo-details text-center">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack1" href="#stack1">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/pic5.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>C++语言简单历史</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="chengguo-details text-center" style="margin: 0 30px">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack2" href="#stack2">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/pic6.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>C++语言循环</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="chengguo-details text-center" style="margin-right: 30px;">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack3" href="#stack3">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/pic7.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>C++语言常量与变量</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="chengguo-details text-center">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack4" href="#stack4">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/pic8.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>C++语言求最大公约数</h5>
+                                </div>
+                            </a>
+                        </div>
+
+									`)
+    }
+    else {
+        $('#show2').html(`<div class="chengguo-details text-center">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack1" href="#stack1">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/pic9.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>java语言简单历史</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="chengguo-details text-center" style="margin: 0 30px">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack2" href="#stack2">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/pic10.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>java语言循环</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="chengguo-details text-center" style="margin-right: 30px;">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack3" href="#stack3">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/pic11.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>java语言常量与变量</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="chengguo-details text-center">
+                            <a class="chengguo" data-toggle="modal" data-href="#stack4" href="#stack4">
+                                <img class="play" style="display: block" src="img/play.png">
+                                <img class="cover" src="img/pic12.jpg" alt="">
+                                <div class="chengguo-bottom">
+                                    <h5>java语言求最大公约数</h5>
+                                </div>
+                            </a>
+                        </div>
+									`)
+    }
+}
+
 /**
  * 代码编辑器
  * @param

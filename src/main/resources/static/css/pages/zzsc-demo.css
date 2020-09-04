@@ -408,7 +408,7 @@ img {
     border: 0;
 }
 .chengguo-details .cover {
-    width: 219px;
+    width: 247px;
 }
 .chengguo-bottom {
 	height: 46px;
@@ -427,9 +427,8 @@ img {
 .chengguo-details .play {
     position: absolute;
     width: 80px;
-    margin-left: 72px;
+    margin-left: 78px;
     margin-top: 48px;
-    
     z-index: 9;
 }
 .embed-responsive-16by9 {
