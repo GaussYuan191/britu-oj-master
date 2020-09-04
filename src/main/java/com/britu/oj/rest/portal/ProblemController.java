@@ -62,6 +62,7 @@ public class ProblemController {
         List<TagVO> tagList = tagService.listParentVOAll().getData();
 
         //set data
+        System.out.println(tagList.toString());
         request.setAttribute("tagList", tagList);
         request.setAttribute("keyword", keyword);
         request.setAttribute("active2", true);

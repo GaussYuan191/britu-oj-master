@@ -15,7 +15,7 @@ spring:
       password: 123456a
 #      driver-class-name: com.mysql.cj.jdbc.Driver
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/ojdb?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      url: jdbc:mysql://localhost:3306/ojdbtest?useUnicode=true&characterEncoding=UTF-8&useSSL=false
       max-active: 50
       min-idle: 10
       initial-size: 10
