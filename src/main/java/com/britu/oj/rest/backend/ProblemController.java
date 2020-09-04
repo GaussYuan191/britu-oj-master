@@ -54,7 +54,7 @@ public class ProblemController {
      * @return
      */
     @RequestMapping("/problemEditPage")
-    public String problemEditPage(HttpServletRequest request,Integer problemId) {
+    public String problemEditPage(HttpServletRequest request,String problemId) {
         ProblemDetailVO problemDetailVO = problemService.getDetailVOById(problemId).getData();
         if (problemDetailVO == null) {
             problemDetailVO = new ProblemDetailVO();
@@ -112,7 +112,7 @@ public class ProblemController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public RestResponseVO delete(Integer problemId){
+    public RestResponseVO delete(String problemId){
         return problemService.delById(problemId);
     }
 

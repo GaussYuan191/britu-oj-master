@@ -76,11 +76,11 @@ public class CompetitionProblemServiceImpl implements CompetitionProblemService 
     }
 
     @Override
-    public RestResponseVO<Integer> getScoreByCompIdProblemId(Integer compId, Integer problemId) {
+    public RestResponseVO<String> getScoreByCompIdProblemId(Integer compId, String problemId) {
         if (compId == null || problemId == null) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
         }
-        Integer score = competitionProblemMapper.getScoreByCompIdProblemId(compId, problemId);
+        String score = competitionProblemMapper.getScoreByCompIdProblemId(compId, problemId);
         return RestResponseVO.createBySuccess(score);
     }
 }

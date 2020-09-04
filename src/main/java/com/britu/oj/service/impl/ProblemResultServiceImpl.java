@@ -70,7 +70,8 @@ public class ProblemResultServiceImpl implements ProblemResultService {
     }
 
     @Override
-    public RestResponseVO<PageInfo> listProblemResult2Page(Integer problemId, String name, String type, Integer status, Integer pageNum, Integer pageSize) {
+    public RestResponseVO<PageInfo> listProblemResult2Page(String problemId, String name, String type, Integer status, Integer pageNum, Integer pageSize) {
+        problemId = null;
         PageHelper.startPage(pageNum, pageSize, true);
         List<ProblemResultVO> problemResultList = problemResultMapper.listProblemResult(problemId, name, type, status);
         for (ProblemResultVO problemResultVO : problemResultList) {
@@ -137,7 +138,7 @@ public class ProblemResultServiceImpl implements ProblemResultService {
                     dataVO.setAcCount(dataVO.getAcCount() + 1);
                 }
             }
-            Integer score = competitionProblemService.getScoreByCompIdProblemId(compId, dataVO.getProblemId()).getData();
+            Integer score = Integer.valueOf(competitionProblemService.getScoreByCompIdProblemId(compId, dataVO.getProblemId()).getData());
             if (score != null) {
                 score = (int) ((dataVO.getAcCount() * 1.0 / testcaseResultList.size()) * score);
                 dataVO.setScore(dataVO.getScore() + score);
@@ -170,43 +171,27 @@ public class ProblemResultServiceImpl implements ProblemResultService {
     @Override
     public RestResponseVO submit_input(String testInput,String testOutput,String problemId) {
 
-//        String problem_in = testInput;
-//        System.out.println(testInput);
-//        System.out.println(testOutput);
-//        System.out.println(problemId);
-//        if (testInput.contains(" ")){
-//            input1 = testInput.split(" ");
-//            for (int i = 0;i<input1.length;i++) {
-//                System.out.println(Integer.parseInt(input1[i]));
-//            }
-//        }else if (testInput.contains("\n")){
-//            input1 = testInput.split("\n");
-//            for (int i= 0;i<input1.length;i++){
-//                System.out.println(Integer.parseInt(input1[i]));
-//            }
-//        }
-
         BufferedWriter bw = null,bw1 =null;
         File dir = new File(fileServerTestcaseDir+"/"+problemId);
-        File problem_dir = new File(dir+"/input");
-        File problem_dir1 = new File(dir+"/output");
-        File problem_dir2 = new File(dir+"/input_test");
-        File problem_dir3 = new File(dir+"/output_test");
+
+        File problem_dir1 = new File(dir+"/input_test");
+        File problem_dir2 = new File(dir+"/output_test");
         System.out.println(dir);
-        System.out.println(problem_dir);
-        System.out.println(problem_dir1);
+
+
         try
         {
-            if ((!problem_dir3.exists())&&(!problem_dir2.exists())&&(!problem_dir1.exists())&&(!problem_dir.exists())&&(!dir.exists())) {
+            if(!dir.exists()){
                 dir.mkdir();
-                problem_dir.mkdir();
-                problem_dir1.mkdir();
-                problem_dir2.mkdir();
-                problem_dir3.mkdir();
+                if ((!problem_dir1.exists())&&(!problem_dir2.exists())) {
+                    dir.mkdir();
+                    problem_dir1.mkdir();
+                    problem_dir2.mkdir();
+                }
             }
             String str = problemId+".txt";
-            File file = new File(problem_dir2, str);
-            File file1 = new File(problem_dir3,str);
+            File file = new File(problem_dir1, str);
+            File file1 = new File(problem_dir2,str);
             if (!file.exists()) {
                 file.createNewFile();
                 file1.createNewFile();

@@ -8,10 +8,74 @@
     <!--Page level styles-->
     <link type="text/css" rel="stylesheet" th:href="@{/plugins/modal/css/component.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/css/pages/problem_detail.css}"/>
+    <script type="text/javascript" th:src="@{/js/pages/autoload.js}"></script><!--2D人物加载-->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/chatbox.css}" rel="stylesheet" type="text/css" />
+    <script src="/js/index.js"></script>
+    <script src = "/js/recorder/recorder-core.js"></script>
+    <script src = "/js/recorder/extensions/waveview.js"></script>
 
 </head>
 
 <body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
+<a href="javascript:;" class="comment" id="chat"></a>
+<div id="chatbox">
+    <div class="Container">
+
+        <div class="top">
+                    <span>To:
+                        <span class="name">Britu小精灵</span>
+                    </span>
+            <div class="x">
+                <a href="javascript:;" class="fa fa-lg fa-times" id="x"></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="bubble_you">
+                <span class="img_1"></span>
+                <span class="bubble_1">
+                    <span class="tri_1"></span>
+                    Hello,我是Britu小精灵。你有什么不懂的问题吗？我可是全知全能哟！
+                </span>
+            </div>
+            <div class="bubble_me">
+                <span class="img_2"></span>
+                <span class="bubble_2">
+                    <span class="tri_2"></span>
+                    好的呢，我可是有一大堆问题想问的呢。
+                </span>
+            </div>
+        </div>
+        <div class="recwave" id="box"></div>
+        <!--        <div id="box">-->
+        <!--            <div class="list">-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="write">
+            <a href="javascript: recopen(); " class="recorder fa fa-lg fa-microphone" id="Recording"></a>
+            <a href="javascript: ;" class="stop" id="stop"></a>
+            <input id="text" type="text" placeholder='尽情畅聊吧' />
+            <a href="javascript:;" class="send fa fa-lg fa-paper-plane" id="send"></a>
+        </div>
+        <div id="bdtts_div_id">
+            <audio id="tts_autio_id" autoplay="autoplay">
+                <source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&per=1&text=" type="audio/mpeg">
+                <embed id="tts_embed_id" height="0" width="0" src="">
+            </audio>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="/js/questions.js"></script>
+
 <div class="preloader" style=" position: fixed;
   width: 100%;
   height: 100%;
@@ -89,10 +153,13 @@ z-index: 999999">
                                     </span>
                                     <span class=" btn-danger loading btn-sm ml-1">
                                         难度:
-                                        <span th:if="${problem.level == 1}">简单</span>
-                                        <span th:if="${problem.level == 2}">中等</span>
-                                        <span th:if="${problem.level == 3}">困难</span>
-                                        <span th:if="${problem.level == 4}">专家</span>
+                                        <span th:if="${problem.level == 1}">入门</span>
+                                        <span th:if="${problem.level == 2}">普及</span>
+                                        <span th:if="${problem.level == 3}">提高</span>
+                                        <span th:if="${problem.level == 4}">普及+</span>
+                                        <span th:if="${problem.level == 5}">提高+</span>
+                                        <span th:if="${problem.level == 6}">省选</span>
+                                        <span th:if="${problem.level == 7}">NOI</span>
                                     </span>
                                 </div>
                                 <div class="mt-5">
@@ -200,6 +267,10 @@ z-index: 999999">
                                                 <i class="fa fa-files-o mr-1"></i>查看题解
                                             </button>
                                         </a>
+                                        <button onclick="save_code(userID)"
+                                                class="notify ml-2 float-right btn btn-info  button-rounded">
+                                            <i class="fa fa-cloud mr-1"></i>暂存代码
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -369,7 +440,7 @@ z-index: 999999">
                 </div>
                 <div class="modal-body">
                     <div>
-                        输入字符串:
+                        请输入数据:
                         <textarea id="testInput" style="height: 100px" type="text" name="testInput"
                                   class="form-control"></textarea>
                     </div>
@@ -412,15 +483,39 @@ z-index: 999999">
 </body>
 
 <script th:inline="javascript">
-    var code = [[${sourceCode.code}]]
-    var type = [[${sourceCode.type}]]
-    alert(code)
-    alert(type)
-    if(code != null){
-        window.onload = function(){
-            getHistoryCode(type,code)
-        }
+    var sourcecode = [[${sourceCode.code}]]
+    var typecode = [[${sourceCode.type}]]
+    var userID;
+    // console.log('用户信息' + [[${user.id}]] );
+    // alert(sourcecode);
+    // alert(typecode);
+    // console.log('后台返回的历史代码' + sourcecode);
+    // console.log('后台返回代码的类型' + typecode);
+    if([[${user.id}]]){
+        userID = [[${user.id}]];
     }
+    else{
+        userID = null;
+    }
+    if(sourcecode != null){
+            getHistoryCode(typecode,sourcecode);
+
+    }
+    outCode(userID);
+</script>
+
+<script>
+
+    window.onload = function(){
+        // var link = window.location.href;
+        // var link2 = document.location;
+        // alert(link);
+        // alert(link2);
+        }
+
+
+
+
 </script>
 
 <script th:inline="javascript">
@@ -463,42 +558,7 @@ z-index: 999999">
     // end of vue
 
 
-    //chars
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myDoughnutChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [acCount, ceCount, peCount, reCount, tleCount, meCount, waCount],
-                backgroundColor: [
-                    '#4BC0C0',
-                    '#FFCD56',
-                    '#ed92ff',
-                    '#FF9F40',
-                    '#62b8ff',
-                    '#6574ff',
-                    '#FF6384'
-                ],
-                borderColor: []
-            }],
-            labels: [
-                'Accepted',
-                'Compile Error',
-                'Presentation Error',
-                'Runtime Error',
-                'Time Limit Exceeded',
-                'Memory Limit Exceeded',
-                'Wrong Answer'
-            ]
-        },
-        options: {
-            title: {
-                display: true,
-                text: '提交次数-' + submitCount + '次'
-            }
-        }
-    });
-    // en of chars
+
 
     //输入测试样例
     function setTestcase() {

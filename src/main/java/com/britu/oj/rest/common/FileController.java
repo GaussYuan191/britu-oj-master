@@ -91,7 +91,7 @@ public class FileController {
 
     @GetMapping("/getTestcaseInput")
     @ResponseBody
-    public RestResponseVO getTestcaseInput(HttpServletResponse response,Integer problemId, Integer num,
+    public RestResponseVO getTestcaseInput(HttpServletResponse response,String problemId, Integer num,
                                  @AuthenticationPrincipal UserDetails userDetails){
         if (userDetails == null) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.UNAUTHORIZED);
@@ -101,7 +101,7 @@ public class FileController {
     }
 
     @GetMapping("/getTestcaseOutput")
-    public RestResponseVO getTestcaseOutput(HttpServletResponse response,Integer problemId, Integer num,@AuthenticationPrincipal UserDetails userDetails){
+    public RestResponseVO getTestcaseOutput(HttpServletResponse response,String problemId, Integer num,@AuthenticationPrincipal UserDetails userDetails){
         if (userDetails == null) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.UNAUTHORIZED);
         }

@@ -20,7 +20,7 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private Integer pid;             //答案表的ID
+    private String pid;             //答案表的ID
     private String problem_name;    //题目的名字
     private String answer_c;        //C语言对应的答案
     private String answer_cpro;     //++对应的答案

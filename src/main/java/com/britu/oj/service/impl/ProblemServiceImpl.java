@@ -62,7 +62,7 @@ public class ProblemServiceImpl implements ProblemService {
 
 
     @Override
-    public RestResponseVO getById(Integer problemId) {
+    public RestResponseVO getById(String problemId) {
         if (problemId == null) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
         }
@@ -72,7 +72,7 @@ public class ProblemServiceImpl implements ProblemService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public RestResponseVO delById(Integer id) {
+    public RestResponseVO delById(String id) {
         if (id == null) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
         }
@@ -176,7 +176,7 @@ public class ProblemServiceImpl implements ProblemService {
 
     @Override
     public RestResponseVO<List<ProblemDetailVO>> listSuggestProblem(double ability, Integer row) {
-        Integer problemId = RecommendUitl.Recommend(ability);
+        String problemId = RecommendUitl.Recommend(ability);
         if (problemId == null) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
         }
@@ -196,7 +196,7 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public RestResponseVO<ProblemDetailVO> getDetailVOById(Integer problemId) {
+    public RestResponseVO<ProblemDetailVO> getDetailVOById(String problemId) {
         if (problemId == null) {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
         }
@@ -206,7 +206,7 @@ public class ProblemServiceImpl implements ProblemService {
 
 
 
-    private boolean insertTags(Integer problemId, String tags) {
+    private boolean insertTags(String problemId, String tags) {
         if (StringUtils.isNoneBlank(tags) && problemId != null) {
             String[] tagsIdsList = tags.split(",");
             if (ArrayUtils.isNotEmpty(tagsIdsList)) {
@@ -225,7 +225,7 @@ public class ProblemServiceImpl implements ProblemService {
         return false;
     }
 
-    private boolean addTestcaseList(Integer problemId,List<TestcaseVO> testcaseVOList){
+    private boolean addTestcaseList(String problemId,List<TestcaseVO> testcaseVOList){
         if (CollectionUtils.isNotEmpty(testcaseVOList)) {
             if (fileService.deleteTestcase(problemId).isSuccess()) {
                 for (TestcaseVO testcaseVO : testcaseVOList) {
@@ -239,7 +239,7 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public RestResponseVO<ProblemResult> querySource_code(Integer compId, Integer problemId, Integer userId) {
+    public RestResponseVO<ProblemResult> querySource_code(Integer compId, String problemId, Integer userId) {
         ProblemResult problemResult = problemResultMapper.querySource_code(userId,compId,problemId);
 //        System.out.println(problemResult);
         return RestResponseVO.createBySuccess(problemResult);

@@ -16,7 +16,7 @@ public class ProblemResultVO {
 
     private String name;
 
-    private Integer problemId;
+    private String problemId;
 
     private Integer compId;
 
@@ -56,11 +56,11 @@ public class ProblemResultVO {
         this.name = name == null ? null : name.trim();
     }
 
-    public Integer getProblemId() {
+    public String getProblemId() {
         return problemId;
     }
 
-    public void setProblemId(Integer problemId) {
+    public void setProblemId(String problemId) {
         this.problemId = problemId;
     }
 

@@ -26,7 +26,7 @@ public class TestcaseController {
 
     @RequestMapping("/list2PageByProblemId")
     @ResponseBody
-    public RestResponseVO list2PageByProblemId(Integer problemId){
+    public RestResponseVO list2PageByProblemId(String problemId){
         return testcaseService.listTestcaseByProblemId(problemId);
     }
 
@@ -51,7 +51,7 @@ public class TestcaseController {
      */
     @RequestMapping("/save")
     @ResponseBody
-    public RestResponseVO save(Integer problemId,Integer num,String testcaseInput,String testcaseOutput) {
+    public RestResponseVO save(String problemId,Integer num,String testcaseInput,String testcaseOutput) {
         return fileService.saveTestcase(problemId,num,testcaseInput,testcaseOutput);
     }
 
@@ -62,7 +62,7 @@ public class TestcaseController {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public RestResponseVO delete(Integer problemId,Integer num) {
+    public RestResponseVO delete(String problemId,Integer num) {
         return fileService.deleteTestcase(problemId,num);
     }
 
@@ -74,7 +74,7 @@ public class TestcaseController {
      */
     @RequestMapping("/listTestcase")
     @ResponseBody
-    public RestResponseVO listTestcase(Integer problemId) {
+    public RestResponseVO listTestcase(String problemId) {
         return fileService.listTestcaseVO(problemId);
     }
 

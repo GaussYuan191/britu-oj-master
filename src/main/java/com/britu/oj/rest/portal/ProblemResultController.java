@@ -76,7 +76,7 @@ public class ProblemResultController {
      */
     @RequestMapping("/listProblemResult2Page")
     @ResponseBody
-    public RestResponseVO listProblemResult2Page(@RequestParam(required = false) Integer problemId,
+    public RestResponseVO listProblemResult2Page(@RequestParam(required = false) String problemId,
                                                  @RequestParam(defaultValue = "1") Integer pageNum,
                                                  @RequestParam(defaultValue = "20") Integer pageSize,
                                                  @RequestParam(defaultValue = "", required = false) String name,
@@ -253,6 +253,7 @@ public class ProblemResultController {
 
             }
         }
+        System.out.println(problemResultDetailVO.toString());
         //set data
         request.setAttribute("active4", true);
         request.setAttribute("problemResultDetail", problemResultDetailVO);

@@ -12,7 +12,7 @@ public class ProblemResultCompetitionVO {
 
     private Integer userId;
 
-    private Integer problemId;
+    private String problemId;
 
     private String problemName;
 
@@ -55,11 +55,11 @@ public class ProblemResultCompetitionVO {
         this.userId = userId;
     }
 
-    public Integer getProblemId() {
+    public String getProblemId() {
         return problemId;
     }
 
-    public void setProblemId(Integer problemId) {
+    public void setProblemId(String problemId) {
         this.problemId = problemId;
     }
 

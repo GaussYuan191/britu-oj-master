@@ -61,8 +61,8 @@
         <!--        </div>-->
 
         <div class="write">
-            <a href="javascript: recopen(); recording(); " class="recorder fa fa-lg fa-microphone" id="Recording"></a>
-            <a href="javascript: notrecording(); " class="stop"></a>
+            <a href="javascript: recopen(); " class="recorder fa fa-lg fa-microphone" id="Recording"></a>
+            <a href="javascript: ;" class="stop" id="stop"></a>
             <input id="text" type="text" placeholder='尽情畅聊吧' />
             <a href="javascript:;" class="send fa fa-lg fa-paper-plane" id="send"></a>
         </div>
@@ -170,9 +170,9 @@
                         </div>
                         <!--#轮播图-->
 
-<!--                        <div id="beijin" style="float: right;">-->
-<!--                            <img th:src="@{/img/image_01.png}">-->
-<!--                        </div>-->
+                        <!--                        <div id="beijin" style="float: right;">-->
+                        <!--                            <img th:src="@{/img/image_01.png}">-->
+                        <!--                        </div>-->
                     </div>
                     <div class="row mt-3">
 
@@ -415,6 +415,7 @@
 <!--<script src = "/js/recorder/core.js"></script>-->
 <script src = "/js/recorder/index.js"></script>
 <script src = "/js/recorder/ztest-jquery.min-1.9.1.js"></script>
+<script src = "/js/questions.js"></script>
 
 
 <!--对话交流js-->
@@ -452,41 +453,57 @@
     // var pic =document.getElementById('pic');
     var text =document.getElementById('text');
     // var info_box = document.getElementsByClassName('info_box')[0];
+    var x = document.getElementById('x');
+
+    x.onclick=function(){
+        document.getElementById("chatbox").style.bottom = "-1000px";
+    };
     var chat = document.getElementById('chat');
+    var status;
     chat.onclick=function(){
         document.getElementById("chatbox").style.bottom = "10px";
 
     };
-   //上传录音
+    //上传录音
     var recording = document.getElementById('Recording');
-    var num = 0;
     var recorder;
     recording.onclick = function(){
-        if((num % 2) === 0){
-            alert(1)
-            // startRecording();
-            recopen();
-            alert(2)
-            recstart();
-            alert("开始语音识别，再点击录音按钮结束");
-            num++;
+        startRecording();
+        alert("开始语音识别，再点击录音按钮结束");
+        document.getElementById("box").style.visibility = "visible";
+        status='1';
+        alert(status);
+    };
+    var stop = document.getElementById('stop');
+    stop.onclick = function () {
+        stopRecording();
+        document.getElementById("box").style.visibility = "hidden";
+        uploadAudio();
+        if (status==='1') {
+            var div = document.createElement('div');
+            var span_1 = document.createElement('span');
+            var span_2 = document.createElement('span');
+            var img = document.createElement('div');
+            var content = document.getElementsByClassName('content')[0];
+            //声明请求变量
+            span_1.className = 'bubble_3';
+            span_2.className = 'img_2';
+            img.className = 'wait';
+            div.id = 'bubble_meme';
+            div.appendChild(span_2);
+            div.appendChild(span_1);
+            div.appendChild(img);
+            content.insertBefore(div, content.lastChild);
+            content.scrollTop = content.scrollHeight;//自动跟进最新消息
+            status = '0';
         }
-        else{
-            alert("识别结束，等待结果");
-            // stopRecording();
-            // uploadAudio();
-            recstop();
-            var id=RandomKey(16);
-            recplay(id);
-
-            num++;
-        }
-    }
+    };
     function startRecording(){
         swrecorder.get(function(rec) {
-            recorder = rec
-            recorder.start()
+            recorder = rec;
+            recorder.start();
         })
+
     }
 
     function stopRecording(){
@@ -498,17 +515,10 @@
     }
     function uploadAudio(){
         recorder.upload("http://127.0.0.1:9944/aliSubmit", function(state,e) {
-            console.log(e,state)
+            console.log(e,state);
         })
     }
 
-
-
-    var x = document.getElementById('x');
-
-    x.onclick=function(){
-        document.getElementById("chatbox").style.bottom = "-1000px";
-    };
     send.onclick=function(){
         if(text.value===''){
             alert('请输入内容');
@@ -536,7 +546,7 @@
             content.scrollTop = content.scrollHeight;//自动跟进最新消息
             // imgs.src='img/2.jpg';
             //请求后台
-            var url = 'http://yuangauss287.top:9944/api/qa?msg='+ text.value;
+            var url = 'http://127.0.0.1:9944/api/qa?msg='+ text.value;
             xhr.open("GET", url);
             xhr.send(fd);
 

@@ -164,7 +164,6 @@
 
                     // alert(1);
                     var jsoncontent = JSON.parse(xhr.responseText);/*将获取的信息解析为json对象*/
-
                     if(jsoncontent['code'] == 200){
                         // alert(jsoncontent['code']);
                         var message = jsoncontent['message'];
@@ -214,7 +213,23 @@
                                 div.appendChild(span_2);
                                 div.appendChild(span_1);
                                 content.insertBefore(div,content.lastChild);
+                                var ttsDiv = document.getElementById('bdtts_div_id');
+                                var ttsAudio = document.getElementById('tts_autio_id');
+                                var ttsText = data;
+
+                                // 文字转语音
+                                ttsDiv.removeChild(ttsAudio);
+                                var au1 = '<audio id="tts_autio_id" autoplay="autoplay">';
+                                var sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&per=3&spd=5&text=' + ttsText + '" type="audio/mpeg">';
+                                var eee = '<embed id="tts_embed_id" height="0" width="0" src="">';
+                                var au2 = '</audio>';
+                                ttsDiv.innerHTML = au1 + sss + eee + au2;
+
+                                ttsAudio = document.getElementById('tts_autio_id');
+                                ttsAudio.play();
+
                                 content.scrollTop = content.scrollHeight;//自动跟进最新消息
+
                             }, 1000);
 
 
@@ -241,6 +256,22 @@
                                 div.appendChild(span_2);
                                 div.appendChild(span_1);
                                 content.insertBefore(div,content.lastChild);
+
+                                var ttsDiv = document.getElementById('bdtts_div_id');
+                                var ttsAudio = document.getElementById('tts_autio_id');
+                                var ttsText = message;
+
+                                // 文字转语音
+                                ttsDiv.removeChild(ttsAudio);
+                                var au1 = '<audio id="tts_autio_id" autoplay="autoplay">';
+                                var sss = '<source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&per=3&spd=5&text=' + ttsText + '" type="audio/mpeg">';
+                                var eee = '<embed id="tts_embed_id" height="0" width="0" src="">';
+                                var au2 = '</audio>';
+                                ttsDiv.innerHTML = au1 + sss + eee + au2;
+
+                                ttsAudio = document.getElementById('tts_autio_id');
+                                ttsAudio.play();
+
                                 content.scrollTop = content.scrollHeight;//自动跟进最新消息
                             },1000);
                         }
@@ -248,6 +279,8 @@
                     }
                 }
             }
+
+
             console.log(fd)
         }
 

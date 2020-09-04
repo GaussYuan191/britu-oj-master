@@ -19,12 +19,12 @@ public interface ProblemResultMapper {
 
     int updateByPrimaryKey(ProblemResult record);
 
-    List<ProblemResultVO> listProblemResult(@Param("problemId") Integer problemId, @Param("name")String name,
+    List<ProblemResultVO> listProblemResult(@Param("problemId") String problemId, @Param("name")String name,
                                             @Param("type") String type, @Param("status") Integer status);
 
-    int countUserIdProblemIdByStatus(@Param("userId")Integer userId,@Param("problemId")Integer problemId,@Param("status")Integer status);
+    int countUserIdProblemIdByStatus(@Param("userId")Integer userId,@Param("problemId")String problemId,@Param("status")Integer status);
 
-    int countUserIdProblemId(@Param("userId")Integer userId,@Param("problemId")Integer problemId);
+    int countUserIdProblemId(@Param("userId")Integer userId,@Param("problemId")String problemId);
 
     ProblemResultSubmitVO getByRunNum2SubmitVO(String runNum);
 
@@ -38,7 +38,7 @@ public interface ProblemResultMapper {
 
     List<UserProblemRecordVO> listProblemRecord(@Param("userId") Integer userId, @Param("flag") Integer flag);
 
-    int deleteByProblemId(Integer problemId);
+    int deleteByProblemId(String problemId);
 
-    ProblemResult querySource_code(@Param("userId") Integer userId,@Param("compId") Integer compId,@Param("problemId") Integer problemId);
+    ProblemResult querySource_code(@Param("userId") Integer userId,@Param("compId") Integer compId,@Param("problemId") String problemId);
 }

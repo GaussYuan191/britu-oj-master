@@ -62,6 +62,7 @@ public class ProblemController {
         List<TagVO> tagList = tagService.listParentVOAll().getData();
 
         //set data
+        System.out.println(tagList.toString());
         request.setAttribute("tagList", tagList);
         request.setAttribute("keyword", keyword);
         request.setAttribute("active2", true);
@@ -108,8 +109,10 @@ public class ProblemController {
      * @return
      */
     @RequestMapping("/problemDetailPage")
-    public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, Integer problemId,Integer compId) {
+    public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, String problemId,Integer compId) {
         Integer u_id;
+        User user = new User();
+        SourceCode sourceCode = new SourceCode();
 //        p_id = problemId
         RestResponseVO<ProblemResult> problemResultRestResponseVO = null;
         if (userDetails == null) {
@@ -117,18 +120,14 @@ public class ProblemController {
 
         }
         else{
-            User user = (User) userDetails;
+            user = (User) userDetails;
             u_id = user.getId();
-//            double ability = abilityService.GetAbility(u_id);
-//            Integer SpendTime = SpendTimeUtil.GetSpendTime(ability);
-//            System.out.println(SpendTime);
-
             problemResultRestResponseVO = problemService.querySource_code(compId,problemId,user.getId());
-            System.out.println(problemResultRestResponseVO.getData());
+
+            sourceCode.setCode(problemResultRestResponseVO.getData().getSourceCode());
+            sourceCode.setType(problemResultRestResponseVO.getData().getType());
         }
-        SourceCode sourceCode = new SourceCode();
-        sourceCode.setCode(problemResultRestResponseVO.getData().getSourceCode());
-        sourceCode.setType(problemResultRestResponseVO.getData().getType());
+
 
 
         ProblemDetailVO detailVO = problemService.getDetailVOById(problemId).getData();
@@ -138,6 +137,7 @@ public class ProblemController {
         //set data
         request.setAttribute("problem", detailVO);
         request.setAttribute("compId", compId);
+        request.setAttribute("user",user);
         request.setAttribute("sourceCode",sourceCode);
         request.setAttribute("active2", true);
         return "portal/problem/problem-detail";
@@ -152,7 +152,7 @@ public class ProblemController {
      */
     @RequestMapping("/getSpendTime")
     @ResponseBody
-        public Integer getSpendTime(@AuthenticationPrincipal UserDetails userDetails){
+        public Integer getSpendTime(@AuthenticationPrincipal UserDetails userDetails,Integer level){
                 Integer u_id;
                 if (userDetails == null) {
                     System.out.println("请先登入");
@@ -163,7 +163,7 @@ public class ProblemController {
                     User user = (User) userDetails;
                     u_id = user.getId();
                     double ability = abilityService.GetAbility(u_id);
-                    Integer SpendTime = SpendTimeUtil.GetSpendTime(ability);
+                    Integer SpendTime = SpendTimeUtil.GetSpendTime(ability,level);
                     System.out.println(SpendTime);
                     return SpendTime;
 
@@ -175,7 +175,7 @@ public class ProblemController {
 
     @RequestMapping("/answer")
 
-    public String problemAnswer(HttpServletRequest request,Integer problemId,Integer compId){
+    public String problemAnswer(HttpServletRequest request,String problemId,Integer compId){
         Answer answerList =  answerCql.findByPid(problemId);
         if(answerList == null){
             throw new AnswerNotFoundException(ExceptionStatusConst.PROBLEM_ANSWER_NOT_STARTED_EXP,"未找到该题号的答案");

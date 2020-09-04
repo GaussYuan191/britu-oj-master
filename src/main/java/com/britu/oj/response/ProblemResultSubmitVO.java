@@ -16,7 +16,7 @@ public class ProblemResultSubmitVO {
 
     private String runNum;
 
-    private Integer problemId;
+    private String problemId;
 
     private Integer compId;
 
@@ -38,11 +38,11 @@ public class ProblemResultSubmitVO {
     }
 
 
-    public Integer getProblemId() {
+    public String getProblemId() {
         return problemId;
     }
 
-    public void setProblemId(Integer problemId) {
+    public void setProblemId(String problemId) {
         this.problemId = problemId;
     }
 

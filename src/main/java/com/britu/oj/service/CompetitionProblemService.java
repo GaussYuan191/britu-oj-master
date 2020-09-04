@@ -22,6 +22,6 @@ public interface CompetitionProblemService {
 
     RestResponseVO<List<CompetitionProblemVO>> listVOByCompetitionId(Integer competitionId);
 
-    RestResponseVO<Integer> getScoreByCompIdProblemId(Integer compId,Integer problemId);
+    RestResponseVO<String> getScoreByCompIdProblemId(Integer compId, String problemId);
 
 }
