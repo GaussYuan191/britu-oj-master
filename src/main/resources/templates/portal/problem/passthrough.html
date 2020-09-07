@@ -15,9 +15,183 @@
 
     <link type="text/css" rel="stylesheet" th:href="@{/plugins/modal/css/component.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/css/pages/learning-center.css}"/>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+
+
+        .color {
+            color: black;
+        }
+        .bg1 {
+            background: url(img/3.png) no-repeat fixed;
+            background-size: 100% 100%;
+            position: relative;
+        }
+        .bg2 {
+            background: url(img/content2.jpg) no-repeat;
+            background-size: 100% 100%;
+            margin: 27.5px auto 27.5px;
+            position: relative;
+            width: 1000px;
+            height: 600px;
+        }
+
+        .test {
+            background: url("img/map1.jpg") no-repeat;
+            background-size: 100% 100%;
+            margin: 19px;
+            width: 962px;
+            height: 562px;
+            position: absolute;
+        }
+
+        .test1 {
+            position: absolute;
+            top: 250px;
+            left: 380px;
+            font-size: 2em;
+        }
+
+        .test2 {
+            position: absolute;
+            bottom: 38%;
+            left: 15%;
+            font-size: 2em;
+        }
+
+        .test3 {
+            position: absolute;
+            top: 280px;
+            left: 600px;
+            font-size: 2em;
+        }
+
+        .test4 {
+            position: absolute;
+            top: 35%;
+            right: 20%;
+            font-size: 2em;
+        }
+
+        .test5 {
+            position: absolute;
+            bottom: 32%;
+            right: 17%;
+            font-size: 2em;
+        }
+
+        .test1:hover {
+            color: blue;
+        }
+
+        .test2:hover {
+            color: blue;
+        }
+
+        .test3:hover {
+            color: blue;
+        }
+
+        .test4:hover {
+            color: blue;
+        }
+
+        .test5:hover {
+            color: blue;
+        }
+
+        img.bird {
+            width: 12%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            animation: run3 20s linear infinite;
+        }
+
+        @keyframes run3 {
+            0% {
+                width: 20%;
+            }
+            50% {
+                width: 12%;
+            }
+            100% {
+                width: 5%
+            }
+        }
+
+        .cloud {
+            width: 18vmin; /*根据宽度或高度那个小然后改变*/
+            height: 5vmin;
+            background: #fff;
+            border-radius: 15vmin;
+            position: absolute;
+            left: 22vmin;
+            top: 12vmin;
+            animation: cl0 20s infinite linear;
+
+        }
+
+        .cloud1 {
+            width: 9vmin;
+            height: 9vmin;
+            background: #fff;
+            position: absolute;
+            border-radius: 7vmin;
+            left: 1vmin;
+            top: -4vmin;
+        }
+
+        .cloud2 {
+            width: 11vmin;
+            height: 11vmin;
+            background: #fff;
+            position: absolute;
+            border-radius: 7vmin;
+            left: 5vmin;
+            top: -7vmin;
+        }
+
+        @keyframes cl0 {
+            0% {
+                transform: translateX(-20vmin)
+            }
+            100% {
+                transform: translateX(100vmin)
+            }
+        }
+        .tri1 {
+            position: absolute;
+            width: 0;
+            height: 0;
+            top: 50%;
+            right: 0;
+            border: 20px solid transparent;
+            border-left-color: #00b0ff;
+            font-size: 0;
+            line-height: 0;
+        }
+        .tri2 {
+            position: absolute;
+            width: 0;
+            height: 0;
+            top: 50%;
+            left: 0;
+            border: 20px solid transparent;
+            border-right-color: #00b0ff;
+            font-size: 0;
+            line-height: 0;
+        }
+
+    </style>
 
 </head>
-<body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
+<body class="bg1 body sidebar-left-hidden fixedNav_position fixedMenu_left">
 <div class="preloader" style=" position: fixed;
   width: 100%;
   height: 100%;
@@ -42,8 +216,19 @@ z-index: 999999">
     <div class="wrapper fixedNav_top">
         <div th:replace="~{fragments/left :: left}"></div>
         </div>
-    <div>
-        闯关页面
+    <div class="bg2">
+        <div class="test">
+            <a href="https://www.baidu.com" target="_blank" class="color test1 fa fa-lg fa-flag-o"></a>
+            <a href="https://www.baidu.com" target="_blank" class="color test2 fa fa-lg fa-flag-o"></a>
+            <a href="https://www.baidu.com" target="_blank" class="color test3 fa fa-lg fa-flag-o"></a>
+            <a href="https://www.baidu.com" target="_blank" class="color test4 fa fa-lg fa-flag-o"></a>
+            <a href="https://www.baidu.com" target="_blank" class="color test5 fa fa-lg fa-flag-checkered"></a>
+            <img src="img/bird.png" class="bird"/>
+            <div class="cloud">
+                <div class="cloud1"></div>
+                <div class="cloud2"></div>
+            </div>
+        </div>
     </div>
 </div>
 
