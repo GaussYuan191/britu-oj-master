@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>知识闯关</title>
+    <div th:replace="~{fragments/head-base}"></div>
+    <script type="text/javascript" th:src="@{/js/pages/autoload.js}"></script><!--2D人物加载-->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/chatbox.css}" rel="stylesheet" type="text/css" />
+    <script src="/js/index.js"></script>
+    <script src = "/js/recorder/recorder-core.js"></script>
+    <script src = "/js/recorder/extensions/waveview.js"></script>
+
+    <link type="text/css" rel="stylesheet" th:href="@{/plugins/modal/css/component.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/learning-center.css}"/>
+
+</head>
+<body class="body sidebar-left-hidden fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img th:src="@{/img/loader.gif}" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+<div id="wrap">
+    <div th:replace="~{fragments/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/left :: left}"></div>
+        </div>
+    <div>
+        闯关页面
+    </div>
+</div>
+
+<a href="javascript:;" class="comment" id="chat"></a>
+<div id="chatbox">
+    <div class="Container">
+
+        <div class="top">
+                    <span>To:
+                        <span class="name">Britu小精灵</span>
+                    </span>
+            <div class="x">
+                <a href="javascript:;" class="fa fa-lg fa-times" id="x"></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="bubble_you">
+                <span class="img_1"></span>
+                <span class="bubble_1">
+                    <span class="tri_1"></span>
+                    Hello,我是Britu小精灵。你有什么不懂的问题吗？我可是全知全能哟！
+                </span>
+            </div>
+            <div class="bubble_me">
+                <span class="img_2"></span>
+                <span class="bubble_2">
+                    <span class="tri_2"></span>
+                    好的呢，我可是有一大堆问题想问的呢。
+                </span>
+            </div>
+        </div>
+        <div class="recwave" id="box"></div>
+        <!--        <div id="box">-->
+        <!--            <div class="list">-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="write">
+            <a href="javascript: recopen(); " class="recorder fa fa-lg fa-microphone" id="Recording"></a>
+            <a href="javascript: ;" class="stop" id="stop"></a>
+            <input id="text" type="text" placeholder='尽情畅聊吧' />
+            <a href="javascript:;" class="send fa fa-lg fa-paper-plane" id="send"></a>
+        </div>
+        <div id="bdtts_div_id">
+            <audio id="tts_autio_id" autoplay="autoplay">
+                <source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&per=1&text=" type="audio/mpeg">
+                <embed id="tts_embed_id" height="0" width="0" src="">
+            </audio>
+
+        </div>
+
+    </div>
+</div>
+<script src = "/js/questions.js"></script>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
