@@ -62,7 +62,7 @@ public class ProblemController {
         List<TagVO> tagList = tagService.listParentVOAll().getData();
 
         //set data
-        System.out.println(tagList.toString());
+//        System.out.println(tagList.toString());
         request.setAttribute("tagList", tagList);
         request.setAttribute("keyword", keyword);
         request.setAttribute("active2", true);
@@ -135,6 +135,7 @@ public class ProblemController {
             throw new ProblemNotFoundException(ExceptionStatusConst.PROBLEM_NOT_FOUND_EXP, "未找到该题号的题目");
         }
         //set data
+        System.out.println(detailVO.toString());
         request.setAttribute("problem", detailVO);
         request.setAttribute("compId", compId);
         request.setAttribute("user",user);
