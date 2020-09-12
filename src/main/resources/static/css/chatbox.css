@@ -314,12 +314,12 @@ body {
     background-color: #cccccc;
     float: left;
 }
-.list {
+.clist {
     height: 20px;
     width: 50px;
     margin: 0 auto;
 }
-.list> div {
+.clist> div {
     background-color: #000000;
     width: 3px;
     height: 18px;
@@ -331,27 +331,27 @@ body {
     animation: list 0.9s 0s infinite cubic-bezier(.85, .25, .37, .85);
 }
 
-.list> div:nth-child(1) {
+.clist> div:nth-child(1) {
     -webkit-animation-delay: 0.2s !important;
     animation-delay: 0.1s !important;
 }
-.list> div:nth-child(2) {
+.clist> div:nth-child(2) {
     -webkit-animation-delay: 0.3s !important;
     animation-delay: 0.2s !important;
 }
-.list> div:nth-child(3) {
+.clist> div:nth-child(3) {
     -webkit-animation-delay: 0.4s !important;
     animation-delay: 0.3s !important;
 }
-.list> div:nth-child(4) {
+.clist> div:nth-child(4) {
     -webkit-animation-delay: 0.5s !important;
     animation-delay: 0.4s !important;
 }
-.list> div:nth-child(5) {
+.clist> div:nth-child(5) {
     -webkit-animation-delay: 0.6s !important;
     animation-delay: 0.5s !important;
 }
-.list> div:nth-child(6) {
+.clist> div:nth-child(6) {
     -webkit-animation-delay: 0.7s !important;
     animation-delay: 0.6s !important;
 }

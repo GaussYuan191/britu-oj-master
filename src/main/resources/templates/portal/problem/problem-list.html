@@ -123,7 +123,7 @@ z-index: 999999">
                     <div id="problemApp">
                         <!--title-->
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col-9">
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="w-75">
@@ -175,7 +175,7 @@ z-index: 999999">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <button class=" w-100 btn button-rounded btn-primary  glow_button"
                                         onclick="randomProblem()"><i
                                         class="fa fa-random"></i><span class="ml-1">帮我随机选择一题</span>
@@ -184,7 +184,8 @@ z-index: 999999">
                         </div>
                         <div class="row mt-3">
                             <!--problemList-->
-                            <div class="col-8">
+                            <div class="col-9">
+
                                 <div id="plist" style="display: block">
                                     <div class="card p-3">
                                         <div class="card-body">
@@ -196,6 +197,7 @@ z-index: 999999">
                                                     <th class="text-center" style="
                                                     width: 56px;">题号</th>
                                                     <th class="">标题</th>
+                                                    <th class="" style="width: 58px;">热度</th>
                                                     <th class="" style="
                                                     width: 126px;">标签</th>
                                                     <th class="text-center" style="
@@ -228,7 +230,12 @@ z-index: 999999">
                                                         </div>
 
                                                     </td>
+
+                                                    <td class="text-center" v-if="problem.submitCount == 0"></td>
+                                                    <td class="text-center" v-if="problem.submitCount != 0"><i
+                                                            class="fa fa-fire text-danger "></i></td>
                                                     <td>
+
                                                         <div style="width: 120px">
                                                             <i class="fa fa-tags mr-1"></i>
                                                             <span v-if="problem.tags != null">
@@ -274,183 +281,21 @@ z-index: 999999">
                                     <!--#page-->
                                 </div>
 
-                                <div id="ptree" style="display: none;">
-                                </div>
-<!--                                <iframe src="http://yuangauss287.top:8066/" width="750px" height="750px" frameborder="0" scrolling="no"></iframe>-->
 
-<!--                                <script th:src="@{http://yuangauss287.top:8082/json/d3js.js}"></script>-->
-<!--                                <script>-->
-<!--                                    var margin = {top: 20, right: 120, bottom: 20, left: 120},-->
-<!--                                        width = 750 - margin.right - margin.left,-->
-<!--                                        height = 800 - margin.top - margin.bottom;-->
-
-<!--                                    var i = 0,-->
-<!--                                        duration = 750,-->
-<!--                                        root;-->
-
-<!--                                    var tree = d3.layout.tree()-->
-<!--                                        .size([height, width]);-->
-
-<!--                                    var diagonal = d3.svg.diagonal()-->
-<!--                                        .projection(function(d) { return [d.y, d.x]; });-->
-
-<!--                                    var svg = d3.select("#ptree").append("svg")-->
-<!--                                        .attr("width", width + margin.right + margin.left)-->
-<!--                                        .attr("height", height + margin.top + margin.bottom)-->
-<!--                                        .append("g")-->
-<!--                                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");-->
-
-<!--                                    d3.json("http://yuangauss287.top:8082/json/flare.json", function(error, flare) {-->
-<!--                                        if (error) throw error;-->
-
-
-
-<!--                                        root = flare;-->
-<!--                                        root.x0 = height / 2;-->
-<!--                                        root.y0 = 0;-->
-
-<!--                                        function collapse(d) {-->
-<!--                                            if (d.children) {-->
-<!--                                                d._children = d.children;-->
-<!--                                                d._children.forEach(collapse);-->
-<!--//                d.children = null;-->
-<!--                                            }-->
-<!--                                        }-->
-
-<!--                                        root.children.forEach(collapse);-->
-<!--                                        update(root);-->
-<!--                                    });-->
-
-<!--                                    //    d3.select(self.frameElement).style("height", "800px");-->
-
-<!--                                    function update(source) {-->
-
-
-
-<!--                                        // Compute the new tree layout.-->
-<!--                                        var nodes = tree.nodes(root).reverse(),-->
-<!--                                            links = tree.links(nodes);-->
-
-<!--                                        // Normalize for fixed-depth.-->
-<!--                                        nodes.forEach(function(d) { d.y = d.depth * 180; });-->
-
-<!--                                        // Update the nodes…-->
-<!--                                        var node = svg.selectAll("g.node")-->
-<!--                                            .data(nodes, function(d) { return d.id || (d.id = ++i); });-->
-
-<!--                                        // Enter any new nodes at the parent's previous position.-->
-<!--                                        var nodeEnter = node.enter().append("g")-->
-<!--                                            .attr("class", "node")-->
-<!--                                            .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })-->
-<!--                                            .on("click", click);-->
-
-<!--                                        //画边框的元素-->
-<!--                                        // nodeEnter.append('image')-->
-<!--                                        //         .attr("xlink:href","./laptop.png")-->
-<!--                                        //         .attr("x","-30px")-->
-<!--                                        //         .attr("y","-35px")-->
-<!--                                        //         .attr("width","60")-->
-<!--                                        //         .attr("height","45");-->
-
-
-<!--                                        //写文字的变迁-->
-<!--                                        nodeEnter.append("text")-->
-<!--                                            .attr("x","0px")-->
-<!--                                            .attr("y", "0px")-->
-<!--                                            .attr("dy", "0.35em")-->
-<!--                                            .attr("text-anchor", "middle")-->
-<!--                                            .text(function(d) { return d.name; })-->
-<!--                                            .style("fill-opacity", 1e-6)-->
-
-<!--                                            .attr("fill", "blue")-->
-
-
-<!--                                        // Transition nodes to their new position.-->
-<!--                                        var nodeUpdate = node.transition()-->
-<!--                                            .duration(duration)-->
-<!--                                            .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });-->
-
-<!--                                        nodeUpdate.select("circle")-->
-<!--                                            .attr("r", 4.5)-->
-<!--                                            .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });-->
-
-<!--                                        nodeUpdate.select("text")-->
-<!--                                            .style("fill-opacity", 1);-->
-
-<!--                                        // Transition exiting nodes to the parent's new position.-->
-<!--                                        var nodeExit = node.exit().transition()-->
-<!--                                            .duration(duration)-->
-<!--                                            .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })-->
-<!--                                            .remove();-->
-
-<!--                                        nodeExit.select("circle")-->
-<!--                                            .attr("r", 1e-6);-->
-
-<!--                                        nodeExit.select("text")-->
-<!--                                            .style("fill-opacity", 1e-6);-->
-
-<!--                                        // Update the links…-->
-<!--                                        var link = svg.selectAll("path.link")-->
-<!--                                            .data(links, function(d) { return d.target.id; });-->
-
-<!--                                        // Enter any new links at the parent's previous position.-->
-<!--                                        link.enter().insert("path", "g")-->
-<!--                                            .attr("class", "link")-->
-<!--                                            .attr("d", function(d) {-->
-<!--                                                var o = {x: source.x0, y: source.y0};-->
-<!--                                                return diagonal({source: o, target: o});-->
-<!--                                            });-->
-
-<!--                                        // Transition links to their new position.-->
-<!--                                        link.transition()-->
-<!--                                            .duration(duration)-->
-<!--                                            .attr("d", diagonal);-->
-
-<!--                                        // Transition exiting nodes to the parent's new position.-->
-<!--                                        link.exit().transition()-->
-<!--                                            .duration(duration)-->
-<!--                                            .attr("d", function(d) {-->
-<!--                                                var o = {x: source.x, y: source.y};-->
-<!--                                                return diagonal({source: o, target: o});-->
-<!--                                            })-->
-<!--                                            .remove();-->
-
-<!--                                        // Stash the old positions for transition.-->
-<!--                                        nodes.forEach(function(d) {-->
-<!--                                            d.x0 = d.x;-->
-<!--                                            d.y0 = d.y;-->
-<!--                                        });-->
-<!--                                    }-->
-
-<!--                                    // Toggle children on click.-->
-<!--                                    function click(d) {-->
-
-
-<!--                                        if (d.children) {-->
-<!--                                            d._children = d.children;-->
-<!--                                            d.children = null;-->
-<!--                                        } else {-->
-<!--                                            d.children = d._children;-->
-<!--                                            d._children = null;-->
-<!--                                            window.location.href='tree.html'-->
-<!--                                        }-->
-<!--                                        update(d);-->
-<!--                                    }-->
-
-
-<!--                                </script>-->
+                                <div id="ptree" style="display: none"></div>
+                                
 
                             </div>
 
                             <!--#problemList-->
 
                             <!--right-->
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="card">
                                     <div class="card-header bg-white"><i class="fa fa-bars mr-1"></i>题目分类</div>
                                     <div class="card-block">
                                         <div class="row">
-                                            <div class="col-4 nav-item dropdown " th:each="tag,status:${tagList}">
+                                            <div class="col-6 nav-item dropdown " th:each="tag,status:${tagList}">
                                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                                                    role="button" data-toggle="dropdown" aria-haspopup="true"
                                                    aria-expanded="false">
@@ -586,11 +431,15 @@ z-index: 999999">
     //显示点击方法
     function kindOfView() {
         if ($('#kind option:selected').val()==-1) {
+
             document.getElementById('plist').style.display='block'
             document.getElementById('ptree').style.display='none'
         } else{
+
             document.getElementById('plist').style.display='none'
             document.getElementById('ptree').style.display='block'
+            var text = '<iframe src="http://yuangauss287.top:8066/" width="857px" height="2000px" frameborder="0" scrolling="no"></iframe>'
+            document.getElementById('ptree').innerHTML = text
         }
     }
 
