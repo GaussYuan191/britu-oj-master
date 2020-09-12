@@ -181,6 +181,7 @@ public class ProblemServiceImpl implements ProblemService {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
         }
         List<ProblemDetailVO> problemList = problemMapper.listSuggestProblem(problemId, row);
+        System.out.println( RestResponseVO.createBySuccess(problemList).getData().toString());
         return RestResponseVO.createBySuccess(problemList);
     }
 

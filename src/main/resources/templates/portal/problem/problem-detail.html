@@ -267,10 +267,17 @@ z-index: 999999">
                                                 <i class="fa fa-files-o mr-1"></i>查看题解
                                             </button>
                                         </a>
-                                        <button onclick="save_code(userID)"
+                                        <button  onclick="save_code(userID)"
                                                 class="notify ml-2 float-right btn btn-info  button-rounded">
                                             <i class="fa fa-cloud mr-1"></i>暂存代码
                                         </button>
+
+                                        <a th:if="${isPassthroug} eq 1 " th:href="@{'/passthrough'}">
+                                            <button
+                                                    class="notify ml-2 float-right btn btn-outline-primary  button-rounded">
+                                                <i class="fa fa-files-o mr-1"></i>返回挑战页面
+                                            </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

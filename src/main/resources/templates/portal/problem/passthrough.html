@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>知识闯关</title>
+    <div th:replace="~{fragments/head-base}"></div>
+    <script type="text/javascript" th:src="@{/js/pages/autoload.js}"></script><!--2D人物加载-->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/chatbox.css}" rel="stylesheet" type="text/css" />
+    <script src="/js/index.js"></script>
+    <script src = "/js/recorder/recorder-core.js"></script>
+    <script src = "/js/recorder/extensions/waveview.js"></script>
+
+    <link type="text/css" rel="stylesheet" th:href="@{/plugins/modal/css/component.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/css/pages/learning-center.css}"/>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+
+
+        .color {
+            color: black;
+        }
+        .bg1 {
+            background: url(img/3.png) no-repeat fixed;
+            background-size: 100% 100%;
+            position: relative;
+        }
+        .bg2 {
+            background: url(img/content2.jpg) no-repeat;
+            background-size: 100% 100%;
+            margin: 27.5px auto 27.5px;
+            position: relative;
+            width: 1000px;
+            height: 600px;
+        }
+
+        .test {
+            background: url("img/map1.jpg") no-repeat;
+            background-size: 100% 100%;
+            margin: 19px;
+            width: 962px;
+            height: 562px;
+            position: absolute;
+        }
+
+        .test1 {
+            position: absolute;
+            top: 250px;
+            left: 380px;
+            font-size: 2em;
+        }
+
+        .test2 {
+            position: absolute;
+            bottom: 38%;
+            left: 15%;
+            font-size: 2em;
+        }
+
+        .test3 {
+            position: absolute;
+            top: 280px;
+            left: 600px;
+            font-size: 2em;
+        }
+
+        .test4 {
+            position: absolute;
+            top: 35%;
+            right: 20%;
+            font-size: 2em;
+        }
+
+        .test5 {
+            position: absolute;
+            bottom: 32%;
+            right: 17%;
+            font-size: 2em;
+        }
+
+        .test1:hover {
+            color: blue;
+        }
+
+        .test2:hover {
+            color: blue;
+        }
+
+        .test3:hover {
+            color: blue;
+        }
+
+        .test4:hover {
+            color: blue;
+        }
+
+        .test5:hover {
+            color: blue;
+        }
+
+        img.bird {
+            width: 12%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            animation: run3 20s linear infinite;
+        }
+
+        @keyframes run3 {
+            0% {
+                width: 20%;
+            }
+            50% {
+                width: 12%;
+            }
+            100% {
+                width: 5%
+            }
+        }
+
+        .cloud {
+            width: 18vmin; /*根据宽度或高度那个小然后改变*/
+            height: 5vmin;
+            background: #fff;
+            border-radius: 15vmin;
+            position: absolute;
+            left: 22vmin;
+            top: 12vmin;
+            animation: cl0 20s infinite linear;
+
+        }
+
+        .cloud1 {
+            width: 9vmin;
+            height: 9vmin;
+            background: #fff;
+            position: absolute;
+            border-radius: 7vmin;
+            left: 1vmin;
+            top: -4vmin;
+        }
+
+        .cloud2 {
+            width: 11vmin;
+            height: 11vmin;
+            background: #fff;
+            position: absolute;
+            border-radius: 7vmin;
+            left: 5vmin;
+            top: -7vmin;
+        }
+
+        @keyframes cl0 {
+            0% {
+                transform: translateX(-20vmin)
+            }
+            100% {
+                transform: translateX(100vmin)
+            }
+        }
+        .tri1 {
+            position: absolute;
+            width: 0;
+            height: 0;
+            top: 50%;
+            right: 0;
+            border: 20px solid transparent;
+            border-left-color: #00b0ff;
+            font-size: 0;
+            line-height: 0;
+        }
+        .tri2 {
+            position: absolute;
+            width: 0;
+            height: 0;
+            top: 50%;
+            left: 0;
+            border: 20px solid transparent;
+            border-right-color: #00b0ff;
+            font-size: 0;
+            line-height: 0;
+        }
+
+    </style>
+
+</head>
+<body class="bg1 body sidebar-left-hidden fixedNav_position fixedMenu_left">
+<div class="preloader" style=" position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  backface-visibility: hidden;
+  background: #ffffff;">
+    <div class="preloader_img" style="width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 48%;
+  top: 48%;
+  background-position: center;
+z-index: 999999">
+        <img th:src="@{/img/loader.gif}" style=" width: 50px;" alt="loading...">
+    </div>
+</div>
+
+
+<div id="wrap">
+    <div th:replace="~{fragments/top :: top}"></div>
+    <!-- /#top -->
+    <div class="wrapper fixedNav_top">
+        <div th:replace="~{fragments/left :: left}"></div>
+        </div>
+    <div class="bg2">
+        <div class="test" id="load_problem">
+<!--            <a href="https://www.baidu.com" target="_blank" class="color test1 fa fa-lg fa-flag-o"></a>-->
+<!--            <a href="https://www.baidu.com" target="_blank" class="color test2 fa fa-lg fa-flag-o"></a>-->
+<!--            <a href="https://www.baidu.com" target="_blank" class="color test3 fa fa-lg fa-flag-o"></a>-->
+<!--            <a href="https://www.baidu.com" target="_blank" class="color test4 fa fa-lg fa-flag-o"></a>-->
+<!--            <a href="https://www.baidu.com" target="_blank" class="color test5 fa fa-lg fa-flag-checkered"></a>-->
+            <img src="img/bird.png" class="bird"/>
+            <div class="cloud">
+                <div class="cloud1"></div>
+                <div class="cloud2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function load_problem(){
+        let tests = document.getElementById("load_problem")
+        let a1 = document.createElement("a");
+        let a2 = document.createElement("a");
+        let a3 = document.createElement("a");
+        let a4 = document.createElement("a");
+        let a5 = document.createElement("a");
+
+        a1.className = "color test1 fa fa-lg fa-flag-o";
+        a2.className = "color test1 fa fa-lg fa-flag-o";
+        a3.className = "color test1 fa fa-lg fa-flag-o";
+        a4.className = "color test1 fa fa-lg fa-flag-o";
+        a5.className = "color test1 fa fa-lg fa-flag-o";
+
+        a1.target = "_blank";
+        a2.target = "_blank";
+        a3.target = "_blank";
+        a4.target = "_blank";
+        a5.target = "_blank";
+
+        a1.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[0]}]]' + "&flag=pt";
+        a2.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[1]}]]' + "&flag=pt";
+        a3.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[2]}]]' + "&flag=pt";
+        a4.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[3]}]]' + "&flag=pt";
+        a5.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[4]}]]' + "&flag=pt";
+        // tests.appendChild(a1);
+        // tests.appendChild(a2);
+        // tests.appendChild(a3);
+        // tests.appendChild(a4);
+        // tests.appendChild(a5);
+        tests.append(a1,a2,a3,a4,a5);
+        console.log('[[${proplemlist[0]}]]');
+
+
+
+    }
+    load_problem();
+</script>
+
+<a href="javascript:;" class="comment" id="chat"></a>
+<div id="chatbox">
+    <div class="Container">
+
+        <div class="top">
+                    <span>To:
+                        <span class="name">Britu小精灵</span>
+                    </span>
+            <div class="x">
+                <a href="javascript:;" class="fa fa-lg fa-times" id="x"></a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="bubble_you">
+                <span class="img_1"></span>
+                <span class="bubble_1">
+                    <span class="tri_1"></span>
+                    Hello,我是Britu小精灵。你有什么不懂的问题吗？我可是全知全能哟！
+                </span>
+            </div>
+            <div class="bubble_me">
+                <span class="img_2"></span>
+                <span class="bubble_2">
+                    <span class="tri_2"></span>
+                    好的呢，我可是有一大堆问题想问的呢。
+                </span>
+            </div>
+        </div>
+        <div class="recwave" id="box"></div>
+        <!--        <div id="box">-->
+        <!--            <div class="list">-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--                <div></div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="write">
+            <a href="javascript: recopen(); " class="recorder fa fa-lg fa-microphone" id="Recording"></a>
+            <a href="javascript: ;" class="stop" id="stop"></a>
+            <input id="text" type="text" placeholder='尽情畅聊吧' />
+            <a href="javascript:;" class="send fa fa-lg fa-paper-plane" id="send"></a>
+        </div>
+        <div id="bdtts_div_id">
+            <audio id="tts_autio_id" autoplay="autoplay">
+                <source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&per=1&text=" type="audio/mpeg">
+                <embed id="tts_embed_id" height="0" width="0" src="">
+            </audio>
+
+        </div>
+
+    </div>
+</div>
+<script src = "/js/questions.js"></script>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

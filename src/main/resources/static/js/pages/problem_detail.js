@@ -485,7 +485,9 @@ function save_code(userId){
     var user_id;
     var type = $("#type").val();
     var sourceCode = editor.getValue();
-    console.log('用户id' + userId )
+    console.log('用户id' + userId );
+    var codeKey = new Array();
+    var key_u;
 //判断用户是否登录，登录则返回用户id，否则返回默认用户
     if (userId !== null){
         user_id = userId;
@@ -497,15 +499,38 @@ function save_code(userId){
         "type": type,
         "code": sourceCode
     });//定义相对应的value
+    //循环取localStorage中的所对应的用户的键dao(Key)
+    getKey:
+        for(var i=0;i<localStorage.length;i++){
+            codeKey = localStorage.key(i).split("-")
+            getUser:
+                for (var j=0;j<codeKey.length;j++) {//感觉这个循环有点多余，因为数组codeKey就两个值
+                    var user_n = codeKey[1];
+                    //alert(user_n);s
+                    // console.log(user_n);
+                    if (user_n == userId) {
+                        key_u = localStorage.key(i);
+                        //alert(key_u);
+                        // console.log(key_u);
+                        break getKey;
+                    }
+                }
+        }
+        localStorage.removeItem(key_u);
     filecode = JSON.stringify(filecode);//localstorage不能直接写入JSON，所以在这里将JSON转为String字符串形式
     localStorage.setItem(filename,filecode);//写入数据库
+    $.message({
+        message: '保存成功！',
+        type: 'success'
+    });
 }
 
 
 function outCode(users_id) {//需要传参user_id
     var codeKey = new Array();
     var key_u;
-    //alert(user_id);
+    console.log('用户id' + users_id);
+
 //循环取localStorage中的所对应的用户的键dao(Key)
     getKey:
         for(var i=0;i<localStorage.length;i++){
@@ -514,23 +539,89 @@ function outCode(users_id) {//需要传参user_id
                 for (var j=0;j<codeKey.length;j++) {//感觉这个循环有点多余，因为数组codeKey就两个值
                     var user_n = codeKey[1];
                     //alert(user_n);s
+                    // console.log(user_n);
                     if (user_n == users_id) {
                         key_u = localStorage.key(i);
                         //alert(key_u);
-                        //console.log(key_u);
+                        // console.log(key_u);
                         break getKey;
                     }
                 }
         }
     var filecode = localStorage.getItem(key_u);
-    //console.log(filecode);
+    // console.log(filecode);
     filecode = eval(JSON.parse(filecode));
-    var type = filecode.type;//取出的代码类型
+    var type1 = filecode.type;//取出的代码类型
     //console.log(type);
-    var sourceCode = filecode.code;//取出的代码
+    var sourceCode1 = filecode.code;//取出的代码
     //console.log(sourceCode);
-    console.log('取出来的ype' + type);
-    console.log('取出来的代码' + sourceCode);
+    console.log('取出来的type' + type1);
+    console.log('取出来的代码' + sourceCode1);
+    var flag = 0;
+    if(sourceCode1){
+        swal({
+            title: '检测到本地暂存的代码，是否要加载？',
+            // text: '提醒',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#EF6F6C',
+            cancelButtonColor: '#4fb7fe',
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+        }).then(function () {
+            flag++;
+            $("#dropdownMenuButton").html(type1);
+            $("#type").val(type1);
+
+            if ("C" == type1) {
+
+                editor.session.setMode("ace/mode/c_cpp");
+                editor.setValue(sourceCode1);
+            } else if ("C++" == type1) {
+                editor.session.setMode("ace/mode/c_cpp");
+                editor.setValue(sourceCode1);
+            } else if ("Java8" == type1) {
+                editor.session.setMode("ace/mode/java");
+                editor.setValue(sourceCode1);
+            } else if ("Python2" == type1) {
+                editor.session.setMode("ace/mode/python");
+                editor.setValue(
+                    sourceCode1);
+                $("#dropdownMenuButton").html("python2");
+            } else if ("Python3" == type1) {
+                editor.session.setMode("ace/mode/python");
+                editor.setValue(sourceCode1);
+            }
+            editor.moveCursorTo(0, 0);
+        }).catch(function (reason) {
+
+        });
+    }
+    if(flag == 0){
+        $("#dropdownMenuButton").html(this_type);
+        $("#type").val(this_type);
+
+        if ("C" == this_type) {
+
+            editor.session.setMode("ace/mode/c_cpp");
+            editor.setValue(this_source_code);
+        } else if ("C++" == this_type) {
+            editor.session.setMode("ace/mode/c_cpp");
+            editor.setValue(this_source_code);
+        } else if ("Java8" == this_type) {
+            editor.session.setMode("ace/mode/java");
+            editor.setValue(this_source_code);
+        } else if ("Python2" == this_type) {
+            editor.session.setMode("ace/mode/python");
+            editor.setValue(
+                this_source_code);
+            $("#dropdownMenuButton").html("python2");
+        } else if ("Python3" == this_type) {
+            editor.session.setMode("ace/mode/python");
+            editor.setValue(this_source_code);
+        }
+        editor.moveCursorTo(0, 0);
+    }
 }
 
 
