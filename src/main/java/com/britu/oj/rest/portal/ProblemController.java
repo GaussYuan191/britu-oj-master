@@ -109,9 +109,10 @@ public class ProblemController {
      * @return
      */
     @RequestMapping("/problemDetailPage")
-    public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, String problemId,Integer compId) {
+    public String problemDetailPage(@AuthenticationPrincipal UserDetails userDetails,HttpServletRequest request, String problemId,Integer compId,@RequestParam(defaultValue = "") String flag) {
         Integer u_id;
         User user = new User();
+        Integer isPassthroug = 0;
         SourceCode sourceCode = new SourceCode();
 //        p_id = problemId
         RestResponseVO<ProblemResult> problemResultRestResponseVO = null;
@@ -128,6 +129,10 @@ public class ProblemController {
             sourceCode.setType(problemResultRestResponseVO.getData().getType());
         }
 
+        if(flag.equals("pt")){
+            isPassthroug = 1;
+        }
+
 
 
         ProblemDetailVO detailVO = problemService.getDetailVOById(problemId).getData();
@@ -140,6 +145,7 @@ public class ProblemController {
         request.setAttribute("compId", compId);
         request.setAttribute("user",user);
         request.setAttribute("sourceCode",sourceCode);
+        request.setAttribute("isPassthroug",isPassthroug);
         request.setAttribute("active2", true);
         return "portal/problem/problem-detail";
     }

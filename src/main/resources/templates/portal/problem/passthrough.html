@@ -210,6 +210,8 @@ z-index: 999999">
         <img th:src="@{/img/loader.gif}" style=" width: 50px;" alt="loading...">
     </div>
 </div>
+
+
 <div id="wrap">
     <div th:replace="~{fragments/top :: top}"></div>
     <!-- /#top -->
@@ -217,12 +219,12 @@ z-index: 999999">
         <div th:replace="~{fragments/left :: left}"></div>
         </div>
     <div class="bg2">
-        <div class="test">
-            <a href="https://www.baidu.com" target="_blank" class="color test1 fa fa-lg fa-flag-o"></a>
-            <a href="https://www.baidu.com" target="_blank" class="color test2 fa fa-lg fa-flag-o"></a>
-            <a href="https://www.baidu.com" target="_blank" class="color test3 fa fa-lg fa-flag-o"></a>
-            <a href="https://www.baidu.com" target="_blank" class="color test4 fa fa-lg fa-flag-o"></a>
-            <a href="https://www.baidu.com" target="_blank" class="color test5 fa fa-lg fa-flag-checkered"></a>
+        <div class="test" id="load_problem">
+<!--            <a href="https://www.baidu.com" target="_blank" class="color test1 fa fa-lg fa-flag-o"></a>-->
+<!--            <a href="https://www.baidu.com" target="_blank" class="color test2 fa fa-lg fa-flag-o"></a>-->
+<!--            <a href="https://www.baidu.com" target="_blank" class="color test3 fa fa-lg fa-flag-o"></a>-->
+<!--            <a href="https://www.baidu.com" target="_blank" class="color test4 fa fa-lg fa-flag-o"></a>-->
+<!--            <a href="https://www.baidu.com" target="_blank" class="color test5 fa fa-lg fa-flag-checkered"></a>-->
             <img src="img/bird.png" class="bird"/>
             <div class="cloud">
                 <div class="cloud1"></div>
@@ -231,6 +233,45 @@ z-index: 999999">
         </div>
     </div>
 </div>
+<script>
+    function load_problem(){
+        let tests = document.getElementById("load_problem")
+        let a1 = document.createElement("a");
+        let a2 = document.createElement("a");
+        let a3 = document.createElement("a");
+        let a4 = document.createElement("a");
+        let a5 = document.createElement("a");
+
+        a1.className = "color test1 fa fa-lg fa-flag-o";
+        a2.className = "color test1 fa fa-lg fa-flag-o";
+        a3.className = "color test1 fa fa-lg fa-flag-o";
+        a4.className = "color test1 fa fa-lg fa-flag-o";
+        a5.className = "color test1 fa fa-lg fa-flag-o";
+
+        a1.target = "_blank";
+        a2.target = "_blank";
+        a3.target = "_blank";
+        a4.target = "_blank";
+        a5.target = "_blank";
+
+        a1.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[0]}]]' + "&flag=pt";
+        a2.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[1]}]]' + "&flag=pt";
+        a3.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[2]}]]' + "&flag=pt";
+        a4.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[3]}]]' + "&flag=pt";
+        a5.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[4]}]]' + "&flag=pt";
+        // tests.appendChild(a1);
+        // tests.appendChild(a2);
+        // tests.appendChild(a3);
+        // tests.appendChild(a4);
+        // tests.appendChild(a5);
+        tests.append(a1,a2,a3,a4,a5);
+        console.log('[[${proplemlist[0]}]]');
+
+
+
+    }
+    load_problem();
+</script>
 
 <a href="javascript:;" class="comment" id="chat"></a>
 <div id="chatbox">
