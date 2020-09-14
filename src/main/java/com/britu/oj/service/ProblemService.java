@@ -1,6 +1,7 @@
 package com.britu.oj.service;
 
 import com.britu.oj.entity.ProblemResult;
+import com.britu.oj.response.ProblemVO;
 import com.britu.oj.response.RestResponseVO;
 import com.github.pagehelper.PageInfo;
 import com.britu.oj.entity.Problem;
@@ -26,6 +27,8 @@ public interface ProblemService {
     RestResponseVO<PageInfo> listProblemVOToPage(Integer userId,Integer flag,Integer sort,String keyword, Integer level, String tagIds, Integer pageNum, Integer pageSize);
 
     RestResponseVO<List<ProblemDetailVO>> listSuggestProblem(double ability, Integer row);
+
+    RestResponseVO<List<ProblemVO>> passthroughSuggestProblem(String problemtype, Integer userId);
 
     RestResponseVO<Integer> randomProblemId();
 

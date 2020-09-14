@@ -414,6 +414,7 @@ z-index: 999999">
                 }, {emulateJSON: true}).then(function (res) {
                     this.total = res.data.data.total;
                     this.problemList = res.data.data.list;
+                    console.log('列表数据' + this.problemList[0]);
                     $("#page").initPage(this.total, pageNum, clickPage);
                 }), function (res) {
                     console.log(res.data.msg);

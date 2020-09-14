@@ -330,7 +330,35 @@ z-index: 999999">
 
 <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
 
+<script th:inline="javascript" type="text/javascript">
+    // vue
+    var problemApp = new Vue({
+        el: '#load_problem',
+        data: {
+            total: 0,
+            problemList: [],
+        },
+        methods: {
+            listProblem: function () {
+                var url = 'passthrough/getproblem';
+                this.$http.post(url, {
 
+                }, {emulateJSON: true}).then(function (res) {
+                    console.log('数据' + res['status']);
+                    console.log('数据' + res.data.list);
+
+                    this.total = res.data.data.total;
+                    this.problemList = res.data.data.list;
+                    console.log('后台返回的数据为'  + this.problemList);
+                }), function (res) {
+                    console.log(res.data.msg);
+                }
+            }
+        }
+    });
+    problemApp.listProblem();
+
+</script>
 
 
 </body>
