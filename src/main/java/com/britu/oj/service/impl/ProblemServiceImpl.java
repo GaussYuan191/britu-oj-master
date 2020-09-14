@@ -157,6 +157,8 @@ public class ProblemServiceImpl implements ProblemService {
         }
 
         List<ProblemVO> problemList = problemMapper.listAll2VO(flag,sort, keyword, level, tagIdsList);
+//        System.out.println(problemList.toString());
+//        System.out.println("flag:" + flag + ",sort:"  + sort + ",keyword:" + keyword + ",level:" + level + ",tagIdsList:" + tagIdsList);
         if (userId != null) {
             for (ProblemVO problemVO : problemList) {
                 int totalCount = problemResultMapper.countUserIdProblemId(userId, problemVO.getId());
@@ -181,8 +183,37 @@ public class ProblemServiceImpl implements ProblemService {
             return RestResponseVO.createByErrorEnum(RestResponseEnum.INVALID_REQUEST);
         }
         List<ProblemDetailVO> problemList = problemMapper.listSuggestProblem(problemId, row);
-        System.out.println( RestResponseVO.createBySuccess(problemList).getData().toString());
+//        System.out.println( RestResponseVO.createBySuccess(problemList).getData().toString());
         return RestResponseVO.createBySuccess(problemList);
+    }
+    //返回闯关页面返回的题目 还有问题
+    @Override
+    public RestResponseVO<List<ProblemVO>> passthroughSuggestProblem(String problemtype,Integer userId){
+        Integer row = 5;
+        String problemId = "P1000";
+        Integer flag = 0;
+        Integer sort = -1;
+        String keyword = "";
+        Integer level = -1;
+        List<Integer> tagIdsList = null;
+        List<ProblemVO> problemList = problemMapper.listAll2VO(flag,sort, keyword, level, tagIdsList);
+        if (userId != null) {
+            for (ProblemVO problemVO : problemList) {
+                int totalCount = problemResultMapper.countUserIdProblemId(userId, problemVO.getId());
+                if (totalCount > 0) {
+                    int acCount = problemResultMapper.countUserIdProblemIdByStatus(userId, problemVO.getId(), JudgeStatusEnum.ACCEPTED.getStatus());
+                    if (acCount > 0) {
+                        problemVO.setUserStatus(CommonConst.ProblemUserStatus.PASSED);
+                    } else {
+                        problemVO.setUserStatus(CommonConst.ProblemUserStatus.TRYING);
+                    }
+                }
+            }
+        }
+//        List<ProblemDetailVO> problemList = problemMapper.listSuggestProblem(problemId, row);
+////        System.out.println( RestResponseVO.createBySuccess(problemList).getData().toString());
+        return RestResponseVO.createBySuccess(problemList);
+
     }
 
     @Override

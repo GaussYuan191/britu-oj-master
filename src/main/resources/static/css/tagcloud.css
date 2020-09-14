@@ -1,0 +1,25 @@
+.tag::after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    text-align: center;
+    font-size: 12px;
+    background-color: #14bcc8;
+    width: 450px;
+    height: 150px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    content: attr(data-msg);
+    transition: all 1000ms;
+    display: none;
+}
+
+.tag:hover::after {
+    left: calc(100% + 200px);
+    display: block;
+    opacity: 1;
+}
