@@ -34,7 +34,7 @@ public class RequestControllerAop {
         RequestControllerAop.debug = debug;
     }
 
-    @Around("execution(* com.oj.gkuoj.rest.*.*.*(..))")
+    @Around("execution(* com.britu.oj.rest.*.*.*(..))")
     public Object around(ProceedingJoinPoint point) throws Throwable {
 //        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 //        logger.info("请求IP:"+request.getRemoteHost());

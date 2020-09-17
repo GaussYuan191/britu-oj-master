@@ -283,4 +283,34 @@ public class ProblemDetailVO {
     public void setTagIds(String tagIds) {
         this.tagIds = tagIds;
     }
+
+    @Override
+    public String toString() {
+        return "ProblemDetailVO{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", htmlContent='" + htmlContent + '\'' +
+                ", inputDesc='" + inputDesc + '\'' +
+                ", outputDesc='" + outputDesc + '\'' +
+                ", testcaseInput='" + testcaseInput + '\'' +
+                ", testcaseOutput='" + testcaseOutput + '\'' +
+                ", tags='" + tags + '\'' +
+                ", tagIds='" + tagIds + '\'' +
+                ", level=" + level +
+                ", submitCount=" + submitCount +
+                ", acCount=" + acCount +
+                ", tleCount=" + tleCount +
+                ", peCount=" + peCount +
+                ", meCount=" + meCount +
+                ", reCount=" + reCount +
+                ", ceCount=" + ceCount +
+                ", waCount=" + waCount +
+                ", time=" + time +
+                ", memory=" + memory +
+                ", flag=" + flag +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }
