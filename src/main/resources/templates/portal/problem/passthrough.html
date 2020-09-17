@@ -433,16 +433,45 @@ z-index: 999999">
     //         flag1.style.color= "white";
     //     },0);
     // };
-    var flaglist = [];
-    flaglist.push(flag1,flag2,flag3,flag4,flag5);
-    for(var flagdemo of flaglist){
-        let status_1 = [[${proplemlist[i].status}]];
-        if (status_1 == 1) {
-            flagdemo.style.backgroundImage="url('img/pass.png')"
-        }
-        if (status_1 == 2) {
-            flagdemo.style.backgroundImage="url('img/error.png')"
-        }
+
+    let status_1 = [[${proplemlist[0].status}]];
+    let status_2 = [[${proplemlist[1].status}]];
+    let status_3 = [[${proplemlist[2].status}]];
+    let status_4 = [[${proplemlist[3].status}]];
+    let status_5 = [[${proplemlist[4].status}]];
+
+    if (status_1 == 1) {
+        flag1.style.backgroundImage="url('img/pass.png')"
+    }
+    if (status_1 == 2) {
+        flag1.style.backgroundImage="url('img/error.png')"
+    }
+
+    if (status_2 == 1) {
+        flag2.style.backgroundImage="url('img/pass.png')"
+    }
+    if (status_2 == 2) {
+        flag2.style.backgroundImage="url('img/error.png')"
+    }
+    if (status_3 == 1) {
+        flag3.style.backgroundImage="url('img/pass.png')"
+    }
+    if (status_3 == 2) {
+        flag3.style.backgroundImage="url('img/error.png')"
+    }
+
+    if (status_4 == 1) {
+        flag4.style.backgroundImage="url('img/pass.png')"
+    }
+    if (status_4 == 2) {
+        flag4.style.backgroundImage="url('img/error.png')"
+    }
+
+    if (status_5 == 1) {
+        flag5.style.backgroundImage="url('img/pass.png')"
+    }
+    if (status_5 == 2) {
+        flag5.style.backgroundImage="url('img/error.png')"
 
     }
 </script>
