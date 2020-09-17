@@ -1,5 +1,6 @@
 package com.britu.oj.rest.portal;
 
+import com.britu.oj.entity.Problem_pt;
 import com.britu.oj.response.ProblemDetailVO;
 import com.britu.oj.response.ProblemVO;
 import com.britu.oj.response.RestResponseVO;
@@ -30,12 +31,19 @@ public class PassthroughController {
 
     @RequestMapping("")
     public String passthrough(HttpServletRequest request){
-        ArrayList<String> problemlist = new ArrayList<>();
-        problemlist.add("P1000");
-        problemlist.add("P1001");
-        problemlist.add("P1002");
-        problemlist.add("P1003");
-        problemlist.add("P1004");
+        ArrayList<Problem_pt> problemlist = new ArrayList<>();
+        Problem_pt problem1 = new Problem_pt("P1000",1);
+        Problem_pt problem2 = new Problem_pt("P1001",1);
+        Problem_pt problem3 = new Problem_pt("P1002",2);
+        Problem_pt problem4 = new Problem_pt("P1003",0);
+        Problem_pt problem5 = new Problem_pt("P1004",0);
+
+
+        problemlist.add(problem1);
+        problemlist.add(problem2);
+        problemlist.add(problem3);
+        problemlist.add(problem4);
+        problemlist.add(problem5);
         request.setAttribute("proplemlist",problemlist);
         request.setAttribute("active9", true);
         return "portal/problem/passthrough";
