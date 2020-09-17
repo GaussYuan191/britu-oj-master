@@ -5,21 +5,57 @@
     opacity: 0;
     text-align: center;
     font-size: 12px;
-    background-color: #14bcc8;
-    width: 450px;
+    /*background-color: #14bcc8;*/
+    background-color: #fff;
+    width: 250px;
     height: 150px;
     margin: 0 auto;
     padding: 20px;
     border-radius: 10px;
+    /*border: 1px solid #3385ff;*/
+    box-shadow:
+            0 0 1px 1px red,
+            0 0 1px 2px orange,
+            0 0 1px 3px yellow,
+            0 0 1px 4px green,
+            0 0 1px 5px cyan,
+            0 0 1px 6px blue,
+            0 0 1px 7px purple;
+
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     content: attr(data-msg);
     transition: all 1000ms;
     display: none;
+
+
+
 }
 
+@-webkit-keyframes rotate {
+    100% {
+        -webkit-transform: rotate(1turn);
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes rotate {
+    100% {
+        -webkit-transform: rotate(1turn);
+        transform: rotate(1turn);
+    }
+}
+
+
+
+
+
+
 .tag:hover::after {
-    left: calc(100% + 200px);
+
+    left: calc(100% + 350px);
     display: block;
     opacity: 1;
+
+
 }

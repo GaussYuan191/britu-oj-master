@@ -11,9 +11,85 @@
     <script type="text/javascript" th:src="@{/js/pages/autoload.js}"></script><!--2D人物加载-->
     <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/css/chatbox.css}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" th:href="@{/css/jump.css}">
     <script src="/js/index.js"></script>
     <script src = "/js/recorder/recorder-core.js"></script>
     <script src = "/js/recorder/extensions/waveview.js"></script>
+
+    <style>
+        #countdown{
+            /*box-shadow: 0 1px 2px 0 rgba(1, 1, 1, 0.4);*/
+            width: 240px;
+            height: 30px;
+            text-align: center;
+            /* background: #f1f1f1;*/
+
+            border-radius: 5px;
+
+            /*margin: auto;*/
+
+        }
+
+
+
+        #countdown #tiles{
+            color: #fff;
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 0px #ccc;
+            display: inline-block;
+            font-family: Arial, sans-serif;
+            text-align: center;
+
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: thin;
+            display: block;
+
+        }
+
+        .color-full {
+            background: #53bb74;
+        }
+        .color-half {
+            background: #ebc85d;
+        }
+        .color-empty {
+            background: #e5554e;
+        }
+
+        #countdown #tiles > span{
+            width: 70px;
+            max-width: 70px;
+
+            padding: 18px 0;
+            position: relative;
+        }
+
+
+
+
+
+        #countdown .labels{
+            width: 100%;
+            height: 25px;
+            text-align: center;
+            position: absolute;
+            bottom: 8px;
+        }
+
+        #countdown .labels li{
+            width: 102px;
+            font: bold 15px 'Droid Sans', Arial, sans-serif;
+            color: #f47321;
+            text-shadow: 1px 1px 0px #000;
+            text-align: center;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+    </style>
 
 </head>
 
@@ -100,19 +176,55 @@ z-index: 999999">
     <div class="wrapper fixedNav_top">
         <div th:replace="~{fragments/left :: left}"></div>
         <!-- /#left -->
-        <div id="content" class="bg-container">
+        <div id="demo" class="demo" style="display: block">
+            <div class="demo__colored-blocks">
+                <div class="demo__colored-blocks-rotater">
+                    <div class="demo__colored-block"></div>
+                    <div class="demo__colored-block"></div>
+                    <div class="demo__colored-block"></div>
+                </div>
+                <div class="demo__colored-blocks-inner"></div>
+                <div class="demo__text">Ready</div>
+            </div>
+            <div class="demo__inner">
+                <svg class="demo__numbers" viewBox="0 0 100 100">
+                    <defs>
+                        <path class="demo__num-path-1" d="M40,28 55,22 55,78"/>
+                        <path class="demo__num-join-1-2" d="M55,78 55,83 a17,17 0 1,0 34,0 a20,10 0 0,0 -20,-10"/>
+                        <path class="demo__num-path-2" d="M69,73 l-35,0 l30,-30 a16,16 0 0,0 -22.6,-22.6 l-7,7"/>
+                        <path class="demo__num-join-2-3" d="M28,69 Q25,44 34.4,27.4"/>
+                        <path class="demo__num-path-3" d="M30,20 60,20 40,50 a18,15 0 1,1 -12,19"/>
+                    </defs>
+                    <path class="demo__numbers-path"
+                          d="M-10,20 60,20 40,50 a18,15 0 1,1 -12,19
+                   Q25,44 34.4,27.4
+                   l7,-7 a16,16 0 0,1 22.6,22.6 l-30,30 l35,0 L69,73
+                   a20,10 0 0,1 20,10 a17,17 0 0,1 -34,0 L55,83
+                   l0,-61 L40,28" />
+                </svg>
+            </div>
+        </div>
+        <div id="content" class="bg-container" style="display: none">
             <header class="head">
                 <div class="main-bar">
                     <div class="row no-gutters">
-                        <div class="col-6 ">
-                            <h4 class="nav_top_align">
+                        <div class="col-8 ">
+                            <h4 class="nav_top_align" style="display: inline-block">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                                 <span class="ml-1">[[${problem.id}]]
                                 [[${problem.name}]]
                                 </span>
                             </h4>
+
+                            <div id="countdown" style="float: right;margin-right: 63px;margin-top: 10px">
+
+                                <div id='tiles' class="color-full"></div>
+                                <!--  <div class="countdown-label">Time Remaining</div> -->
+                            </div>
+
+
                         </div>
-                        <div class="col-6 ">
+                        <div class="col-4 ">
                             <div th:if="${compId == null}">
                                 <ol class="breadcrumb float-right nav_breadcrumb_top_align">
                                     <li class="breadcrumb-item">
@@ -256,26 +368,28 @@ z-index: 999999">
                                                 class="notify ml-2 float-right btn btn-info  button-rounded">
                                             <i class="fa fa-cloud mr-1"></i>提交代码
                                         </button>
-                                        <button class="ml-2 float-right btn  btn-secondary button-rounded "
+                                        <button class="ml-2 float-right btn  btn-info button-rounded "
                                                 onclick="clearTestcase()"
                                                 data-toggle="modal" data-href="#stack1" href="#stack1">
                                             <i class="fa fa-play mr-1"></i>运行测试
                                         </button>
                                         <a th:href="@{'/problem/answer?problemId='+${problem.id}}">
                                             <button
-                                                    class="notify ml-2 float-right btn btn-outline-primary  button-rounded">
+                                                    class="notify ml-2 float-right btn btn-info  button-rounded">
                                                 <i class="fa fa-files-o mr-1"></i>查看题解
                                             </button>
                                         </a>
                                         <button  onclick="save_code(userID)"
                                                 class="notify ml-2 float-right btn btn-info  button-rounded">
-                                            <i class="fa fa-cloud mr-1"></i>暂存代码
+                                            <i class="fa fa-cloud-download mr-1"></i>暂存代码
                                         </button>
 
-                                        <a th:if="${isPassthroug} eq 1 " th:href="@{'/passthrough'}">
+                                        <a th:if="${isPassthroug} eq 1 " th:href="@{'/passthrough'}" style="float: left;
+    margin-top: 22px;
+    margin-left: 27px;">
                                             <button
-                                                    class="notify ml-2 float-right btn btn-outline-primary  button-rounded">
-                                                <i class="fa fa-files-o mr-1"></i>返回挑战页面
+                                                    class="notify ml-2 float-right btn btn-info  button-rounded">
+                                                <i class="fa fa-mail-reply mr-1"></i>返回挑战页面
                                             </button>
                                         </a>
                                     </div>
@@ -290,6 +404,13 @@ z-index: 999999">
 
             </div>
         </div>
+        <script>
+            setTimeout(function () {
+                var demo = document.getElementById("demo");
+                demo.style.display = 'none';
+                document.getElementById("content").style.display = 'block';
+            },3500)
+        </script>
     </div>
     <!-- /.inner -->
     <!-- /.outer -->
@@ -589,4 +710,5 @@ z-index: 999999">
 
     /*]]>*/
 </script>
+<script src="/js/clock.js"></script>
 </html>

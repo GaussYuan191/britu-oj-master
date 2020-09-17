@@ -248,7 +248,7 @@
                                                                 <span class="text-danger"
                                                                       th:if="${competition.competitionStatus == 3 }">已结束</span>
                                                             </span>
-                                                            <span class=" float-right  gray-font">
+                                                            <span class="gray-font">
                                                             [[${#dates.format(competition.startTime,'yyyy-M-d HH:mm')}]]
                                                             </span>
                                                         </div>
@@ -256,7 +256,7 @@
                                                             <span class=" btn-warning btn-sm">OI赛制</span>&nbsp;
                                                             <a class="text-danger ml-3"
                                                                th:href="@{'/user/mainPage?userId='+${competition.userId}}">[[${competition.name}]]</a>
-                                                            <span class="gray-font  float-right">[[${#dates.format(competition.endTime,'yyyy-M-d HH:mm')}]]</span>
+                                                            <span class="gray-font">[[${#dates.format(competition.endTime,'yyyy-M-d HH:mm')}]]</span>
                                                         </div>
                                                     </div>
                                                 </div>
