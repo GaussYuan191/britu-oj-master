@@ -4,6 +4,9 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>知识闯关</title>
     <div th:replace="~{fragments/head-base}"></div>
     <script type="text/javascript" th:src="@{/js/pages/autoload.js}"></script><!--2D人物加载-->
@@ -34,7 +37,7 @@
             position: relative;
         }
         .bg2 {
-            background: url(img/content2.jpg) no-repeat;
+            background: url(img/content.png) no-repeat;
             background-size: 100% 100%;
             /*margin: 27.5px auto 27.5px;*/
             position: relative;
@@ -43,7 +46,7 @@
             margin-left: 70px;
         }
 
-        .test {
+        .load_problem {
             background: url("img/map1.jpg") no-repeat;
             background-size: 100% 100%;
             margin: 19px;
@@ -54,35 +57,50 @@
 
         .test1 {
             position: absolute;
-            top: 250px;
-            left: 380px;
+            width: 50px;
+            height: 50px;
+            background: url("img/nopass.png") no-repeat;
+            top: 214px;
+            left: 344px;
             font-size: 2em;
         }
 
         .test2 {
             position: absolute;
-            bottom: 38%;
-            left: 15%;
+            width: 50px;
+            height: 50px;
+            background: url("img/nopass.png") no-repeat;
+            bottom: 32%;
+            left: 14%;
             font-size: 2em;
         }
 
         .test3 {
             position: absolute;
-            top: 280px;
-            left: 600px;
+            width: 50px;
+            height: 50px;
+            background: url("img/nopass.png") no-repeat;
+            top: 239px;
+            left: 467px;
             font-size: 2em;
         }
 
         .test4 {
             position: absolute;
+            width: 50px;
+            height: 50px;
+            background: url("img/nopass.png") no-repeat;
             top: 35%;
             right: 20%;
             font-size: 2em;
         }
 
         .test5 {
+            width: 50px;
+            height: 50px;
+            background: url("img/nopass.png") no-repeat;
             position: absolute;
-            bottom: 32%;
+            bottom: 28%;
             right: 17%;
             font-size: 2em;
         }
@@ -127,20 +145,20 @@
             }
         }
 
-        .cloud {
-            width: 18vmin; /*根据宽度或高度那个小然后改变*/
+        .gamecloud {
+            width: 14vmin; /*根据宽度或高度那个小然后改变*/
             height: 5vmin;
             background: #fff;
             border-radius: 15vmin;
             position: absolute;
             left: 22vmin;
-            top: 12vmin;
+            top: 15vmin;
             animation: cl0 20s infinite linear;
 
         }
 
         .cloud1 {
-            width: 9vmin;
+            width: 8vmin;
             height: 9vmin;
             background: #fff;
             position: absolute;
@@ -150,13 +168,13 @@
         }
 
         .cloud2 {
-            width: 11vmin;
-            height: 11vmin;
+            width: 7vmin;
+            height: 8vmin;
             background: #fff;
             position: absolute;
             border-radius: 7vmin;
             left: 5vmin;
-            top: -7vmin;
+            top: -5vmin;
         }
 
         @keyframes cl0 {
@@ -167,28 +185,65 @@
                 transform: translateX(100vmin)
             }
         }
-        .tri1 {
+        .change {
             position: absolute;
-            width: 0;
-            height: 0;
-            top: 50%;
-            right: 0;
-            border: 20px solid transparent;
-            border-left-color: #00b0ff;
-            font-size: 0;
-            line-height: 0;
+            top: 20px;
+            right: 20px;
+            width: 71px;
+            height: 60px;
+            background-image: url("img/change.png");
+            border-radius: 13px;
+            z-index: 1;
+            transition: transform .3s ease-in-out;
         }
-        .tri2 {
+        .change:hover {
+            transform: translateY(-5px);
+            box-shadow: 6px 9px 4px -6px rgba(0,0,0,.3);
+        }
+        .title {
             position: absolute;
-            width: 0;
-            height: 0;
-            top: 50%;
+            width: 161px;
+            height: 51px;
+            top: 2px;
+            left: 412px;
+            background: url("img/title.png") no-repeat;
+            z-index: 1;
+        }
+        div>p {
+            margin-top: 13px;
+            margin-left: 47px;
+
+        }
+
+        .lt-up-ang, .rt-up-ang, .lt-dn-ang, .rt-dn-ang {
+            background: url(img/ang-sprite.png) no-repeat;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            z-index: 1;
+        }
+        .lt-up-ang {
+            top: 0;
             left: 0;
-            border: 20px solid transparent;
-            border-right-color: #00b0ff;
-            font-size: 0;
-            line-height: 0;
         }
+        .rt-up-ang {
+            background-position: -40px 0;
+            right: 0px;
+            top: 0;
+        }
+        .lt-dn-ang {
+            background-position: 0 -40px;
+            left: 0;
+            bottom: 0px;
+        }
+        .rt-dn-ang {
+            background-position: -40px -40px;
+            right: 0px;
+            bottom: 0px;
+        }
+
+
+
 
     </style>
 
@@ -217,7 +272,9 @@ z-index: 999999">
 </div>
 
 
+
 <div id="wrap" >
+
     <div th:replace="~{fragments/top :: top}"></div>
     <!-- /#top -->
     <div class="wrapper fixedNav_top">
@@ -226,57 +283,34 @@ z-index: 999999">
 
 
 
-    <div class="bg2" >
-        <div class="test" id="load_problem">
-<!--            <a href="https://www.baidu.com" target="_blank" class="color test1 fa fa-lg fa-flag-o"></a>-->
-<!--            <a href="https://www.baidu.com" target="_blank" class="color test2 fa fa-lg fa-flag-o"></a>-->
-<!--            <a href="https://www.baidu.com" target="_blank" class="color test3 fa fa-lg fa-flag-o"></a>-->
-<!--            <a href="https://www.baidu.com" target="_blank" class="color test4 fa fa-lg fa-flag-o"></a>-->
-<!--            <a href="https://www.baidu.com" target="_blank" class="color test5 fa fa-lg fa-flag-checkered"></a>-->
+
+   
+    <div class="bg2">
+        <div class="lt-up-ang"></div>
+        <div class="rt-up-ang"></div>
+        <div class="lt-dn-ang"></div>
+        <div class="rt-dn-ang"></div>
+        <div class="load_problem" id="load_problem">
+<!--            th:style="'backgroundImage' + ${${proplemlist[0] == 1} ？''}"-->
+            <a  target="_blank" class="color test1 " id="flag1" ></a>
+            <a  target="_blank" class="color test2 " id="flag2" ></a>
+            <a  target="_blank" class="color test3 " id="flag3"></a>
+            <a  target="_blank" class="color test4 " id="flag4"></a>
+            <a  target="_blank" class="color test5 " id="flag5"></a>
+
             <img src="img/bird.png" class="bird"/>
-            <div class="cloud">
+            <div class="gamecloud">
                 <div class="cloud1"></div>
                 <div class="cloud2"></div>
+            </div>
+            <div class="change"></div>
+            <div class="title">
+                <p>闯关挑战</p>
             </div>
         </div>
     </div>
 
 </div>
-<script>
-    function load_problem(){
-        let tests = document.getElementById("load_problem")
-        let a1 = document.createElement("a");
-        // let a2 = document.createElement("a");
-        // let a3 = document.createElement("a");
-        // let a4 = document.createElement("a");
-        // let a5 = document.createElement("a");
-
-        a1.className = "color test1 fa fa-lg fa-flag-o";
-        // a2.className = "color test1 fa fa-lg fa-flag-o";
-        // a3.className = "color test1 fa fa-lg fa-flag-o";
-        // a4.className = "color test1 fa fa-lg fa-flag-o";
-        // a5.className = "color test1 fa fa-lg fa-flag-o";
-
-        a1.target = "_blank";
-        // a2.target = "_blank";
-        // a3.target = "_blank";
-        // a4.target = "_blank";
-        // a5.target = "_blank";
-
-        a1.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[0]}]]' + "&flag=pt";
-        // a2.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[1]}]]' + "&flag=pt";
-        // a3.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[2]}]]' + "&flag=pt";
-        // a4.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[3]}]]' + "&flag=pt";
-        // a5.href = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[4]}]]' + "&flag=pt";
-        tests.appendChild(a1);
-        // tests.appendChild(a2);
-        // tests.appendChild(a3);
-        // tests.appendChild(a4);
-        // tests.appendChild(a5);
-        // tests.append(a1,a2,a3,a4,a5);
-    }
-    load_problem();
-</script>
 
 <a href="javascript:;" class="comment" id="chat"></a>
 <div id="chatbox">
@@ -337,40 +371,83 @@ z-index: 999999">
 
 
 
+
 <div th:replace="~{fragments/footer :: footer}"></div>
+
+
 
 <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
 
-<script th:inline="javascript" type="text/javascript">
-    // vue
-    var problemApp = new Vue({
-        el: '#load_problem',
-        data: {
-            total: 0,
-            problemList: [],
-        },
-        methods: {
-            listProblem: function () {
-                var url = 'passthrough/getproblem';
-                this.$http.post(url, {
+<!--<script th:inline="javascript" type="text/javascript">-->
+<!--    // vue-->
+<!--   -->
+<!--    var problemApp = new Vue({-->
+<!--        el: '#load_problem',-->
+<!--        data: {-->
+<!--            total: 0,-->
+<!--            problemList: [],-->
+<!--        },-->
+<!--        methods: {-->
+<!--            listProblem: function () {-->
+<!--                var url = 'passthrough/getproblem';-->
+<!--                this.$http.post(url, {-->
 
-                }, {emulateJSON: true}).then(function (res) {
-                    console.log('数据' + res['status']);
-                    console.log('数据' + res.data.list);
+<!--                }, {emulateJSON: true}).then(function (res) {-->
+<!--                    console.log('数据' + res['status']);-->
+<!--                    console.log('数据' + res.data.list);-->
 
-                    this.total = res.data.data.total;
-                    this.problemList = res.data.data.list;
-                    console.log('后台返回的数据为'  + this.problemList);
-                }), function (res) {
-                    console.log(res.data.msg);
-                }
-            }
+<!--                    this.total = res.data.data.total;-->
+<!--                    this.problemList = res.data.data.list;-->
+<!--                    console.log('后台返回的数据为'  + this.problemList);-->
+<!--                }), function (res) {-->
+<!--                    console.log(res.data.msg);-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
+<!--    });-->
+<!--    problemApp.listProblem();-->
+
+<!--</script>-->
+
+<script>
+    let flag1 = document.getElementById('flag1');
+    let flag2 = document.getElementById('flag2');
+    let flag3 = document.getElementById('flag3');
+    let flag4 = document.getElementById('flag4');
+    let flag5 = document.getElementById('flag5');
+    let url1 = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[0].pid}]]' + "&flag=pt";
+    let url2 = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[1].pid}]]' + "&flag=pt";
+    let url3 = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[2].pid}]]' + "&flag=pt";
+    let url4 = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[3].pid}]]' + "&flag=pt";
+    let url5 = "http://127.0.0.1:8081/problem/problemDetailPage?problemId=" + '[[${proplemlist[4].pid}]]' + "&flag=pt";
+
+    flag1.setAttribute('href',url1);
+    flag2.setAttribute('href',url2);
+    flag3.setAttribute('href',url3);
+    flag4.setAttribute('href',url4);
+    flag5.setAttribute('href',url5);
+    // flag1.onclick = function() {
+    //     setTimeout( ()=>{
+    //         window.open("https://www.baidu.com/","_blank");
+    //
+    //         flag1.style.color= "white";
+    //     },0);
+    // };
+    var flaglist = [];
+    flaglist.push(flag1,flag2,flag3,flag4,flag5);
+    for(var flagdemo of flaglist){
+        let status_1 = [[${proplemlist[i].status}]];
+        if (status_1 == 1) {
+            flagdemo.style.backgroundImage="url('img/pass.png')"
         }
-    });
-    problemApp.listProblem();
+        if (status_1 == 2) {
+            flagdemo.style.backgroundImage="url('img/error.png')"
+        }
 
+    }
 </script>
 
 
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
